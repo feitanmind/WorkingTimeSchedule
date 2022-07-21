@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Application for working time schedule">
+    <meta name="author" content="Adam Burski">
+    <meta name="keywords" content="working, work, schedule, time">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Time Schedule</title>
+    <script src="/../scripts/jquery-3.6.0.min.js"></script>
+    <script>
+        var ready = 0;
+        var u = 0;
+        var w = 0;
+        $(document).ready(function(){
+                var da = $("#one");
+                //da.animate({width: "200px"}, "slow");
+                var b = setInterval(() => {
+                    if (u < 360){
+                        da.css("transform","rotate( "+u+"deg)");
+                        u++;
+                        console.log(w);
+                    }else{
+                        if(w > 50){
+                            clearInterval(b);
+                            u = 0;                            
+                        }else{
+                            u =0;
+                            w++;
+                        }                        
+                    }
+                    
+                }, 2);
+            })       
+
+
+    </script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.233);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 45vh;
+        }
+        #one{
+            width: 20px;
+            height: 20px;
+            border: double 5px transparent;
+            border-radius: 50%;
+            background-image: linear-gradient(white, white), radial-gradient(circle at 100%, #2596be 0% 30%, #dfdfdf 30% 100%);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            position: relative;
+        }
+
+    </style>
+</head>
+<body>
+    <p>Loading page...</p>
+    <div id="one"></div>
+</body>
+</html>

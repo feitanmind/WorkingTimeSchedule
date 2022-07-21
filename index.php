@@ -1,1 +1,5 @@
-<?php require_once "./daysOfTheWeek.php" ?>
+<?php
+
+header("Location: login/")
+
+?>

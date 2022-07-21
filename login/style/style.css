@@ -1,0 +1,61 @@
+*{
+    margin:0;
+    padding:0;
+}
+body, html{
+    height: 100%;
+}
+body{
+    background-image: url("img/login-background.png");
+    background-size: cover;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+/* LOGIN BOARD */
+.loginBoard{
+    Width: 70vw;
+    height: 85vh;
+    background-color: white;
+    border-radius: 1vw;
+    display: flex;
+}
+/* LEFT PANEL LOGIN */
+.leftPanelLogin{
+    border-bottom-left-radius: 1vw;
+    border-top-left-radius: 1vw;
+    height: 100%;
+    width: 65%;
+}
+.contactTutorialAndSupport{
+    width: 100%;
+    height: 90%;
+    background-image: url("img/guysketch.png");
+    background-size: cover;
+    background-position-x: 4vw;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    padding-top: 1%;
+    gap: 4%;
+}
+.box1{
+    width: 37%;
+    height: 22%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 1vw;
+}
+
+
+/* RIGHT PANEL LOGIN */
+.rightPanelLogin{
+    background-color: rgb(255, 255, 255);
+    border-radius: 1vw;
+    height: 100%;
+    width: 35%;
+    box-shadow: -0.5vw 0 2vw rgb(202, 202, 202);
+}
