@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Working Time Schedule</title>
     <script src="/../scripts/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/clear_css.css">
     <link rel="stylesheet" type="text/css" href="style/style.css">
     <script src="/../scripts/loadingPage.js"></script>
     <link rel="icon" type="image/x-icon" href="style/img/favicon.ico">
@@ -18,10 +19,31 @@
         <div class="leftPanelLogin">
             <div class="contactTutorialAndSupport">
                 <div class="contactUS box1">
+                    <div class="lpl-ctas-header">DO YOU NEED HELP?</div>
+                    <div class="lpl-ctas-content">
+                    Contact us in a convenient way.
+                    You can do this by e-mail or by sending a form
+                    </div>
+                    <div class="lpl-ctas-btns">
+                        <div class="btn-mail btn-1"><a href="#mail">MAIL</a></div>
+                        <div class="btn-form btn-1"><a href="#form">FORM</a></div>
+                    </div>
                 </div>
                 <div class="tutorial box1">
+                    <div class="lpl-ctas-header">BEFORE YOU START</div>
+                    <div class="lpl-ctas-content">
+                    Check the operating instructions provided by our experts
+                    </div>
+                    <div class="lpl-ctas-btns">
+                        <div class="btn-tutorial btn-1"><a href="#mail">INSTRUCTION</a></div>
+                    </div>
                 </div>
                 <div class="supportUS box1">
+                    <div class="lpl-ctas-header">DO YOU LIKE THIS PROJECT?</div>
+                    <div class="lpl-ctas-content">See our official Instagram profile</div>
+                    <div class="lpl-ctas-btns">
+                        <div class="btn-instagram btn-1"><a href="#mail">INSTAGRAM</a></div>
+                    </div>
                 </div>
             </div>
             <div class="logoAndAbout">

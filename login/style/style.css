@@ -1,3 +1,16 @@
+@font-face {
+    font-family: Roboto-Bold;
+    src: url("fonts/Roboto-Bold.ttf");
+}
+@font-face {
+    font-family: Roboto-Regular;
+    src: url("fonts/Roboto-Regular.ttf");
+}
+@keyframes btn1-anim {
+    from{background-color: #0A85ED;}
+    to{background-color: #195f99;}
+    
+}
 *{
     margin:0;
     padding:0;
@@ -48,8 +61,86 @@ body{
     height: 22%;
     background-color: rgb(255, 255, 255);
     border-radius: 1vw;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2%;
+    box-sizing: border-box;
+}
+.lpl-ctas-header{
+    /* background-color: brown; */
+    width: 100%;
+    height: 20%;
+    background-image: url("img/icon2.png");
+    background-repeat: no-repeat;
+    background-position-y: 0.2vh;
+    background-position-x: 4%;
+    background-size: 7% 85%;
+    padding-left: 12%;
+    padding-top: 2%;
+    box-sizing: border-box;
+    color: #0A85ED;
+    font-family: Roboto-Bold;
+    font-size: 0.8vw;
+}
+.lpl-ctas-content{
+    /* background-color: aqua; */
+    width: 100%;
+    height: 40%;
+    font-family: Roboto-Regular;
+    box-sizing: border-box;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 4%;
+    font-size: 0.7vw;
+}
+.lpl-ctas-btns{
+    /* background-color: blueviolet; */
+    width: 100%;
+    height: 26%;
+    box-sizing: border-box;
+    display: flex;
+    padding-left: 4%;
+    gap: 4%;
 }
 
+.btn-1{
+    background-color: #0A85ED;
+    border-radius: 1vw;
+    color: white;
+    font-family: Roboto-Bold;
+    text-align: center;
+}
+.btn-1:hover{
+    animation: btn1-anim 1s;
+}
+.btn-1 a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color:white;
+    text-decoration: none;
+    font-size: 0.7vw;
+}
+.btn-mail{
+    width: 40%;
+    height: 100%;
+}
+.btn-form{
+    width: 40%;
+    height: 100%;
+}
+.btn-tutorial{
+    width: 60%;
+    height: 100%;
+    margin-left: 13%;
+}
+.btn-instagram{
+    width: 60%;
+    height: 100%;
+    margin-left: 13%;
+}
 
 /* RIGHT PANEL LOGIN */
 .rightPanelLogin{
