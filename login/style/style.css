@@ -11,9 +11,17 @@
     to{background-color: #195f99;}
     
 }
+@keyframes border-inp {
+    from{border-color: #caccce;}
+    to{border-color: #0A85ED;}
+}
+
 *{
     margin:0;
     padding:0;
+}
+input{
+    all:unset;
 }
 body, html{
     height: 100%;
@@ -27,7 +35,7 @@ body{
     flex-direction: column;
     align-items: center;
 }
-/* LOGIN BOARD */
+/* LOGIN BOARD____________________________________________________________________________ */
 .loginBoard{
     Width: 70vw;
     height: 85vh;
@@ -35,7 +43,7 @@ body{
     border-radius: 1vw;
     display: flex;
 }
-/* LEFT PANEL LOGIN */
+/* LEFT PANEL LOGIN_______________________________________________________________________ */
 .leftPanelLogin{
     border-bottom-left-radius: 1vw;
     border-top-left-radius: 1vw;
@@ -109,9 +117,12 @@ body{
     color: white;
     font-family: Roboto-Bold;
     text-align: center;
+    text-transform: uppercase;
+    height: 3.8vh;
+    font-size: 0.7vw;
 }
 .btn-1:hover{
-    animation: btn1-anim 1s;
+    animation: btn1-anim 1s forwards;
 }
 .btn-1 a{
     display: flex;
@@ -125,28 +136,183 @@ body{
 }
 .btn-mail{
     width: 40%;
-    height: 100%;
 }
 .btn-form{
     width: 40%;
-    height: 100%;
 }
 .btn-tutorial{
     width: 60%;
-    height: 100%;
     margin-left: 13%;
 }
 .btn-instagram{
     width: 60%;
-    height: 100%;
     margin-left: 13%;
 }
 
-/* RIGHT PANEL LOGIN */
+/* RIGHT PANEL LOGIN _______________________________________________________________________*/
 .rightPanelLogin{
     background-color: rgb(255, 255, 255);
     border-radius: 1vw;
     height: 100%;
     width: 35%;
     box-shadow: -0.5vw 0 2vw rgb(202, 202, 202);
+    padding-top: 4%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+/* CHANGE LANGUAGE */
+.changeLanguage{
+    display: flex;
+    width: 100%;
+    height: 5%;
+    font-family: Roboto-Bold;
+    /* background-color: red; */
+    gap: 1%;
+    align-items: flex-end;
+    justify-content: end;
+    box-sizing: border-box;
+    padding-right: 12%;
+    font-size: 0.8vw;
+}
+.eng-lang, .pl-lang{
+    cursor: pointer;
+}
+.helloText{
+    /* background-color: aqua; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3%;
+    height: 7%;
+    margin-top: 30%;
+    box-sizing: border-box;
+    padding-left: 12%;
+    color: #212529;
+}
+.helloText h2{
+    background-image: url("img/icon3.png");
+    background-repeat: no-repeat;
+    background-position-y: 0.2vh;
+    background-size: 1vw 1vw;
+    height: 40%;
+    font-family: Roboto-Bold;
+    box-sizing: border-box;
+    padding-left: 7%;
+    font-size: 1.2vw;
+}
+.helloText p{
+    font-family: Roboto-Regular;
+    font-size: 0.8vw;
+}
+.login-form{
+    /* background-color: orange; */
+    width: 100%;
+    height: 40%;
+
+
+}
+.form-1{
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+    width: 100%;
+    height: 70%;
+    /* background-color: green; */
+    box-sizing: border-box;
+    padding-left: 12%;
+    padding-right: 12%;
+    font-family: Roboto-Regular;
+}
+.fontform{
+    font-family: Roboto-Bold;
+    margin-top: 1.5%;
+    font-size: 0.8vw;
+    color: #0A85ED;
+}
+.form-1 p{
+    font-size: 0.6vw;
+}
+.form-1 a{
+    text-decoration: none;
+    color: #0A85ED;
+}
+#usrlogin{
+    background-color: white;
+    height: 3.8vh;
+    border-radius: 0.7vw;
+    border: 0.1vw #caccce solid;
+    font-size: 0.7vw;
+    font-family: Roboto-Regular;
+    box-sizing: border-box;
+    padding-left: 1vw;
+}
+#usrlogin::placeholder{
+    color: #979797;
+}
+#usrpass{
+    background-color: white;
+    height: 3.8vh;
+    width: 17vw;
+    border-bottom-left-radius: 0.7vw;
+    border-top-left-radius: 0.7vw;
+    border-top: 0.1vw #caccce solid;
+    border-bottom: 0.1vw #caccce solid;
+    border-left: 0.1vw #caccce solid;
+    font-size: 0.7vw;
+    box-sizing: border-box;
+    padding-left: 1vw;
+}
+#usrpass:focus{
+    animation: border-inp 2s forwards;
+}
+#usrpass:focus + .showPass{
+    animation: border-inp 2s forwards;
+}
+#usrpass::placeholder{
+    background-image: url("img/icon4.png");
+    background-repeat: no-repeat;
+    background-position-x: 1vw;
+    background-size: 0.6vw 0.8vw;
+    background-position-y: 1vh;
+    color: #979797;
+}
+.passwo{
+    display: flex;
+    flex-direction: row;
+}
+.showPass{
+    border-top: 0.1vw #caccce solid;
+    border-bottom: 0.1vw #caccce solid;
+    border-right: 0.1vw #caccce solid;
+    width: 2vw;
+    height: 3.6vh;
+    top:-20vh;
+    background-image: url("img/Icon5.png");
+    background-repeat: no-repeat;
+    border-bottom-right-radius: 0.7vw;
+    border-top-right-radius: 0.7vw;
+    background-position-y: 0.7vh;
+}
+.form-1 input[type=text]:focus{
+    animation: border-inp 2s forwards;
+}
+.form-1 input[type=submit]{
+    cursor: pointer;
+}
+.usub{
+    margin-top: 3%;
+}
+.copyright{
+    width: 100%;
+    height: 20%;
+    /* background-color: yellow; */
+    color: #9f9fa0;
+    font-size: 0.6vw;
+    font-family: Roboto-Regular;
+    box-sizing: border-box;
+    padding-left: 12%;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 3%;
 }
