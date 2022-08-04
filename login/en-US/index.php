@@ -11,10 +11,23 @@
     <link rel="stylesheet" type="text/css" href="../style/clear_css.css">
     <link rel="stylesheet" type="text/css" href="../style/style.css">
     <script src="/../scripts/loadingPage.js"></script>
+    <script src="/../scripts/animation-login.js"></script>
+    <script src="/../scripts/showpass.js"></script>
+    <script>
+        function closeForm()
+        {
+            document.getElementById("closea").style.display = "none";
+            document.getElementById("passchanger").style.display = "none";
+        }
+
+
+    </script>
     <link rel="icon" type="image/x-icon" href="../style/img/favicon.ico">
 </head>
 <body>
-    <iframe src="loading.html" id="loading" style="position: absolute; width: 100vw; height: 100vh; margin:0;"></iframe>
+    <iframe src="loading.html" id="loading" style="position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"></iframe>
+    <div id="closea" onclick="closeForm()"></div>
+
     <div class="loginBoard">
         <div class="leftPanelLogin">
             <div class="contactTutorialAndSupport">
@@ -25,7 +38,7 @@
                     You can do this by e-mail or by sending a form
                     </div>
                     <div class="lpl-ctas-btns">
-                        <div class="btn-mail btn-1"><a href="#mail">MAIL</a></div>
+                        <div class="btn-mail btn-1"><a href="mailto:burskiadamwork@gmail.com">MAIL</a></div>
                         <div class="btn-form btn-1"><a href="#form">FORM</a></div>
                     </div>
                 </div>
@@ -35,14 +48,14 @@
                     Check the operating instructions provided by our experts
                     </div>
                     <div class="lpl-ctas-btns">
-                        <div class="btn-tutorial btn-1"><a href="#mail">INSTRUCTION</a></div>
+                        <div class="btn-tutorial btn-1"><a href="./instruction.pdf" target="_blank" rel="noopener noreferrer">INSTRUCTION</a></div>
                     </div>
                 </div>
                 <div class="supportUS box1">
                     <div class="lpl-ctas-header">DO YOU LIKE THIS PROJECT?</div>
                     <div class="lpl-ctas-content">See our official Instagram profile</div>
                     <div class="lpl-ctas-btns">
-                        <div class="btn-instagram btn-1"><a href="#mail">INSTAGRAM</a></div>
+                        <div class="btn-instagram btn-1"><a href="https://www.instagram.com/yellow.minds.angel/?hl=en" target="_blank" rel="noopener noreferrer">INSTAGRAM</a></div>
                     </div>
                 </div>
             </div>
@@ -68,22 +81,20 @@
                         <input type="password" id="usrpass" name="usrpass" placeholder="      PASSWORD"/>
                         <div id="showp" class="showPass" onmousedown="showpass()" onmouseup="hidepass()"></div>
                     </div>
-                    <p><a href="#forgotpass">Forgot password?</a></p>
+                    <p><a onclick="document.getElementById('passchanger').style.display = 'flex';document.getElementById('closea').style.display = 'flex';" style="cursor:pointer;">Forgot password?</a></p>
                     <input class="usub btn-1" type="submit" value="Log in"/>
                 </form>       
             </div>
-            <script>
-                function showpass(){
-                    document.getElementById('showp').style.backgroundImage = 'url("../style/img/Icon6.png")';
-                    document.getElementById('usrpass').type = 'text';
-                }
-                function hidepass(){
-                    document.getElementById('showp').style.backgroundImage = 'url("../style/img/Icon5.png")';
-                    document.getElementById('usrpass').type = 'password';
-                }
-            </script>
             <div class="copyright">© 2022 | PIESIOSPACE CORPORATION. ALL RIGHTS RESERVED</div>
         </div>
     </div>
+    <div class="pong" id="pong"></div>
+    <div class="pong" id="pong2"></div>
+    <div class="pong" id="pong3"></div>
+    <div id="handguy"></div>
+    <div id="dotguy"></div>
+    <iframe src="/../app/RequestToChangePassword.php" id="passchanger" style=" display: none; position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"</iframe>
+    
 </body>
+
 </html>
