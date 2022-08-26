@@ -1,15 +1,15 @@
 <?php
 
-        $cipher = "aes-256-cbc"; 
-        $encryption_key = "h^frdd#21!!cdw";
-        $iv_size = openssl_cipher_iv_length($cipher);
-        $iv = 'dsadadas8f3ed6ft'; 
+    require "Encrypt.php";
     if(isset($_GET['uid']) && isset($_GET['d'])) //+ data wygaśniecia do sprawdzenia 
     {
+        $cryptedEvaluationDate = $_GET['d'];
+        $cryptedUserIdentifier = $_GET['uid'];
+        $cipher = new Encrypt();
         //sprawdzenie daty wygaśniecia 
-        if(openssl_decrypt(str_replace("U002B","+",str_replace("U2215","/",str_replace("U003D","=",htmlentities($_GET['d'], ENT_QUOTES,"UTF-8")))),$cipher, $encryption_key, 0, $iv) >= strtotime("now")){
+        if($cipher->decryptString($cryptedEvaluationDate) >= strtotime("now")){
             
-            $user_id = openssl_decrypt(str_replace("U002B","+",str_replace("U2215","/",str_replace("U003D","=",htmlentities($_GET['uid'], ENT_QUOTES,"UTF-8")))),$cipher, $encryption_key, 0, $iv);
+            $user_id = $cipher->decryptString();
             echo '
             <form method="post" action="ChangePasswordForm.php">
                 <input type="text" name="newpass" placeholder="insert new password" /><br>

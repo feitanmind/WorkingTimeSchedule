@@ -20,10 +20,10 @@ class Encrypt
     //need a test
     function encryptString($stringToEncrypt)
     {
-        $cipher = "aes-256-cbc"; 
-        $encryption_key = "h^frdd#21!!cdw";
-        $iv_size = openssl_cipher_iv_length($cipher);
-        $iv = 'dsadadas8f3ed6ft'; 
+        $cipher = $this -> cipherAES[0];
+        $encryption_key = $this -> cipherAES[1];
+        $iv_size = $this -> cipherAES[2];
+        $iv = $this->cipherAES[3]; 
         $encryptedData = openssl_encrypt($stringToEncrypt, $cipher, $encryption_key, 0, $iv); 
         $encryptedData = str_replace("+","U002B",
                          str_replace("/","U2215",
@@ -35,10 +35,10 @@ class Encrypt
     //need a test
     function decryptString($stringToDecrypt)
     {
-        $cipher = "aes-256-cbc"; 
-        $encryption_key = "h^frdd#21!!cdw";
-        $iv_size = openssl_cipher_iv_length($cipher);
-        $iv = 'dsadadas8f3ed6ft'; 
+        $cipher = $this -> cipherAES[0];
+        $encryption_key = $this -> cipherAES[1];
+        $iv_size = $this -> cipherAES[2];
+        $iv = $this->cipherAES[3]; 
         $decryptedData = openssl_decrypt(
                          str_replace("U002B","+",
                          str_replace("U2215","/",
