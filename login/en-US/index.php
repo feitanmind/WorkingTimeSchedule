@@ -93,7 +93,7 @@
     <div class="pong" id="pong3"></div>
     <div id="handguy"></div>
     <div id="dotguy"></div>
-    <iframe src="/../app/RequestToChangePassword.php" id="passchanger" style=" display: none; position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"</iframe>
+    <iframe src="/../app/RequestToChangePassword.php" id="passchanger" style=" display: none; position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"></iframe>
     
 </body>
 

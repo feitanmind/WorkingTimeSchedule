@@ -367,8 +367,10 @@ body{
     z-index:3;
     width: 2vw;
     height: 2vw;
-    background-color: aqua;
-    top: 29vh;
+    background-image: url("img/cross.png");
+    background-size:cover;
+    border-radius: 1vw;
+    top: 40.5vh;
     left: 60vw;
     cursor: pointer;
 }

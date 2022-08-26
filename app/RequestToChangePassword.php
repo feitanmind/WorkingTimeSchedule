@@ -10,26 +10,12 @@
 </head>
 <body>
 <?php 
-require "EmailNotification.php";
-date_default_timezone_set('America/Los_Angeles');
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-        if(isset($_POST['umail']))
-        {
-            $usrMail = $_POST['umail'];
-            $sendRecover = new EmailNotification;
-            $sendRecover->recoverPass($usrMail);
-            if($sendRecover == true)
-            {
-                echo "Good Job!";
-            }else{
-                echo "NONE";
-            }
-        }
-
-
-    ?>
+    require "EmailNotification.php";
+    date_default_timezone_set('America/Los_Angeles');
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+?>
     <div class="pass-changer">
             <h1>Forgot password?</h1>        
         <form method="post" action="../app/RequestToChangePassword.php">
@@ -37,6 +23,35 @@ error_reporting(E_ALL);
             <input type="text" name="umail" placeholder="INSERT YOUR EMAIL"/>
             <input type="submit" value="Send mail with recover"/>
         </form>
+        <div id="returnInfo"></div>
+        <?php
+            if(isset($_POST['umail']))
+            {
+                $usrMail = $_POST['umail'];
+                $sendRecover = new EmailNotification;
+                $sendOrNot = $sendRecover->recoverPass($usrMail);
+                if($sendOrNot == true)
+                {
+                    echo '
+                        <script>let info1 = document.getElementById("returnInfo");
+                            info1.innerHTML = "<p>Mail was send</p>";
+                            info1.style.color = "green";
+                        </script>
+                    ';
+                }else{
+                    echo '
+                        <script>
+                            let info1 = document.getElementById("returnInfo");
+                            info1.innerHTML = "<p>There is no user with this e-mail</p>";
+                            info1.style.color = "red";
+                        </script>
+                    ';
+                }
+            }
+
+
+        ?>
+        
     </div>
 </body>
 </html>
