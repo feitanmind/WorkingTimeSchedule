@@ -1,138 +1,98 @@
 <?php
-namespace App;
+    namespace App;
     require "Encrypt.php";
-    if(isset($_GET['uid']) && isset($_GET['d'])) //+ data wygaśniecia do sprawdzenia 
+    require "ConnectToDatabase.php";
+?>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style/ChangePasswordStyle.css"/>
+</head>
+<body>
+<?php
+    //Sprawdzenie czy zostały przekazane dane (zaszyfrowane id użytkownika oraz zaszyfrowana data wygaśniecia)
+    if(isset($_GET['uid']) && isset($_GET['d']))
     {
         $cipher = new Encrypt();
         $cryptedUserIdentifier = $_GET['uid'];
         $cryptedEvaluationDate = $_GET['d'];      
-        //sprawdzenie daty wygaśniecia 
+        //sprawdzenie daty wygaśniecia strony 
         if($cipher->decryptString($cryptedEvaluationDate) >= strtotime("now")){
             
             $user_id = $cipher->decryptString($cryptedUserIdentifier);
             echo '
-            <link rel="stylesheet" type="text/css" href="style/ChangePasswordStyle.css"/>
+            
             <script src="/../scripts/showpass.js"></script>
-            <script>
-
-
-            </script>
             <form class="ChangePasswordPosition" id="form1" method="post" action="ChangePasswordForm.php">
                 <h2>Change your password</h2>
                 <input type="password" name="newpass" id="newpass" onfocusout="checkPasswordsAreSameFieldOne()" placeholder="insert new password" /><br>
                 <input type="password" name="confpass" id="confpass" onfocusout="checkPasswordsAreSameFieldTwo()" placeholder="confirm new password" /><br>
+                <input type="text" name="uid" value="'.$user_id.'" style="display: none;"/>
                 <div style="height: 1vh" id="info2">.</div>
                 <input type="submit" id="changePassSend" disabled="true" value="Change password"/>
                 
             </form>
-            
+            <script src="/../scripts/checkPasswordChange.js"></script>
             ';
-        }else{
-            echo "Strona wygasła";
         }
-               
-    }else{
-        if(isset($_POST['newpass']) && isset($_POST['confpass'])){
+        else
+        {
             echo '
-            <link rel="stylesheet" type="text/css" href="style/ChangePasswordStyle.css"/>
-            <body>
-            
-            <form id="form1"></form>
-            </body>
-            <script>
-                document.getElementById("form1").innerHTML="<h2>Zmieniono hasło</h2><p>Zostaniesz przeniesiony do strony logowania za:</p><h2 style=\"margin-left: 6vw; margin-top: 2vh; font-size: 4vw;\">10</h2>";
-                var reconnectCount = 10;
-                let rec = setInterval(() => {
-                    reconnectCount--;
-                    if(reconnectCount < 1)
-                    {
-                        document.location = "../";
-                    }
-                    else
-                    {
-                        document.getElementsByTagName("h2")[1].innerText = reconnectCount;
-                    }
-                     
-                }, 1000);
-
-            </script>
-            
+            <form class="ChangePasswordPosition" style="height: 8vh; background-color: id="form1">
+                <h2>Site expired...</h2>
+            </form>
+            <h2 style="margin-top: 5vh;">Redirecting to login site...</h2>
+            <h2 style="font-size: 10vw;">9</h2>
+            <script src="/scripts/countDownAndLog.js"></script>
             ';
-        }else{
+        }            
+    }
+    else
+    {
+        if(isset($_POST['newpass']) && isset($_POST['confpass']))
+        {
+            //Drugie sprawdzenie na wypadek obejścia skryptu JavaScript
+            if($_POST['newpass'] == $_POST['confpass'] && $_POST['uid'] != '') 
+            {
+                $uid = intval($_POST['uid']);
+                $cipher = new Encrypt();
+                $newPasswordForUser = $cipher->encryptString($_POST['newpass']);
+                $conn = new ConnectToDatabase;
+                $connAuth = $conn -> connChangePass();
+                $sqlUpdatePassword = "UPDATE users SET password='$newPasswordForUser' WHERE id = $uid;";
+                if($connAuth->query($sqlUpdatePassword) === TRUE)
+                {
+                    echo '
+                    <form class="ChangePasswordPosition" style="height: 8vh; background-color: rgba(82, 218, 54, 0.212);" id="form1">
+                        <h2>Password changed</h2>
+                    </form>
+                    <h2 style="margin-top: 5vh;">Redirecting to login site...</h2>
+                    <h2 style="font-size: 10vw;">9</h2>
+                    <script src="/scripts/countDownAndLog.js"></script>
+                    ';
+                }
+                else
+                {
+                    echo '
+                    <form class="ChangePasswordPosition" style="height: 8vh; background-color: rgba(177, 23, 23, 0.521);" id="form1">
+                        <h2>Error: Contact with Administrator</h2>
+                    </form>
+                    <h2 style="margin-top: 5vh;">Redirecting to login site...</h2>
+                    <h2 style="font-size: 10vw;">9</h2>
+                    <script src="/scripts/countDownAndLog.js"></script>
+                    ';
+                }
+            }
+            else
+            {
+                header("Location: ../");
+            }
+        }
+        else
+        {
             header("Location: ../");
         }
     }
-  
-
-
 ?>
-<script>
-    let check1 = 0;
-    let info2 = document.getElementById("info2");
-    let changePassSend = document.getElementById("changePassSend");
-    function checkPasswordsAreSameFieldTwo()
-        {
-            check1 = 1;
-            let field1 = document.getElementById("newpass");
-            let field2 = document.getElementById("confpass");
-            
-            
-            if(field1.value == field2.value)
-            {
-                changePassSend.disabled = false;
-                changePassSend.style.backgroundColor = "#0A85ED";
-                            field1.style.borderColor = "#caccce";
-                            field2.style.borderColor = "#caccce";
-                            field1.style.backgroundColor = "#fff";
-                            field2.style.backgroundColor = "#fff";
-                            info2.innerHTML = " ";
-                            
-                        }
-                        else
-                        {
-                            changePassSend.disabled = true;
-                            changePassSend.style.backgroundColor = "gray";
-                            field1.style.borderColor = "red";
-                            field2.style.borderColor = "red";
-                            field1.style.backgroundColor = "rgba(255, 0, 0, 0.233)";
-                            field2.style.backgroundColor = "rgba(255, 0, 0, 0.233)";
-                            info2.innerHTML = "Hasła nie są takie same!";
-                            info2.style.color = "red";
-                        }
-
-                    }
-                    
-    function checkPasswordsAreSameFieldOne()
-                {
-                    if( check1 != 0 )
-                    {
-                        field1 = document.getElementById("newpass");
-                        field2 = document.getElementById("confpass");
-                        if(field1.value == field2.value)
-                        {
-                            changePassSend.disabled = false;
-                            changePassSend.style.backgroundColor = "#0A85ED";
-                            field1.style.borderColor = "#caccce";
-                            field2.style.borderColor = "#caccce";
-                            field1.style.backgroundColor = "#fff";
-                            field2.style.backgroundColor = "#fff";
-                            info2.style.innerHTML = " ";
-
-                        }
-                        else
-                        {
-                            changePassSend.disabled = true;
-                            changePassSend.style.backgroundColor = "gray";
-                            field1.style.borderColor = "red";
-                            field2.style.borderColor = "red";
-                            field1.style.backgroundColor = "rgba(255, 0, 0, 0.233)";
-                            field2.style.backgroundColor = "rgba(255, 0, 0, 0.233)";
-                            info2.style.color = "red";
-                            info2.innerHTML = "Hasła nie są takie same!";
-                        }
-                    }
-
-                    
-                }
-                
-</script>
+</body>
+</html>

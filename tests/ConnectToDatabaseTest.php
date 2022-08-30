@@ -1,8 +1,7 @@
 <?php
-
 class ConnectToDatabaseTest extends \PHPUnit\Framework\TestCase 
 {
-    public function testConnectToDbWithCorrectCredentials()
+    public function test_ShouldReturnTrueWhenPassedCorrectCredentials()
     {
         $userCredentials = array("localhost","testowy","testowy","app");
         $conn = new App\ConnectToDatabase;
@@ -11,7 +10,7 @@ class ConnectToDatabaseTest extends \PHPUnit\Framework\TestCase
         $this -> assertEquals(true, $ifconnected);
     }
    
-    public function testConnectToDbWhithoutCorrectCredentials()
+    public function test_ShouldThrownExceptionWhenPassedBadUserCredentials()
     {
         $badUserCredentials = array("localhost","bad_user","bad_password","app");
         $conn = new App\ConnectToDatabase;
@@ -20,6 +19,15 @@ class ConnectToDatabaseTest extends \PHPUnit\Framework\TestCase
         $ifconnected = $conn -> connectToDb($badUserCredentials[0],$badUserCredentials[1],$badUserCredentials[2],$badUserCredentials[3]);
         
         
+    }
+
+    public function test_ShouldReturnStringWhenFunctionWasInvoked()
+    {
+        $conn = new App\ConnectToDatabase;
+        $sql = $conn -> connChangePass();
+        $status = $sql->stat();
+        $this -> assertStringContainsString("Uptime", $status);
+        unset($conn); 
     }
 }
 
