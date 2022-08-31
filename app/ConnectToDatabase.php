@@ -13,11 +13,12 @@ class ConnectToDatabase
         }
         else
         {
-            return true;
+            return array($mysqli,true);
         }
     }
 
-    public function connChangePass()
+
+    public function connAdminPass()
     {
         $mysqli = new \MySQLi('localhost', 'testowy1','testowy1','app_comercial');
         if($mysqli->connect_errno)

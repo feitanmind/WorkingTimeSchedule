@@ -79,6 +79,7 @@ class ComposerStaticInitceab3b4ba106c32c79d1eadf40fa6139
         'App\\DaysOfTheWeek' => __DIR__ . '/../..' . '/app/DaysOfTheWeek.php',
         'App\\EmailNotification' => __DIR__ . '/../..' . '/app/EmailNotification.php',
         'App\\Encrypt' => __DIR__ . '/../..' . '/app/Encrypt.php',
+        'App\\LoginToAccount' => __DIR__ . '/../..' . '/app/LoginToAccount.php',
         'App\\Mailer' => __DIR__ . '/../..' . '/app/Mailer.php',
         'App\\Month' => __DIR__ . '/../..' . '/app/Month.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',

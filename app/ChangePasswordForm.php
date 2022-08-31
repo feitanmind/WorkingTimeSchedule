@@ -6,6 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <title>Changing password- Working Time Shcedule</title>
     <link rel="stylesheet" type="text/css" href="style/ChangePasswordStyle.css"/>
 </head>
 <body>

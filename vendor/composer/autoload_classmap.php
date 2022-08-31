@@ -10,6 +10,7 @@ return array(
     'App\\DaysOfTheWeek' => $baseDir . '/app/DaysOfTheWeek.php',
     'App\\EmailNotification' => $baseDir . '/app/EmailNotification.php',
     'App\\Encrypt' => $baseDir . '/app/Encrypt.php',
+    'App\\LoginToAccount' => $baseDir . '/app/LoginToAccount.php',
     'App\\Mailer' => $baseDir . '/app/Mailer.php',
     'App\\Month' => $baseDir . '/app/Month.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',

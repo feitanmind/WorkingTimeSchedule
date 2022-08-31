@@ -1,6 +1,20 @@
+<?php namespace App;session_start();?>
 <!DOCTYPE html>
 <html>
 <head>
+    <?php 
+    date_default_timezone_set('America/Los_Angeles');
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+ 
+   
+    require "/var/www/test/public_html/app/Encrypt.php";
+    require "/var/www/test/public_html/app/ConnectToDatabase.php";
+    require "/var/www/test/public_html/app/LoginToAccount.php";
+    $log = new LoginToAccount;
+    if(isset($_SESSION['header'])) header($_SESSION['header']);
+    ?>
     <meta charset="UTF-8">
     <meta name="description" content="Application for working time schedule">
     <meta name="author" content="Adam Burski">
@@ -13,22 +27,16 @@
     <script src="/../scripts/loadingPage.js"></script>
     <script src="/../scripts/animation-login.js"></script>
     <script src="/../scripts/showpass.js"></script>
-    <script>
-        function closeForm()
-        {
-            document.getElementById("closea").style.display = "none";
-            document.getElementById("passchanger").style.display = "none";
-        }
-
-
-    </script>
+    <script src="/../scripts/closeRecoverPassForm.js"></script>
     <link rel="icon" type="image/x-icon" href="../style/img/favicon.ico">
+
 </head>
 <body>
     <iframe src="loading.html" id="loading" style="position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"></iframe>
     <div id="closea" onclick="closeForm()"></div>
 
     <div class="loginBoard">
+        <!-- LEFT PANEL -->
         <div class="leftPanelLogin">
             <div class="contactTutorialAndSupport">
                 <div class="contactUS box1">
@@ -62,6 +70,7 @@
             <div class="logoAndAbout">
             </div>
         </div>
+        <!-- RIGHT PANEL -->
         <div class="rightPanelLogin">
             <div class="changeLanguage">
                 <div class="pl-lang" onclick="document.location = '../pl-PL/'">PL</div>
@@ -73,7 +82,7 @@
                 <p>Log in to your account</p>
             </div>
             <div class="login-form">
-                <form class="form-1">
+                <form method="post" class="form-1">
                     <div class="ulog fontform">LOGIN</div>
                     <input type="text" name="usrlogin" id="usrlogin" placeholder="LOGIN OR EMAIL"/>
                     <div class="upass fontform">PASSWORD</div>
@@ -96,5 +105,4 @@
     <iframe src="/../app/RequestToChangePassword.php" id="passchanger" style=" display: none; position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"></iframe>
     
 </body>
-
 </html>

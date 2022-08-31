@@ -3,7 +3,7 @@
     {
         public function testSendingMail()
         {
-            $this->markTestSkipped('Sending mails every test');
+            // $this->markTestSkipped('Sending mails every test');
             $nameOfClient = "John Doe";
             $mailOfClient = "burskiadamwork@gmail.com";
             $mailer = new App\Mailer;
