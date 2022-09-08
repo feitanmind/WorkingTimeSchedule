@@ -1,4 +1,87 @@
+@font-face {
+    font-family: Roboto-Bold;
+    src: url("fonts/Roboto-Bold.ttf");
+}
+@font-face {
+    font-family: Roboto-Regular;
+    src: url("fonts/Roboto-Regular.ttf");
+}
+
 *{
     margin: 0;
     padding: 0;
+}
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    background-color: rgb(190, 190, 190);
+    font-family: Roboto-Regular;
+}
+
+/* USER LEFT PANEL */
+.userLeftPanel
+{
+    height: 100%;
+    width: 15%;
+    background-color: #212529;
+    color:white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.userLeftPanel .userLogout
+{
+    width: 100%;
+    height: 7vh;
+    font-size: 0.8vw;
+}
+.userLeftPanel .userLogout a{
+    text-decoration: none;
+    color: white;
+    font-size: 0.8vw;
+}
+.timeToLogout
+{
+    display: flex;
+    gap: 0.4vw;
+}
+
+.userLeftPanel .userData{
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.userLeftPanel .userData h2{
+    margin-top: 5%;
+    font-family: Roboto-Bold;
+    font-size: 1.2vw;
+}
+.userLeftPanel .userData p{
+    text-transform: capitalize;
+    font-size: 0.8vw;
+}
+
+.userLeftPanel img{
+    width: 10vw;
+    height: 10vw;
+    border-radius: 50%;
+}
+
+/* CALENDAR CENTER PANEL */
+.calendarCenterPanel
+{
+    background-color: azure;
+    height: 100%;
+    width: 67%;
+}
+
+/* PANEL RIGHT  */
+.rightStatsPanel
+{
+    background-image: url("img/panelRight.png");
+    height: 100%;
+    width: 18%;
+    background-size: cover;
 }

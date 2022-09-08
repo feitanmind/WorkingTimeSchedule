@@ -1,6 +1,6 @@
 <?php
 namespace App;
-require "ConnectToDatabase.php";
+
     class User
     {
         public $name;
@@ -81,7 +81,8 @@ require "ConnectToDatabase.php";
         // Zwraca dane użytkownika 
         public function getUserData()
         {
-            $userCredentials = '<div id="nameAndSurname">'.$this->name. ' '. $this->surname. '</div>'
+            $userCredentials = '<img src="data:image/png;base64,'.base64_encode($this->avatar).'"/>'
+            .'<h2>'.$this->name. ' '. $this->surname. '</h2>'
             .'<p>UserID: '.$this->user_id.'</p>'
             .'<p>Department: '.$this->department.'</p>'
             .'<p>Role: '.$this->role.'</p>'
