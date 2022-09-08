@@ -1,6 +1,6 @@
 <?php
 session_start();
-class LoginToAccountTest extends \PHPUnit\Framework\TestCase
+class LoginTest extends \PHPUnit\Framework\TestCase
 {
     public function test_shouldReturnTrueWhenCorrectCredentialsPassedByForm()
     {
@@ -9,7 +9,7 @@ class LoginToAccountTest extends \PHPUnit\Framework\TestCase
         $userPass = 'niemahasla';
         $_POST['usrlogin'] = $userLog;
         $_POST['usrpass'] = $userPass;
-        $login = new App\LoginToAccount;
+        $login = new App\Login;
         $this->assertEquals(true,$_SESSION['log']);
     }
     public function test_ShouldReturnReturnInformationWithError()
@@ -19,7 +19,7 @@ class LoginToAccountTest extends \PHPUnit\Framework\TestCase
         $userPass = 'n888jy7';
         $_POST['usrlogin'] = $userLog;
         $_POST['usrpass'] = $userPass;
-        $login = new App\LoginToAccount;
+        $login = new App\Login;
         $this->assertEquals('Cannot find user',$_SESSION['warning1']);
     }
 }

@@ -239,6 +239,7 @@ body{
     color: #0A85ED;
 }
 #usrlogin{
+    color: black;
     background-color: white;
     height: 3.8vh;
     border-radius: 0.7vw;
@@ -252,6 +253,7 @@ body{
     color: #979797;
 }
 #usrpass{
+    color: black;
     background-color: white;
     height: 3.8vh;
     width: 17vw;
@@ -297,6 +299,7 @@ body{
 }
 .form-1 input[type=text]:focus{
     animation: border-inp 2s forwards;
+    
 }
 .form-1 input[type=submit]{
     cursor: pointer;
@@ -373,4 +376,10 @@ body{
     top: 40.5vh;
     left: 60vw;
     cursor: pointer;
+}
+#warning1
+{
+    font-size: 0.7vw;
+    margin-top: 1vh;
+    color: red;
 }

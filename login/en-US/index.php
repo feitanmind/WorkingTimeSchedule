@@ -11,8 +11,8 @@
    
     require "/var/www/test/public_html/app/Encrypt.php";
     require "/var/www/test/public_html/app/ConnectToDatabase.php";
-    require "/var/www/test/public_html/app/LoginToAccount.php";
-    $log = new LoginToAccount;
+    require "/var/www/test/public_html/app/Login.php";
+    $log = new Login;
     if(isset($_SESSION['header'])) header($_SESSION['header']);
     ?>
     <meta charset="UTF-8">
@@ -84,14 +84,26 @@
             <div class="login-form">
                 <form method="post" class="form-1">
                     <div class="ulog fontform">LOGIN</div>
-                    <input type="text" name="usrlogin" id="usrlogin" placeholder="LOGIN OR EMAIL"/>
+                    <input type="text" autocomplete="off" name="usrlogin" id="usrlogin" placeholder="LOGIN OR EMAIL" />
                     <div class="upass fontform">PASSWORD</div>
                     <div class="passwo">
-                        <input type="password" id="usrpass" name="usrpass" placeholder="      PASSWORD"/>
+                        <input type="password" autocomplete="off" id="usrpass" name="usrpass" placeholder="      PASSWORD" onfocus="test()"/>
                         <div id="showp" class="showPass" onmousedown="showpass()" onmouseup="hidepass()"></div>
                     </div>
                     <p><a onclick="document.getElementById('passchanger').style.display = 'flex';document.getElementById('closea').style.display = 'flex';" style="cursor:pointer;">Forgot password?</a></p>
                     <input class="usub btn-1" type="submit" value="Log in"/>
+                    <div id="warning1">
+                    <?php 
+                        if(isset($_SESSION['warning1'])) echo $_SESSION['warning1'];
+
+                    ?>
+                    </div>
+                    <script>
+                        function test()
+                        {
+                            document.getElementById('warning1').innerHTML ='.'
+                        }
+                    </script>
                 </form>       
             </div>
             <div class="copyright">© 2022 | PIESIOSPACE CORPORATION. ALL RIGHTS RESERVED</div>

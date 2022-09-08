@@ -11,6 +11,7 @@
 </head>
 <body>
 <?php
+
     //Sprawdzenie czy zostały przekazane dane (zaszyfrowane id użytkownika oraz zaszyfrowana data wygaśniecia)
     if(isset($_GET['uid']) && isset($_GET['d']))
     {
@@ -56,13 +57,22 @@
             if($_POST['newpass'] == $_POST['confpass'] && $_POST['uid'] != '') 
             {
                 $uid = intval($_POST['uid']);
+                $newPasswordDecrypted = $_POST['newpass'];
                 $cipher = new Encrypt();
                 $newPasswordForUser = $cipher->encryptString($_POST['newpass']);
                 $conn = new ConnectToDatabase;
-                $connAuth = $conn -> connChangePass();
+                $connAuth = $conn -> connAdminPass();
+                //Change password in user field
                 $sqlUpdatePassword = "UPDATE users SET password='$newPasswordForUser' WHERE id = $uid;";
+
                 if($connAuth->query($sqlUpdatePassword) === TRUE)
                 {
+                    $findUsernameInDatabase = "SELECT login FROM users WHERE id = $uid";
+                    $resultSelectLogin = $connAuth->query($findUsernameInDatabase);
+                    $rowSelectLogin = $resultSelectLogin->fetch_assoc();
+
+                    $changePasswordForDatabaseSQL = "SET PASSWORD FOR '".$rowSelectLogin['login']."'@'localhost' = PASSWORD('".$newPasswordDecrypted."');";
+                    $resultSelectLogin = $connAuth->query($changePasswordForDatabaseSQL);
                     echo '
                     <form class="ChangePasswordPosition" style="height: 8vh; background-color: rgba(82, 218, 54, 0.212);" id="form1">
                         <h2>Password changed</h2>

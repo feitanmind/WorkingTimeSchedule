@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-class LoginToAccount
+class Login
 {
     
     function __construct()
@@ -27,7 +27,7 @@ class LoginToAccount
             $userPassword = $cipher->encryptString($_POST['usrpass']);
 
             $mysqliAdm = $conn -> connAdminPass();
-            $searchUserInDb = "SELECT users.login, users.password, user_data.email FROM users INNER JOIN user_data ON users.id = user_data.usr_id WHERE users.login = '$userLogin' OR user_data.email = '$userLogin'";
+            $searchUserInDb = "SELECT users.id, users.login, users.password, users.email FROM users WHERE users.login = '$userLogin' OR users.email = '$userLogin'";
             $result = $mysqliAdm ->query($searchUserInDb);
             if($result->num_rows > 0)
             {
@@ -35,6 +35,7 @@ class LoginToAccount
                 if($row['password'] == $userPassword)
                 {
                     $_SESSION['log'] = true;
+                    $_SESSION['user_id'] = $row['id'];
                     $_SESSION['username'] = $row['login'];
                     $_SESSION['password'] = $userPassword;
                     unset($_SESSION['warning1']);
