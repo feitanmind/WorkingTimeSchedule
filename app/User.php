@@ -13,6 +13,7 @@ namespace App;
         public $user_id;
         public $custom_id;
         public $full_time;
+        public $dep_id;
 
         // wyciąganie nazwy z tabeli po id
         static private function selectName($id, $tableName)
@@ -61,6 +62,7 @@ namespace App;
                 $this->user_id =                $row['id'];
                 $this->custom_id =              $row['custom_id'];
                 $this->full_time =              $row['full_time'];
+                $this->dep_id =                 $row['dep_id'];
                 $dep_id =                       $row['dep_id'];
                 $role_id =                      $row['role_id'];
 

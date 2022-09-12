@@ -18,7 +18,9 @@ body{
     background-color: rgb(190, 190, 190);
     font-family: Roboto-Regular;
 }
-
+input{
+    all:unset;
+}
 /* USER LEFT PANEL */
 .userLeftPanel
 {
@@ -68,13 +70,76 @@ body{
     height: 10vw;
     border-radius: 50%;
 }
+.button1{
+    background-color: #0A85ED;
+    width: 10vw;
+    height: 5vh;
+    font-size: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.3vw;
+    cursor: pointer;
+}
 
-/* CALENDAR CENTER PANEL */
-.calendarCenterPanel
+
+
+/* CENTER PANEL */
+.centerPanel
 {
     background-color: azure;
     height: 100%;
     width: 67%;
+}
+.centerPanel h2{
+    font-size: 2vw;
+}
+.addUser{
+    margin-top: 10vh;
+    margin-left: 10vw;
+    font-size: 0.8vw;
+}
+.addUser form{
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    gap: 1vh;
+    height: 55vh;
+    width: 40vw;
+    background-color: #d6d6d6;
+    padding: 1.5vw;
+}
+.addUser form p{
+    margin-top: 6vh;
+}
+.addUser input[type="text"]{
+    background-color: white;
+    width: 12vw;
+    height: 3vh;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+}
+.addUser input[type="submit"]{
+    color:white;
+    text-align: center;
+}
+.addUser select{
+    all: unset;
+}
+.addUser select{
+    width: 12vw;
+    height: 3vh;
+    background-color: white;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    font-size: 0.7vw;
+    
+}
+
+#userAvatarShow{
+    width: 7vw;
+    height: 7vw;
+    border-radius: 50%;
 }
 
 /* PANEL RIGHT  */

@@ -11,6 +11,7 @@ namespace App;
     private int $daysInMonth;
     private int $workingDays;
     private float $hoursToBeWorked;
+    private int $dep_id;
     private $nameOfMonths = array('January','February','March','April','May','June','July','August','September','October','November','December');
     
 
@@ -20,7 +21,7 @@ namespace App;
         $this->name = $this->getName();        
         $this->year = $year;
         $this->daysInMonth = cal_days_in_month(CAL_GREGORIAN,$numberInYear,$year);
-
+        $this->dep_id = $user->dep_id;
         //DATE in SQL = 1999-09-09
 
         
@@ -37,17 +38,48 @@ namespace App;
     //Funkcja sprawdzająca czy istnieje rekord zawierający tworzony miesiąc w bazie danych 
     public function checkMonthInDatabase()
     {
+        $month = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year));
+        $expire = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year+2));
+        $dep_id = $this->dep_id;
 
+        // fwrite(STDERR, print_r($expire, TRUE)); //Kontrolka do sprawdzania
+
+        $conn = new ConnectToDatabase;
+        $mysqliAdm = $conn -> connAdminPass();
+        $selectMonthInDB = "SELECT month, dep_id FROM month WHERE month = '$month' AND dep_id = $dep_id;";
+        $result = $mysqliAdm ->query($selectMonthInDB);
+
+        if($result->num_rows <= 0)
+        {
+            $result->free();
+            unset($conn);
+            return false;
+        }
+        else
+        {
+            $result->free();
+            unset($conn);
+            return true;
+        }
     }
     //Funkcja tworząca czysty miesiąc w bazie danych
     public function createMonthInDatabase()
     {
-        //Utwórz nowy miesiąc w bazie danych
-                    // Numer miesiąca 
-                    // Rok
-                    // Oddzial
-                    // Sprawdź liczbę dni
-                    // Dla każdego dnia ustaw wartość pustą jsona []
+        $month = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year));
+        $expire = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year+2));
+        $dep_id = $this->dep_id;
+        $conn = new ConnectToDatabase;
+        $mysqliAdm = $conn -> connAdminPass();
+
+        $createNewMonth = "INSERT INTO month (month,dep_id,days,expire) VALUES ('$month',$dep_id,'[]','$expire')";
+        if($mysqliAdm ->query($createNewMonth) === TRUE)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     //Funkcja rysująca miesiąc w postaci tabeli
