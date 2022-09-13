@@ -25,8 +25,9 @@ require "/var/www/test/public_html/app/User.php";
     <!-- SECTION __________________________LEFT USER PANEL -->
     <div class="userLeftPanel">
         <div class="userLogout">
+        <img src="style/img/logo.png"/>
             <a href="Logout.php">Logout</a><br>
-            <div class="timeToLogout"><p>Time to logout: </p><p>20min</p></div>
+            <div class="timeToLogout"><p>Time to logout:</p><p>20min</p></div>
         </div>
         
         <div class="userData">           
@@ -37,20 +38,23 @@ require "/var/www/test/public_html/app/User.php";
                 echo $user->getUserData();
             ?>
         </div>
-        <div class="button1 addUserButtonLeft">Add user</div>
+        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Calendar Mode</div>
+        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Simple Mode</div>
+        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Add user</div>
+        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Add shift</div>
     </div>
     <!-- SECTION __________________________CENTER PANEL -->
     <div class="centerPanel">
-        <div class="addUser">
+        <div class="addUser" id="addUser">
 
             <form method="post" class="formAdduser">
                 <h2>Add new user</h2>
-                Name: <input type="text" name="name"/>
-                Surname: <input type="text" name="surname"/>
-                Login: <input type="text" name="login"/>
-                Email: <input type="text" name="email"/>
-                CustomID: <input type="text" name="custom_id"/>
-                FullTime:   <select name="fulltime">
+                Name: <input type="text" name="addu_name"/>
+                Surname: <input type="text" name="addu_surname"/>
+                Login: <input type="text" name="addu_login"/>
+                Email: <input type="text" name="addu_email"/>
+                CustomID: <input type="text" name="addu_custom_id"/>
+                FullTime:   <select name="addu_fulltime">
                                 <option value="1">Full Time (1)</option>
                                 <option value="0.5">Half (1/2)</option>
                                 <option value="0.6">Three-Fifths (3/5)</option>
@@ -59,12 +63,12 @@ require "/var/www/test/public_html/app/User.php";
                         
                         <p>Avatar:</p>
                         <img id="userAvatarShow" src="style/img/user.png" alt="your image" />
-                            <input accept="image/*" type='file' id="userAvatar" />
+                            <input accept="image/*" type='file' id="addu_userAvatar" />
                             
                             <script>
                                 var changedAv = 0;
-                                userAvatar.onchange = evt => {
-                                const [file] = userAvatar.files
+                                addu_userAvatar.onchange = evt => {
+                                const [file] = addu_userAvatar.files
                                 if (file)
                                 {
                                     userAvatarShow.src = URL.createObjectURL(file);
@@ -90,9 +94,14 @@ require "/var/www/test/public_html/app/User.php";
                                 });
 
                             </script>
-                            
+                            Temporary password:
+                            <input type="password" name="password"/>
+
                             <input type="submit" value="Add user" class="button1"/>
             </form>
+        </div>
+
+        <div class="calendarMode" id="calendarMode">
         </div>
 
     </div>

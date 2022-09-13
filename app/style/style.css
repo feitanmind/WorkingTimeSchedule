@@ -38,6 +38,13 @@ input{
     height: 7vh;
     font-size: 0.8vw;
 }
+.userLeftPanel .userLogout img{
+    width: 2vw;
+    height: 2vw;
+    float: right;
+    margin-right: 1vw;
+    margin-top: 0.5vh;
+}
 .userLeftPanel .userLogout a{
     text-decoration: none;
     color: white;
@@ -80,6 +87,7 @@ input{
     align-items: center;
     border-radius: 0.3vw;
     cursor: pointer;
+    margin-top: 2vh;
 }
 
 
@@ -95,9 +103,13 @@ input{
     font-size: 2vw;
 }
 .addUser{
-    margin-top: 10vh;
-    margin-left: 10vw;
+    width: 34vw;
+    overflow: hidden;
+    margin-top: 15vh;
+    margin-left: 15vw;
     font-size: 0.8vw;
+    border-radius: 1vw;
+    display: none;
 }
 .addUser form{
     display: flex;
@@ -105,9 +117,10 @@ input{
     flex-wrap:wrap;
     gap: 1vh;
     height: 55vh;
-    width: 40vw;
+    width: 36vw;
     background-color: #d6d6d6;
     padding: 1.5vw;
+    border-radius: 1vw;
 }
 .addUser form p{
     margin-top: 6vh;
@@ -118,10 +131,20 @@ input{
     height: 3vh;
     border:0.1vw solid #0A85ED;
     border-radius: 1vw;
+    padding-left: 1vw;
 }
 .addUser input[type="submit"]{
     color:white;
     text-align: center;
+
+}
+.addUser input[type="password"]{
+    background-color: white;
+    width: 12vw;
+    height: 3vh;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    padding-left: 1vw;
 }
 .addUser select{
     all: unset;
@@ -133,7 +156,7 @@ input{
     border:0.1vw solid #0A85ED;
     border-radius: 1vw;
     font-size: 0.7vw;
-    
+    padding-left: 1vw;
 }
 
 #userAvatarShow{
