@@ -165,6 +165,45 @@ input{
     border-radius: 50%;
 }
 
+/* Calendar */
+.calendarMode{
+    font-size: 0.8vw;
+    display: none;
+    /* background-color: aqua; */
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.calendarMode table{
+    all:unset;
+}
+.calendarMode td{
+    width: 9vw;
+}
+.mainCalendar{
+    display: flex;
+    flex-wrap:wrap;
+    width: 95%;
+    height: 73%;
+    /* margin-left: 2vw; */
+}
+.dayOfTheWeek{
+    background-color: #fff;
+    width: 9vw;
+    height: 12vh;
+    outline: 0.15vw solid #969696;
+}
+.outDay{
+    background-color: #cacaca;
+}
+.printCalendar{
+    align-self: flex-end;
+    margin-right: 2vw;
+    color: white;
+}
+
 /* PANEL RIGHT  */
 .rightStatsPanel
 {

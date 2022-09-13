@@ -4,7 +4,7 @@ namespace App;
  class Month
  {
     private const NUMBER_DAYS_IN_WEEK = 7;
-    private const DRAWING_FIELDS = 42;
+    private int $drawing_fields = 42;
     private string $name;
     private int $year;
     private int $numberInYear;
@@ -34,6 +34,11 @@ namespace App;
         }else{
             return $this -> nameOfMonths[$this->numberInYear-1];
         }
+    }
+    //Funkcja zwracająca rok
+    public function getYear()
+    {
+        return $this->year;
     }
     //Funkcja sprawdzająca czy istnieje rekord zawierający tworzony miesiąc w bazie danych 
     public function checkMonthInDatabase()
@@ -67,6 +72,7 @@ namespace App;
     {
         $month = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year));
         $expire = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year+2));
+
         $dep_id = $this->dep_id;
         $conn = new ConnectToDatabase;
         $mysqliAdm = $conn -> connAdminPass();
@@ -74,43 +80,51 @@ namespace App;
         $createNewMonth = "INSERT INTO month (month,dep_id,days,expire) VALUES ('$month',$dep_id,'[]','$expire')";
         if($mysqliAdm ->query($createNewMonth) === TRUE)
         {
+            unset($conn);
             return true;
         }
         else
         {
+            unset($conn);
             return false;
         }
     }
 
-    //Funkcja rysująca miesiąc w postaci tabeli
-    public function drawMonth()
+    private function drawMonthAccept()
     {
-        $daysInMonth = $this->daysInMonth;
-        $month = $this->numberInYear;
-        $year = $this->year;
-        //Sprawdzenie czy miesiąc jest w bazie danych 
-            //Jeśli tak
-                //Sprawdzamy ilość dni
+       
+        //Sprawdzamy ilość dni
                     //Sprawdzamy jakim dniem jest pierwszy dzień miesiąca
-                    $dayOfTheWeek = date("w", mktime(0, 0, 0, $month, 1, $year)); //sunday =0, saturday =6
+                    $dayOfTheWeek = date("w", mktime(0, 0, 0, $this->numberInYear, 1, $this->year)); //sunday =0, saturday =6
                     //Jaka odległość dzieli pierwszy dzień miesiąca od poniedziałku
-                    $spaceFromMonday = $dayOfTheWeek != 0 ? $daysOfTheWeek-1 : 6;
+                    $spaceFromMonday = $dayOfTheWeek != 0 ? $dayOfTheWeek-1 : 6;
                     //Jaka odległość dzieli koniec miesiąca od końca tabeli
-                    $daysOut = DRAWING_FIELDS - ($spaceFromMonday + $daysInMonth);
+                    $daysOut = $this->drawing_fields - ($spaceFromMonday + $this->daysInMonth);
                     //Początek rysowania kalendarza
+                    
                     echo '<div class="mainCalendar">';
-
+                    echo '<table>
+                        <tr>
+                        <td>Monday</td>
+                        <td>Tuesday</td>
+                        <td>Wednesday</td>
+                        <td>Thursday</td>
+                        <td>Friday</td>
+                        <td>Saturday</td>
+                        <td>Sunday</td>                  
+                        </tr>
+                        </table>';
                     //Rysujemy ilość pól odstępu od poniedziałku// W przyszłości ponumerowane
-                    for ($i = $dayOfTheWeek; $i > 0; $i--)
+                    for ($i = $spaceFromMonday; $i > 0; $i--)
                     {
                         echo '<div class="dayOfTheWeek outDay"></div>';
                     }
                     //Rysujemy wszystkie pola miesiąca
-                    for($j = 1; $j <= $daysInMonth; $j++)
+                    for($j = 1; $j <= $this->daysInMonth; $j++)
                     {
                         echo '<div class="dayOfTheWeek day'.$j.'">'
                                 .'<div class="numberOfDay">'.$j.'</div>'
-                                .'<div class="dayBody">'.$j.'</div>'
+                                .'<div class="dayBody"></div>'
                              .'</div>';
                     }
                     //Rysujemy dni po końcu miesiąca
@@ -122,6 +136,28 @@ namespace App;
                     //Koniec rysowania kalendarza
                     echo '</div>';
 
+    }
+
+
+    //Funkcja rysująca miesiąc w postaci tabeli
+    public function drawMonth()
+    {
+        $daysInMonth = $this->daysInMonth;
+        $month = $this->numberInYear;
+        $year = $this->year;
+        //Sprawdzenie czy miesiąc jest w bazie danych 
+        if($this->checkMonthInDatabase())
+        {
+            $this->drawMonthAccept();
+        }
+        else
+        {
+            $this->createMonthInDatabase();
+            $this->drawMonthAccept();
+        }
+        
+            
+                    
 
             //Jeśli nie
                 //createMonthInDatabase();

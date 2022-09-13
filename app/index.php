@@ -6,6 +6,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require "ConnectToDatabase.php";
 require "/var/www/test/public_html/app/User.php";
+require "Month.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,9 +39,9 @@ require "/var/www/test/public_html/app/User.php";
                 echo $user->getUserData();
             ?>
         </div>
-        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Calendar Mode</div>
-        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Simple Mode</div>
-        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Add user</div>
+        <div class="button1 addUserButtonLeft" onclick="document.getElementById('calendarMode').style.display = 'flex';document.getElementById('addUser').style.display = 'none'">Calendar Mode</div>
+        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block';">Simple Mode</div>
+        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block';document.getElementById('calendarMode').style.display = 'none'">Add user</div>
         <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Add shift</div>
     </div>
     <!-- SECTION __________________________CENTER PANEL -->
@@ -102,8 +103,16 @@ require "/var/www/test/public_html/app/User.php";
         </div>
 
         <div class="calendarMode" id="calendarMode">
+            
+            <?php
+            //później trzeba zmienić na konkretnego użytkownika
+                $mth = new Month(10,2022);
+                echo "<h2>".$mth->getName()." ".$mth->getYear()."</h2>";
+                $mth->drawMonth();
+            ?>
+             <div class="button1 printCalendar">Print</div>
         </div>
-
+       
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
     <div class="rightStatsPanel">
