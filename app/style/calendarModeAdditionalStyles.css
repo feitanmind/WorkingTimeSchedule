@@ -1,0 +1,57 @@
+#addP{
+    width: 2vw;
+    height: 2vh;
+    background-color: #0A85ED;
+}
+#remP{
+    background-color: red;
+}
+#newPrompt{
+    position: absolute;
+    background-color: white;
+    border-radius: 1vw;
+    outline: black solid 0.2vw;
+    width: 15vw;
+    height: 20vh;
+    padding-left: 0.3vw;
+}
+#newPrompt h3{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9vw;
+    gap: 2vw;
+    border-top-left-radius: 1vw;
+    border-top-right-radius: 1vw;
+    background-color: white;
+}
+#listOfUsers{
+    float: left;
+    background-color: lightgrey;
+    border-right: solid 0.1vw black;
+    width: 50%;
+    height: 13vh;
+}
+#currentlyOnShift{
+    float: right;
+}
+#newPrompt input[type=submit]
+{
+    position: absolute;
+    bottom: 0;
+    left:0;
+    text-align: center;
+    height: 5vh;
+    border-bottom-left-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+    width: 100%; 
+}
+#closeAddPrompt{
+    cursor: pointer;
+}
+.numberOfDay{
+    display: flex;
+}
+.numberOfDay p{
+    margin-left: 0.5vw;
+    margin-right: 1vw;
+}

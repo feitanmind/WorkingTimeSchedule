@@ -37,7 +37,13 @@ require "Month.php";
                 $user = new User($user_id);
                 // Wyświetlenie danych użytkownika
                 echo $user->getUserData();
+                echo '<div style="display: none;">';
+                echo $user->getListOfUsers();
+                echo '</div>';
             ?>
+            <script>
+                var listOfUsers = document.getElementById("usersToAdd").outerHTML;
+            </script>
         </div>
         <div class="button1 addUserButtonLeft" onclick="document.getElementById('calendarMode').style.display = 'flex';document.getElementById('addUser').style.display = 'none'">Calendar Mode</div>
         <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block';">Simple Mode</div>
@@ -45,6 +51,7 @@ require "Month.php";
         <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Add shift</div>
     </div>
     <!-- SECTION __________________________CENTER PANEL -->
+    
     <div class="centerPanel">
         <div class="addUser" id="addUser">
 
@@ -85,7 +92,6 @@ require "Month.php";
                             </select>
                             <script>
                                  $('#gender').change(function() {
-                                    console.log("hello");
                                     if($(this).val() === 'female' && changedAv == 0){
                                         userAvatarShow.src = 'style/img/user2.png';
                                     }
@@ -103,14 +109,18 @@ require "Month.php";
         </div>
 
         <div class="calendarMode" id="calendarMode">
-            
+            <script src="/../scripts/calendarModeForms.js"></script>
             <?php
             //później trzeba zmienić na konkretnego użytkownika
                 $mth = new Month(10,2022);
                 echo "<h2>".$mth->getName()." ".$mth->getYear()."</h2>";
                 $mth->drawMonth();
+                
             ?>
-             <div class="button1 printCalendar">Print</div>
+            <!-- Dodatkowe style zawierające wygląd formularzy i niektóre elementy CalendarMode -->
+            <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
+            <!-- Przycisk który generuje wydruk -->
+            <div class="button1 printCalendar">Print</div>
         </div>
        
     </div>

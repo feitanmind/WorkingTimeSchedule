@@ -122,8 +122,11 @@ namespace App;
                     //Rysujemy wszystkie pola miesiąca
                     for($j = 1; $j <= $this->daysInMonth; $j++)
                     {
-                        echo '<div class="dayOfTheWeek day'.$j.'">'
-                                .'<div class="numberOfDay">'.$j.'</div>'
+                        echo '<div class="dayOfTheWeek"  id="day'.$j.'">'
+                                .'<div class="numberOfDay"><p>'.$j.'</p>
+                                    <div id="addP" onclick="createFormToAddPersonToDay(this);">ADD</div>
+                                    <div id="remP" onclick="createFormToRemovePersonFormShift(this);">REMOVE</div>
+                                  </div>'
                                 .'<div class="dayBody"></div>'
                              .'</div>';
                     }
@@ -135,6 +138,7 @@ namespace App;
 
                     //Koniec rysowania kalendarza
                     echo '</div>';
+                    // echo '<script>console.log(document.getElementById("day1").id);</script>';
 
     }
 

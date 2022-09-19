@@ -164,11 +164,20 @@ input{
     height: 7vw;
     border-radius: 50%;
 }
-
+#tohide
+{
+    display: none;
+}
+#addP{
+    width: 2vw;
+    height: 2vh;
+    background-color: #0A85ED;
+}
 /* Calendar */
 .calendarMode{
     font-size: 0.8vw;
-    display: none;
+    display: flex;
+    /* display: none; */
     /* background-color: aqua; */
     width: 100%;
     height: 100vh;
@@ -203,7 +212,9 @@ input{
     margin-right: 2vw;
     color: white;
 }
-
+select{
+    width: 100%;
+}
 /* PANEL RIGHT  */
 .rightStatsPanel
 {
