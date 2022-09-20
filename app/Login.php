@@ -40,6 +40,8 @@ class Login
                     $_SESSION['password'] = $userPassword;
                     unset($_SESSION['warning1']);
                     $_SESSION['header'] = "Location: ../../app/";
+                    $_SESSION['workers_role'] = 1;
+                    $_SESSION['shift_id'] = 1;
                     
                 }
                 else

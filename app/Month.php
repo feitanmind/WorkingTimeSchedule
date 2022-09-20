@@ -1,6 +1,5 @@
 <?php
 namespace App;
-
  class Month
  {
     private const NUMBER_DAYS_IN_WEEK = 7;
@@ -12,6 +11,7 @@ namespace App;
     private int $workingDays;
     private float $hoursToBeWorked;
     private int $dep_id;
+    private $month_db;
     private $nameOfMonths = array('January','February','March','April','May','June','July','August','September','October','November','December');
     
 
@@ -22,6 +22,7 @@ namespace App;
         $this->year = $year;
         $this->daysInMonth = cal_days_in_month(CAL_GREGORIAN,$numberInYear,$year);
         $this->dep_id = $user->dep_id;
+        $this->month_db = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year));
         //DATE in SQL = 1999-09-09
 
         
@@ -43,7 +44,8 @@ namespace App;
     //Funkcja sprawdzająca czy istnieje rekord zawierający tworzony miesiąc w bazie danych 
     public function checkMonthInDatabase()
     {
-        $month = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year));
+        $month = $this->month_db;
+        
         $expire = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year+2));
         $dep_id = $this->dep_id;
 
@@ -130,6 +132,10 @@ namespace App;
         return true;
     }
 
+
+
+
+
     private function drawMonthAccept()
     {
        
@@ -167,7 +173,8 @@ namespace App;
                                     <div id="addP" onclick="createFormToAddPersonToDay(this);">ADD</div>
                                     <div id="remP" onclick="createFormToRemovePersonFormShift(this);">REMOVE</div>
                                   </div>'
-                                .'<div class="dayBody"></div>'
+                                .'<div class="dayBody">'.$this->getDayBody($j, 1,1).'</div>'
+                                
                              .'</div>';
                     }
                     //Rysujemy dni po końcu miesiąca
@@ -182,7 +189,66 @@ namespace App;
 
     }
 
-
+    public function getDayBody($day, $shift_id,$role_id)
+    {
+        $conn = new ConnectToDatabase;
+        $month = $this->month_db;
+        $dep_id = $this->dep_id;
+        //Przekazywane przez SESSION
+        $shift_id = 1;
+        $mysqliAdm = $conn -> connAdminPass();
+        //Role id będzie poprzez SESSION
+        $sqlSelectDayBody = "SELECT days FROM month WHERE month = '$month' AND dep_id = $dep_id and role_id = 1;";
+        $res = $mysqliAdm->query($sqlSelectDayBody);
+        $row = $res->fetch_assoc();
+        $json = $row['days'];
+        $showNames = false;
+        $showIDs = false;
+        $showUserIDs = true;
+        $arrayDays = json_decode($json,true);
+        foreach($arrayDays as $arr)
+        {
+            foreach($arr as $a)
+            {
+                if(is_numeric($a))
+                {
+                    if($a == $shift_id)
+                    {
+                        //Wyciągnięcie wartości body z konkretnego dnia
+                        $dbody = $arrayDays[$a-1]['calendar'][$day-1]['body'];
+                        //Tworzenie tabeli z użytkowników w daym dniu 
+                        $workers = explode("$",$dbody);
+                        foreach($workers as $worker)
+                        {
+                            // W - working at this day
+                            // V - vacation at this day
+                            // if($worker[0] == 'W');
+                            // if($worker[0] == 'V');
+                                $uid = intval(substr($worker,1));
+                                $selectUserFromDb = 'SELECT name, surname, usr_id, custom_id FROM user_data WHERE usr_id='.$uid.';';
+                                $resU = $mysqliAdm->query($selectUserFromDb);
+                                $rowU = $resU->fetch_assoc();
+                                if($rowU != null)
+                                {
+                                    if($showNames)
+                                {
+                                    echo $rowU['name'].' '.$rowU['surname'][0];
+                                }
+                                elseif($showIDs)
+                                {
+                                    echo $rowU['custom_id'];
+                                }
+                                elseif($showUserIDs)
+                                {
+                                    echo $rowU['usr_id'];
+                                }
+                                }         
+                        }
+                    }
+                }
+            }
+        }
+    }
     //Funkcja rysująca miesiąc w postaci tabeli
     public function drawMonth()
     {
