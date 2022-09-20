@@ -79,14 +79,39 @@ namespace App;
     }
 
 
-
+    //Funkcja tworząca plik json dla kolumny days w tabeli month
+    function createNewDaysBodyJson()
+    {
+        $dayBody = array();
+        $conn = new ConnectToDatabase;
+        $mysqliAdm = $conn -> connAdminPass();
+        $sqlSelectAllRoles = "SELECT id FROM shifts;";
+        $res = $mysqliAdm->query($sqlSelectAllRoles);
+        
+        $newValueShift = "[";
+        while($row = $res->fetch_assoc())
+        {   $newValueShift = $newValueShift . '{"shift"' . ':'. $row['id'] . ',"calendar":[';
+            
+            for($i = 1; $i < $this->daysInMonth; $i++)
+            {
+                $newValueShift = $newValueShift . '{"day":'.$i.',"body":""},';
+            }
+            $newValueShift = $newValueShift . '{"day":'.$this->daysInMonth.',"body":""}]},';
+        }
+        $newValueShift = substr($newValueShift,0,-1);
+        $newValueShift = $newValueShift . ']';
+        
+        $res->free();
+        unset($conn1);
+        return $newValueShift;
+    }
 
     //Funkcja tworząca czysty miesiąc w bazie danych
     public function createMonthInDatabase()
     {
         $month = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year));
         $expire = date("Y-m-d",mktime(0,0,0,$this->numberInYear,1,$this->year+2));
-
+        $dayBody = $this->createNewDaysBodyJson();
         $dep_id = $this->dep_id;
         $conn = new ConnectToDatabase;
         $mysqliAdm = $conn -> connAdminPass();
@@ -94,7 +119,7 @@ namespace App;
         // How many roles ?
         for($r = 1; $r <= $this->howManyRoles(); $r++)
         {
-            $createNewMonth = "INSERT INTO month (month,dep_id,role_id,days,expire) VALUES ('$month',$dep_id,$r,'[]','$expire')";
+            $createNewMonth = "INSERT INTO month (month,dep_id,role_id,days,expire) VALUES ('$month',$dep_id,$r,'$dayBody','$expire')";
             if($mysqliAdm ->query($createNewMonth) !== TRUE)
             {
                 unset($conn);
