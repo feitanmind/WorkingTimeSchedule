@@ -19,13 +19,13 @@ public function recoverPass(string $userMail)
 
         //Connect to Db
         $mysqli = new \MySQLi('localhost','testowy1','testowy1','app_comercial');
-        $sql = "SELECT email, usr_id FROM user_data WHERE email = '$userMail'";
+        $sql = "SELECT email, id FROM users WHERE email = '$userMail'";
         $res = $mysqli->query($sql);
         //Find Mail in database
         if( $res->num_rows > 0)
         {
             $row = $res->fetch_assoc();
-            $uid = $row['usr_id'];
+            $uid = $row['id'];
 
             $dateExpired=strtotime("now +30 Minutes");
             // testoo.html?usr_id=admin&password=pass

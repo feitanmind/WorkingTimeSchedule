@@ -67,6 +67,20 @@ namespace App;
             return true;
         }
     }
+
+    public function howManyRoles()
+    {
+        $conn = new ConnectToDatabase;
+        $mysqliAdm = $conn -> connAdminPass();
+        $selectAllRoles = "SELECT id FROM roles;";
+        $result = $mysqliAdm->query($selectAllRoles);
+        // Można później dodać pomijanie niektórych ról
+        return $result->num_rows;
+    }
+
+
+
+
     //Funkcja tworząca czysty miesiąc w bazie danych
     public function createMonthInDatabase()
     {
@@ -77,17 +91,18 @@ namespace App;
         $conn = new ConnectToDatabase;
         $mysqliAdm = $conn -> connAdminPass();
 
-        $createNewMonth = "INSERT INTO month (month,dep_id,days,expire) VALUES ('$month',$dep_id,'[]','$expire')";
-        if($mysqliAdm ->query($createNewMonth) === TRUE)
+        // How many roles ?
+        for($r = 1; $r <= $this->howManyRoles(); $r++)
         {
-            unset($conn);
-            return true;
+            $createNewMonth = "INSERT INTO month (month,dep_id,role_id,days,expire) VALUES ('$month',$dep_id,$r,'[]','$expire')";
+            if($mysqliAdm ->query($createNewMonth) !== TRUE)
+            {
+                unset($conn);
+                return false;
+            }
         }
-        else
-        {
-            unset($conn);
-            return false;
-        }
+        unset($conn);
+        return true;
     }
 
     private function drawMonthAccept()
@@ -159,16 +174,6 @@ namespace App;
             $this->createMonthInDatabase();
             $this->drawMonthAccept();
         }
-        
-            
-                    
-
-            //Jeśli nie
-                //createMonthInDatabase();
-                
-
-
-
     }
 
 

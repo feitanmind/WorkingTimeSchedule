@@ -2,9 +2,11 @@
     width: 2vw;
     height: 2vh;
     background-color: #0A85ED;
+    cursor: pointer;
 }
 #remP{
     background-color: red;
+    cursor: pointer;
 }
 #newPrompt{
     position: absolute;

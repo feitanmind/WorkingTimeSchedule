@@ -216,7 +216,7 @@ select{
     width: 100%;
 }
 /* PANEL RIGHT  */
-.rightStatsPanel
+.rightPanel
 {
     background-image: url("img/panelRight.png");
     height: 100%;

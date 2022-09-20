@@ -125,8 +125,40 @@ require "Month.php";
        
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
-    <div class="rightStatsPanel">
-    
+    <div class="rightPanel">
+        <form>
+            <select name="roleID">
+            <?php
+                $conn1 = new ConnectToDatabase;
+                $mysqliAdm1 = $conn1 -> connAdminPass();
+                $sqlSelectAllRoles1 = "SELECT * FROM roles;";
+                $res1 = $mysqliAdm1->query($sqlSelectAllRoles1);
+                while($row1 = $res1->fetch_assoc())
+                {
+                    echo "<option value=".$row1['id'].">".$row1['name']."</option>";
+                }
+                $res1->free();
+                unset($conn1);
+            ?>
+            </select>
+        </form>
+
+        <form>
+            <select name="shiftID">
+            <?php
+                $conn1 = new ConnectToDatabase;
+                $mysqliAdm1 = $conn1 -> connAdminPass();
+                $sqlSelectAllRoles1 = "SELECT * FROM shifts;";
+                $res1 = $mysqliAdm1->query($sqlSelectAllRoles1);
+                while($row1 = $res1->fetch_assoc())
+                {
+                    echo "<option value=".$row1['id'].">".$row1['startHour']."-".$row1['endHour']."<i> (".$row1['name'].")</i></option>";
+                }
+                $res1->free();
+                unset($conn1);
+            ?>
+            </select>
+        </form>
     </div>
 </body>
 </html>
