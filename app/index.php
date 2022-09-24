@@ -33,6 +33,23 @@ require "Month.php";
         
         <div class="userData">           
             <?php
+                if(isset($_POST['shiftID']))
+                {
+                    $_SESSION['shift_id']=$_POST['shiftID'];
+                }
+                else
+                {
+                    $_SESSION['shift_id']=1;
+                }
+
+                if(isset($_POST['roleID']))
+                {
+                    $_SESSION['role_id']= $_POST['roleID'];
+                }
+                else
+                {
+                    $_SESSION['role_id']=1;
+                }
                 $user_id = $_SESSION['user_id'];
                 $user = new User($user_id);
                 // Wyświetlenie danych użytkownika
@@ -126,39 +143,45 @@ require "Month.php";
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
     <div class="rightPanel">
-        <form>
+        <form mothod="post">
             <select name="roleID">
             <?php
                 $conn1 = new ConnectToDatabase;
                 $mysqliAdm1 = $conn1 -> connAdminPass();
                 $sqlSelectAllRoles1 = "SELECT * FROM roles;";
                 $res1 = $mysqliAdm1->query($sqlSelectAllRoles1);
+                
+                
                 while($row1 = $res1->fetch_assoc())
                 {
-                    echo "<option value=".$row1['id'].">".$row1['name']."</option>";
+                    echo '<option onclick="this.form.submit();" value='.$row1['id'].">".$row1['name'].'</option>';
                 }
+                
                 $res1->free();
                 unset($conn1);
+                
             ?>
             </select>
         </form>
 
-        <form>
+        <form method="post">
             <select name="shiftID">
             <?php
                 $conn1 = new ConnectToDatabase;
                 $mysqliAdm1 = $conn1 -> connAdminPass();
                 $sqlSelectAllRoles1 = "SELECT * FROM shifts;";
                 $res1 = $mysqliAdm1->query($sqlSelectAllRoles1);
+                
+
                 while($row1 = $res1->fetch_assoc())
                 {
-                    echo "<option value=".$row1['id'].">".$row1['startHour']."-".$row1['endHour']."<i> (".$row1['name'].")</i></option>";
+                    echo '<option onclick="this.form.submit();" value='.$row1['id'].'>'.$row1['startHour'].'-'.$row1['endHour'].'<i> ('.$row1['name'].')</i></option>';
                 }
                 $res1->free();
                 unset($conn1);
             ?>
             </select>
-               
+        </form>
         </div>
 </body>
 </html>

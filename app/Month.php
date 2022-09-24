@@ -173,7 +173,7 @@ namespace App;
                                     <div id="addP" onclick="createFormToAddPersonToDay(this);">ADD</div>
                                     <div id="remP" onclick="createFormToRemovePersonFormShift(this);">REMOVE</div>
                                   </div>'
-                                .'<div class="dayBody">'.$this->getDayBody($j, 1,1).'</div>'
+                                .'<div class="dayBody">'.$this->getDayBody($j, $_SESSION['shift_id'],$_SESSION['role_id']).'</div>'
                                 
                              .'</div>';
                     }
@@ -195,16 +195,16 @@ namespace App;
         $month = $this->month_db;
         $dep_id = $this->dep_id;
         //Przekazywane przez SESSION
-        $shift_id = 1;
+        
         $mysqliAdm = $conn -> connAdminPass();
         //Role id będzie poprzez SESSION
         $sqlSelectDayBody = "SELECT days FROM month WHERE month = '$month' AND dep_id = $dep_id and role_id = 1;";
         $res = $mysqliAdm->query($sqlSelectDayBody);
         $row = $res->fetch_assoc();
         $json = $row['days'];
-        $showNames = false;
+        $showNames = true;
         $showIDs = false;
-        $showUserIDs = true;
+        $showUserIDs = false;
         $arrayDays = json_decode($json,true);
         foreach($arrayDays as $arr)
         {
@@ -218,6 +218,7 @@ namespace App;
                         $dbody = $arrayDays[$a-1]['calendar'][$day-1]['body'];
                         //Tworzenie tabeli z użytkowników w daym dniu 
                         $workers = explode("$",$dbody);
+                        $ret = "";
                         foreach($workers as $worker)
                         {
                             // W - working at this day
@@ -228,22 +229,25 @@ namespace App;
                                 $selectUserFromDb = 'SELECT name, surname, usr_id, custom_id FROM user_data WHERE usr_id='.$uid.';';
                                 $resU = $mysqliAdm->query($selectUserFromDb);
                                 $rowU = $resU->fetch_assoc();
+                                
                                 if($rowU != null)
                                 {
                                     if($showNames)
-                                {
-                                    echo $rowU['name'].' '.$rowU['surname'][0];
-                                }
-                                elseif($showIDs)
-                                {
-                                    echo $rowU['custom_id'];
-                                }
-                                elseif($showUserIDs)
-                                {
-                                    echo $rowU['usr_id'];
-                                }
+                                    {
+                                        //cant be return here
+                                        $ret = $ret. $rowU['name'].' '.$rowU['surname'][0];
+                                    }
+                                    elseif($showIDs)
+                                    {
+                                        $ret = $ret. $rowU['custom_id'];
+                                    }
+                                    elseif($showUserIDs)
+                                    {
+                                        $ret = $ret. $rowU['usr_id'];
+                                    }
                                 }         
                         }
+                        return $ret;
                     }
                 }
             }
