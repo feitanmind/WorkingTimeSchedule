@@ -189,6 +189,7 @@ namespace App;
 
     }
 
+
     public function getDayBody($day, $shift_id,$role_id)
     {
         $conn = new ConnectToDatabase;
@@ -235,15 +236,15 @@ namespace App;
                                     if($showNames)
                                     {
                                         //cant be return here
-                                        $ret = $ret. $rowU['name'].' '.$rowU['surname'][0];
+                                        $ret = $ret.'<p>'.$rowU['name'].' '.$rowU['surname'][0].'</p>';
                                     }
                                     elseif($showIDs)
                                     {
-                                        $ret = $ret. $rowU['custom_id'];
+                                        $ret = $ret. '<p>'.$rowU['custom_id'].'</p>';
                                     }
                                     elseif($showUserIDs)
                                     {
-                                        $ret = $ret. $rowU['usr_id'];
+                                        $ret = $ret. '<p>'.$rowU['usr_id'].'</p>';
                                     }
                                 }         
                         }
@@ -270,7 +271,6 @@ namespace App;
             $this->drawMonthAccept();
         }
     }
-
 
  }
 
