@@ -111,7 +111,43 @@ namespace App;
             unset($connectionToDatabase);
         }
 
-     
+        public function addUser($login, $password, $email, $name, $surname, $dep_id, $role_id, $avatar, $custom_id, $full_time)
+        {
+            // Tworzymy nowe połączenie do bazy danych 
+            $connectionToDatabase = new ConnectToDatabase;
+            // Dodawanie szyfrowania 
+            require_once "Encrypt.php";
+            $cipher = new Encrypt;
+            // Łączymy się przy pomocy poświadczeń administratora
+            $connectionWithAdminCredentials = $connectionToDatabase -> connAdminPass();
+            $encrypted_password = $cipher->encryptString($password);
+            $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$password'";
+            $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
+            $selectUserId = "SELECT id FROM users WHERE login = '$login'";
+
+
+            try
+            {
+                $connectionWithAdminCredentials->query($sqlCreateUserInDataBase);
+                $connectionWithAdminCredentials->query($sqlInsertIntoUsers);
+
+                $resultIdOfUser = $connectionWithAdminCredentials->query($selectUserId);
+                $row = $resultIdOfUser->fetch_assoc();
+                $idOfUser = $row['id'];
+                $sqlInsertIntoUserData = "INSERT INTO user_data(name,surname,dep_id,role_id,avatar,usr_id,custom_id, full_time, hours_of_work, days_of_holiday) VALUES('$name','$surname',$dep_id,$role_id,'$avatar',$idOfUser,$custom_id,$full_time,'[]','[]');";
+
+                $connectionWithAdminCredentials->query($sqlInsertIntoUserData);
+                
+                unset($connectionToDatabase);
+                return true;
+                
+            }
+            catch (Exception $e)
+            {
+                unset($connectionToDatabase);
+                return $e;
+            }
+        }
 
 
 

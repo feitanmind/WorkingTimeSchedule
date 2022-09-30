@@ -19,11 +19,11 @@
             $this->assertEquals(true,$month->checkMonthInDatabase());
         }
 
-        public function test_ShouldAddMonthInDatabase()
-        {
-            $month = new App\Month(9,2021);
-            $this->assertEquals(true,$month->createMonthInDatabase());
-        }
+        // public function test_ShouldAddMonthInDatabase()
+        // {
+        //     $month = new App\Month(9,2021);
+        //     $this->assertEquals(true,$month->createMonthInDatabase());
+        // }
 
     }
 

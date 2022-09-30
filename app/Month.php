@@ -117,11 +117,20 @@ namespace App;
         $dep_id = $this->dep_id;
         $conn = new ConnectToDatabase;
         $mysqliAdm = $conn -> connAdminPass();
-
+        //Sprawdzenie ile jest dni pracujących / nie będących sobotą i inedzielą
+        $countWorkingDays = 0;
+            for($k = 1; $k <= $this->daysInMonth; $k++)
+            {
+                if(date("w", mktime(0, 0, 0, $this->numberInYear, $k, $this->year)) > 0 && date("w", mktime(0, 0, 0, $this->numberInYear, $k, $this->year)) < 6)
+                {
+                    $countWorkingDays++;
+                }
+            }
+            
         // How many roles ?
         for($r = 1; $r <= $this->howManyRoles(); $r++)
         {
-            $createNewMonth = "INSERT INTO month (month,dep_id,role_id,days,expire) VALUES ('$month',$dep_id,$r,'$dayBody','$expire')";
+            $createNewMonth = "INSERT INTO month (month,dep_id,role_id,days,expire,working_days) VALUES ('$month',$dep_id,$r,'$dayBody','$expire',$countWorkingDays)";
             if($mysqliAdm ->query($createNewMonth) !== TRUE)
             {
                 unset($conn);
@@ -271,6 +280,8 @@ namespace App;
             $this->drawMonthAccept();
         }
     }
+
+
 
  }
 
