@@ -1,2 +1,2 @@
-# wokingTimeSchedule
+# workingTimeSchedule
 Docelowa praca 
