@@ -3,7 +3,7 @@ class ConnectToDatabaseTest extends \PHPUnit\Framework\TestCase
 {
     public function test_ShouldReturnTrueWhenPassedCorrectCredentials()
     {
-        $userCredentials = array("localhost","testowy","testowy","app");
+        $userCredentials = array("localhost","testowy1","testowy1","app");
         $conn = new App\ConnectToDatabase;
         $ifconnected = $conn -> connectToDb($userCredentials[0],$userCredentials[1],$userCredentials[2],$userCredentials[3]);
         //Sprawdzamy co w przypadku podania dobrych danych do bazy danych
