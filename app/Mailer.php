@@ -4,7 +4,7 @@ namespace App;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-require '/var/www/test/public_html/vendor/autoload.php';
+require '/var/www/html/wokingTimeSchedule/vendor/autoload.php';
 class Mailer
 {
     public function sendMail(string $nameAdrr, string $addrAdrr, string $mailSubject, string $mailBody)
@@ -30,7 +30,7 @@ class Mailer
             $mail->Subject = $mailSubject;
             $mail->Body    = $mailBody;
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-            $mail->send();
+            //$mail->send();
             return true;
         
         }catch (Exception $e) {

@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require "ConnectToDatabase.php";
-require "/var/www/test/public_html/app/User.php";
+require "User.php";
 require "Month.php";
 ?>
 <!DOCTYPE html>

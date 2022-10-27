@@ -20,7 +20,7 @@ class ConnectToDatabase
 
     public function connAdminPass()
     {
-        $mysqli = new \MySQLi('localhost', 'testowy1','testowy1','app_comercial');
+        $mysqli = new \MySQLi('localhost', 'testowy1','testowy1','app_commercial');
         if($mysqli->connect_errno)
         {
             echo("Failed to connect. Error: ".$mysqli->connect_error);
