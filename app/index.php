@@ -19,7 +19,7 @@ require "Month.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
-    <script src="/../scripts/jquery-3.6.0.min.js"></script>
+    <script src="scripts/jquery-3.6.0.min.js"></script>
     <title>Working time schedule</title>
 </head>
 <body>
@@ -165,7 +165,7 @@ require "Month.php";
         ?>
 
         <div class="calendarMode" id="calendarMode">
-            <script src="/../scripts/calendarModeForms.js"></script>
+            <script src="scripts/calendarModeForm.js"></script>
             <?php
             //później trzeba zmienić na konkretnego użytkownika
                 $mth = new Month(10,2022);

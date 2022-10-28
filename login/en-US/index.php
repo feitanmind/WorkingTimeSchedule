@@ -21,13 +21,13 @@
     <meta name="keywords" content="working, work, schedule, time">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Working Time Schedule</title>
-    <script src="/../scripts/jquery-3.6.0.min.js"></script>
+    <script src="/../wokingTimeSchedule/app/scripts/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../style/clear_css.css">
     <link rel="stylesheet" type="text/css" href="../style/style.css">
-    <script src="/../scripts/loadingPage.js"></script>
-    <script src="/../scripts/animation-login.js"></script>
-    <script src="/../scripts/showpass.js"></script>
-    <script src="/../scripts/closeRecoverPassForm.js"></script>
+    <script src="/../wokingTimeSchedule/app/scripts/loadingPage.js"></script>
+    <script src="/../wokingTimeSchedule/app/scripts/animation-login.js"></script>
+    <script src="/../wokingTimeSchedule/app/scripts/showpass.js"></script>
+    <script src="/../wokingTimeSchedule/app/scripts/closeRecoverPassForm.js"></script>
     <link rel="icon" type="image/x-icon" href="../style/img/favicon.ico">
 
 </head>
@@ -114,7 +114,7 @@
     <div class="pong" id="pong3"></div>
     <div id="handguy"></div>
     <div id="dotguy"></div>
-    <iframe src="/../app/RequestToChangePassword.php" id="passchanger" style=" display: none; position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"></iframe>
+    <iframe src="../../app/RequestToChangePassword.php" id="passchanger" style=" display: none; position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"></iframe>
     
 </body>
 </html>

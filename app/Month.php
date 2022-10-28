@@ -1,5 +1,8 @@
 <?php
 namespace App;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
  class Month
  {
     private const NUMBER_DAYS_IN_WEEK = 7;
@@ -13,9 +16,9 @@ namespace App;
     private int $dep_id;
     private $month_db;
     private $nameOfMonths = array('January','February','March','April','May','June','July','August','September','October','November','December');
-    
+    private $user;
 
-    function __construct(int $numberInYear, int $year = 1990, User $user = new User(1)) 
+    function __construct(int $numberInYear,int $year = 1990, User $user = new User(1)) 
     {
         $this->numberInYear = $numberInYear;
         $this->name = $this->getName();        
