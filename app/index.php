@@ -8,6 +8,7 @@ require "ConnectToDatabase.php";
 require "User.php";
 require "Month.php";
 require "Shift.php";
+require "Role.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -182,33 +183,13 @@ require "Shift.php";
        
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
-    <div class="rightPanel">
-        <form mothod="post">
-            <select name="roleID">
+    <div class="rightPanel">   
             <?php
-                $conn1 = new ConnectToDatabase;
-                $mysqliAdm1 = $conn1 -> connAdminPass();
-                $sqlSelectAllRoles1 = "SELECT * FROM roles;";
-                $res1 = $mysqliAdm1->query($sqlSelectAllRoles1);
-                
-                
-                while($row1 = $res1->fetch_assoc())
-                {
-                    echo '<option onclick="this.form.submit();" value='.$row1['id'].">".$row1['name'].'</option>';
-                }
-                
-                $res1->free();
-                unset($conn1);
-                
+            Role::displaySelectRolesForUser();   
             ?>
-            </select>
-        </form>
-
             <?php
             Shift::displaySelectShiftsForUser($user->dep_id);
             ?>
-
-        
         </div>
 </body>
 </html>
