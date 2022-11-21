@@ -204,14 +204,11 @@ require "Shift.php";
             </select>
         </form>
 
-        ggfg
-        <form method="post">
-
             <?php
             Shift::displaySelectShiftsForUser($user->dep_id);
             ?>
 
-        </form>
+        
         </div>
 </body>
 </html>
