@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 require "ConnectToDatabase.php";
 require "User.php";
 require "Month.php";
+require "Shift.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -203,23 +204,13 @@ require "Month.php";
             </select>
         </form>
 
+        ggfg
         <form method="post">
-            <select name="shiftID">
-            <?php
-                $conn1 = new ConnectToDatabase;
-                $mysqliAdm1 = $conn1 -> connAdminPass();
-                $sqlSelectAllRoles1 = "SELECT * FROM shifts;";
-                $res1 = $mysqliAdm1->query($sqlSelectAllRoles1);
-                
 
-                while($row1 = $res1->fetch_assoc())
-                {
-                    echo '<option onclick="this.form.submit();" value='.$row1['id'].'>'.$row1['startHour'].'-'.$row1['endHour'].'<i> ('.$row1['name'].')</i></option>';
-                }
-                $res1->free();
-                unset($conn1);
+            <?php
+            Shift::displaySelectShiftsForUser($user->dep_id);
             ?>
-            </select>
+
         </form>
         </div>
 </body>
