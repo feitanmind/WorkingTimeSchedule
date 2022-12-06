@@ -10,7 +10,7 @@
 <style>
 .mainCalendar
 {
-    width: 100%;
+    width: 80%;
     height: 80vh;
     display: flex;
     flex-direction: row;
@@ -20,8 +20,29 @@
 .dayOfTheWeek
 {
     width: 15%;
-    height: 10vh;
+    height: 11vh;
     background-color: lightgrey;
+    display: flex;
+    flex-direction: column;
+    gap:0;
+}
+.dayOfTheWeek p
+{
+    margin: 0;
+    float: left;
+    margin-right: 10%;
+}
+#addP
+{
+    font-size: 1vw;
+    float: left;
+    margin-right: 5%;
+
+}
+#remP
+{
+    font-size: 1vw;
+    float: left;
 }
 </style>
 <body>
@@ -36,11 +57,23 @@
     include("Day.php");
     include("b_Month.php");
 
+    // Warning: Undefined property: App\User::$Name in /var/www/html/wokingTimeSchedule/app/b_Month.php on line 70
 
     $md = new b_Month(1,2022,1);
     echo "Done";
     $md->DrawMonth();
-    
+    //adding user
+    $user = new User(1);
+    $user2 = new User(2);
+    array_push($md->Days[0]->Shifts[0]->EmployeesWorking, $user);
+    array_push($md->Days[0]->Shifts[0]->EmployeesWorking, $user2);
+    echo "hh";
+    //$md->DrawMonth();
+    $md->DrawMonth();
+    //removing user 
+    $keyToDelete = array_search($user2,$md->Days[0]->Shifts[0]->EmployeesWorking);
+    array_splice($md->Days[0]->Shifts[0]->EmployeesWorking,$keyToDelete);
+    $md->DrawMonth();
     ?>
 </body>
 </html>

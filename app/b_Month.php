@@ -53,17 +53,26 @@ class b_Month
         {
             echo '<div class="dayOfTheWeek outDay" style="background-color: grey;"></div>';
         }
+        
         //Rysujemy wszsytkie pola miesiąca 
         for($j = 1; $j <= $numberDaysInMonth; $j++)
         {
+            $workingPeople = $this->Days[$j-1]->Shifts[0]->EmployeesWorking;
+
             echo '<div class="dayOfTheWeek"  id="day'.$j.'">'
                     .'<div class="numberOfDay"><p>'.$j.'</p>
                         <div id="addP" onclick="createFormToAddPersonToDay(this);">ADD</div>
                         <div id="remP" onclick="createFormToRemovePersonFormShift(this);">REMOVE</div>
-                    </div>'
-                    .'<div class="dayBody"></div>
-                              Body  
-                  </div>';
+                     </div>'
+                    ."<div class=\"dayBody\">";
+                    foreach($workingPeople as $workingPerson)
+                    {
+                        echo $workingPerson->name;
+                    }
+                    
+                    echo "</div>
+                             
+                  </div>";
         }
         //Rysujemy dni po końcu miesiąca
         for($l = $daysOut; $l > 0; $l--)
