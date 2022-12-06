@@ -17,7 +17,24 @@ function createFormToAddPersonToDay(obj)
     obj.parentElement.parentElement.childNodes[1].childNodes.forEach(elem => listOfUserOnDay += '<p>'+elem.innerHTML+'</p>')
 
     //Podmienienie go na przygotowany template prompta
-    newPrompt.innerHTML ="<div id=\"newPrompt\"><h3>Add user to shift<p onclick=\"closeAddUser()\" id=\"closeAddPrompt\">x</p></h3><form method=\"post\"><div id=\"listOfUsers\"><p>List of Users</p>"+listOfUsers+"</div><div id=\"currentlyOnShift\"><p>Current Users</p>"+listOfUserOnDay+"</div><input style=\"background-color: #0A85ED;\" type=\"submit\" value=\"Add\"/></form></div>";
+    console.log(obj.parentElement.parentElement.childNodes[0].childNodes[0].innerText);
+    newPrompt.innerHTML =" \
+    <div id=\"newPrompt\"> \
+        <h3>Add user to shift<p onclick=\"closeAddUser()\" id=\"closeAddPrompt\">x</p></h3> \
+        <form method=\"get\">\
+            \
+            <div id=\"listOfUsers\"> \
+                <p>List of Users</p>"+listOfUsers+"\
+            </div>\
+            \
+            <div id=\"currentlyOnShift\">\
+                <p>Current Users</p>"+listOfUserOnDay+"\
+            </div>\
+            <input type=\"text\" name=\"dayId\" value=\""+obj.parentElement.parentElement.childNodes[0].childNodes[0].innerText+"\"/>\
+            \
+            <input style=\"background-color: #0A85ED;\" type=\"submit\" value=\"Add\"/>\
+        </form>\
+    </div>";
     obj.parentElement.appendChild(newPrompt);
 }
 
@@ -35,6 +52,14 @@ function createFormToRemovePersonFormShift(obj)
     listOfUserOnDayToRemove = '<form><select name="userToRemove" multiple>'+listOfUserOnDayToRemove+'</select></form>';
     obj.disabled = true;
     //Podmienienie go na przygotowany template prompta
-    newPrompt.innerHTML ="<div id=\"newPrompt\"><h3>Remove person from shift<p onclick=\"closeAddUser()\" id=\"closeAddPrompt\">x</p></h3><form method=\"post\"><div id=\"listOfUsers\" style=\"width: 100%;\"><p>Users working in this day</p>"+listOfUserOnDayToRemove+"</div><input style=\"background-color: pink;\" type=\"submit\" value=\"Remove\"/></form></div>";
+    newPrompt.innerHTML ="\
+        <div id=\"newPrompt\">\
+            <h3>Remove person from shift<p onclick=\"closeAddUser()\" id=\"closeAddPrompt\">x</p></h3>\
+            \
+            <form method=\"post\">\
+                <div id=\"listOfUsers\" style=\"width: 100%;\"><p>Users working in this day</p>"+listOfUserOnDayToRemove+"</div>\
+                <input style=\"background-color: pink;\" type=\"submit\" value=\"Remove\"/>\
+            </form>\
+        </div>";
     obj.parentElement.appendChild(newPrompt);
 }

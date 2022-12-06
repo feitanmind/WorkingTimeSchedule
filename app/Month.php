@@ -56,7 +56,7 @@ error_reporting(E_ALL);
 
         $conn = new ConnectToDatabase;
         $mysqliAdm = $conn -> connAdminPass();
-        $selectMonthInDB = "SELECT month, dep_id FROM month WHERE month = '$month' AND dep_id = $dep_id;";
+        $selectMonthInDB = "SELECT month, dep_id FROM calendar WHERE month = '$month' AND dep_id = $dep_id;";
         $result = $mysqliAdm ->query($selectMonthInDB);
 
         if($result->num_rows <= 0)
@@ -133,7 +133,7 @@ error_reporting(E_ALL);
         // How many roles ?
         for($r = 1; $r <= $this->howManyRoles(); $r++)
         {
-            $createNewMonth = "INSERT INTO month (month,dep_id,role_id,days,expire,working_days) VALUES ('$month',$dep_id,$r,'$dayBody','$expire',$countWorkingDays)";
+            $createNewMonth = "INSERT INTO calendar (month,dep_id,role_id,days,expire,working_days) VALUES ('$month',$dep_id,$r,'$dayBody','$expire',$countWorkingDays)";
             if($mysqliAdm ->query($createNewMonth) !== TRUE)
             {
                 unset($conn);
@@ -211,7 +211,7 @@ error_reporting(E_ALL);
         
         $mysqliAdm = $conn -> connAdminPass();
         //Role id będzie poprzez SESSION
-        $sqlSelectDayBody = "SELECT days FROM month WHERE month = '$month' AND dep_id = $dep_id and role_id = 1;";
+        $sqlSelectDayBody = "SELECT days FROM calendar WHERE month = '$month' AND dep_id = $dep_id and role_id = 1;";
         $res = $mysqliAdm->query($sqlSelectDayBody);
         $row = $res->fetch_assoc();
         $json = $row['days'];

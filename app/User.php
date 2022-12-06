@@ -102,7 +102,7 @@ namespace App;
             $connectionWithAdminCredentials = $connectionToDatabase -> connAdminPass();
             $selectListOfUserSQL = "SELECT name, surname, usr_id FROM user_data WHERE dep_id = $this->dep_id";
             $resultWorkersData = $connectionWithAdminCredentials -> query($selectListOfUserSQL);
-            echo '<select id="usersToAdd" style="width: 100%;height:80%;" name="usersToAdd" multiple>';
+            echo '<select id="usersToAdd" style="width: 100%;height:80%; font-size: 1vw;" name="usersToAdd" multiple>';
             while($row = $resultWorkersData->fetch_assoc())
             {
                 echo '<option value="'.$row['usr_id'].'">'.$row['name']. ' '. $row['surname'].'</option>';
@@ -148,7 +148,10 @@ namespace App;
                 return $e;
             }
         }
+        public function addUserToDay()
+        {
 
+        }
 
 
     }

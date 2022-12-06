@@ -131,40 +131,40 @@ require "Role.php";
                             
                             <input type="submit" value="Add user" class="button1"/>
             </form>
+            <?php
+                if
+                (
+                    isset($_POST['addu_name']) &&
+                    isset($_POST['addu_surname']) && 
+                    isset($_POST['addu_login']) && 
+                    isset($_POST['addu_email']) && 
+                    isset($_POST['addu_custom_id']) && 
+                    isset($_POST['addu_password']) && 
+                    isset($_POST['addu_role']) && 
+                    isset($_POST['addu_fulltime']) 
+                )
+                {
+                    if(isset($_POST['addu_userAvatar']))
+                    {
+                        $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['addu_userAvatar'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                    }
+                    else if(isset($_POST['gender']))
+                    {
+                        if($_POST['gender'] == "male")
+                        {
+                            //trzeba pomyśleć czemu nie działa dodawanie s
+                            $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['maleDefault'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                        }
+                        else
+                        {
+                            $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['femaleDefault'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                        }
+
+                    }   
+                }
+            ?>
         </div>
-        <?php
-        if
-        (
-            isset($_POST['addu_name']) &&
-            isset($_POST['addu_surname']) && 
-            isset($_POST['addu_login']) && 
-            isset($_POST['addu_email']) && 
-            isset($_POST['addu_custom_id']) && 
-            isset($_POST['addu_password']) && 
-            isset($_POST['addu_role']) && 
-            isset($_POST['addu_fulltime']) 
-        )
-        {
-            if(isset($_POST['addu_userAvatar']))
-            {
-                $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['addu_userAvatar'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
-            }
-            else if(isset($_POST['gender']))
-            {
-                if($_POST['gender'] == "male")
-                {
-                    //trzeba pomyśleć czemu nie działa dodawanie s
-                $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['maleDefault'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
 
-                }
-                else
-                {
-                    $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['femaleDefault'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
-                }
-
-            }
-        }
-        ?>
 
         <div class="calendarMode" id="calendarMode">
             <script src="scripts/calendarModeForm.js"></script>

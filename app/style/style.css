@@ -221,5 +221,6 @@ select{
     background-image: url("img/panelRight.png");
     height: 100%;
     width: 18%;
+    font-size: 1vw;
     background-size: cover;
 }

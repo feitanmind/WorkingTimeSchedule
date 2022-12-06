@@ -9,7 +9,7 @@ class Role
         $sqlSelectAllRoles = "SELECT * FROM roles;";
         $res = $mysqliAdm->query($sqlSelectAllRoles);
         echo '<form method="post">';
-        echo '<select name="roleID">';
+        echo '<select style="font-size: 1vw" name="roleID">';
 
         while($row = $res->fetch_assoc())
         {
