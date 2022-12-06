@@ -2,7 +2,32 @@
 namespace App;
 class Shift
 {
+    public int $Id;
+    public string $Name;
+    public string $Department;
+    public float $HoursPerShift;
+    public string $StartHour;
+    public string $EndHour;
+    public $EmployeesWorking = array();
+    public $EmployeesVacation = array();
 
+    //Shift($row['name'],$row['dep_id'],$row['hours_per_shift'],$row['startHour'],$row['endHour']))
+    public function __construct($id, $name, $depId, $hoursPerShift, $startHour, $endHour)
+    {
+        $this->Name = $name;
+        $this->Department = $depId;
+        $this->HoursPerShift = $hoursPerShift;
+        $this->StartHour = $startHour;
+        $this->EndHour = $endHour;
+    }
+    public function AddUserToWork(User $user)
+    {
+        array_push($this->EmployeesWorking, $user); 
+    }
+    public function AddUserVacation(User $user)
+    {
+        array_push($this->EmployeesVacation, $user);
+    }
 
     public static function displaySelectShiftsForUser(string $depID)
     {

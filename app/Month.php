@@ -5,8 +5,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
  class Month
  {
-    private const NUMBER_DAYS_IN_WEEK = 7;
-    private int $drawing_fields = 42;
     private string $name;
     private int $year;
     private int $numberInYear;
@@ -150,14 +148,15 @@ error_reporting(E_ALL);
 
     private function drawMonthAccept()
     {
-       
+                    //Ile p[]
+                    $drawing_fields = 42;
         //Sprawdzamy ilość dni
                     //Sprawdzamy jakim dniem jest pierwszy dzień miesiąca
                     $dayOfTheWeek = date("w", mktime(0, 0, 0, $this->numberInYear, 1, $this->year)); //sunday =0, saturday =6
                     //Jaka odległość dzieli pierwszy dzień miesiąca od poniedziałku
                     $spaceFromMonday = $dayOfTheWeek != 0 ? $dayOfTheWeek-1 : 6;
                     //Jaka odległość dzieli koniec miesiąca od końca tabeli
-                    $daysOut = $this->drawing_fields - ($spaceFromMonday + $this->daysInMonth);
+                    $daysOut = $drawing_fields - ($spaceFromMonday + $this->daysInMonth);
                     //Początek rysowania kalendarza
                     
                     echo '<div class="mainCalendar">';
