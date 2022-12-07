@@ -82,11 +82,10 @@ class b_Month
         //Koniec rysowania kalendarza
         echo '</div>';
     }
-
     public function JsonEncodeMonth()
     {
         $JSONMonthEncode = "";
-        $JSONMonthEncode=$JSONMonthEncode. "[{
+        $JSONMonthEncode=$JSONMonthEncode. "{
                             \"MonthNumber\":$this->MonthNumber,
                             \"Year\":$this->Year,
                             \"Days\":[
@@ -131,8 +130,87 @@ class b_Month
                                             },";
                                 }
                                 $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
-                                $JSONMonthEncode=$JSONMonthEncode."]}]";
-        return $JSONMonthEncode;
+                                $JSONMonthEncode=$JSONMonthEncode."]}";
+        return trim($JSONMonthEncode);
+        
+    }
+    public static function JsonDecodeMonth($json)
+    {
+        $position = strpos($json, "MonthNumber");
+        //echo "Pos num: ". $posMonthNumber;
+        $step = substr($json, $position+13);
+        
+        $_monthNumber = substr($step, 0, strpos($step, ","));
+        echo "Month number: ".$_monthNumber."<br>";
+        
+        $position = strpos($step, "Year");
+        $step = substr($step, $position+6);
+        $_year = substr($step, 0, strpos($step,","));
+        echo "Year: " .$_year. "<br>";
+        echo "____________<br>";
+        //$JSONMonthDecode = new b_Month();
+
+        
+        while(strpos($step, "NumberOfDay") != false)
+        {
+            $position = strpos($step, "NumberOfDay");
+            $step = substr($step, $position+14);
+            $step3 = $step;
+            if(strpos($step,"NumberOfDay"))
+            {
+                $positionNextNumberOfDay = strpos($step, "NumberOfDay");
+                $step = substr($step,0, $positionNextNumberOfDay);
+                $_numberOfDay = substr($step, 0, strpos($step,","));
+            }
+            else
+            {
+
+                $positionNextNumberOfDay = strpos($step, "}]");
+                $step = substr($step,0, $positionNextNumberOfDay);
+                $_numberOfDay = substr($step, 0, strpos($step,","));
+            }
+        
+            //echo $step;
+            // $step = substr($step,0, $positionNextNumberOfDay);
+            // $_numberOfDay = substr($step, 0, strpos($step,","));
+            echo "NumberOfDay: $_numberOfDay <br>";
+            //echo $step;
+            //while
+            while(strpos($step, "ShiftID"))
+            {
+                $position = strpos($step, "ShiftID");
+                $step = substr($step, $position+10);
+                $step2 = $step;
+                if(strpos($step,"ShiftID"))
+                {
+                    $positionNextShiftID = strpos($step,"ShiftID");
+                }
+                else
+                {
+                    $positionNextShiftID = strlen($step);
+                }
+                
+                $step = substr($step,0, $positionNextShiftID);
+                $_shiftId = substr($step,0,strpos($step,","));
+                echo "____Shift Id: ".$_shiftId ."<br>";
+                $position = strpos($step,"[");
+                $step = substr($step,$position);
+                $positionEndOfWorking = strpos($step,"EmployeesVacation");
+                $step = substr($step,0,$positionEndOfWorking);
+                    //while
+                    
+                    while(strpos($step,"UserId") != false)
+                    {
+                        $position = strpos($step,"UserId");
+                        $step = substr($step, $position+8);
+                        $_userId = substr($step,0, strpos($step,"}"));
+                        echo "_______User-Id: $_userId <br>";                
+                    }
+                $step = $step2;
+            }
+        $step = $step3;
+        }
+        
         
     }
     public function RemoveMonth()

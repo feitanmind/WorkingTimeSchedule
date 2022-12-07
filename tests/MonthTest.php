@@ -4,7 +4,7 @@
         public function test_ReturnNameOfMonth()
         {
             $month = new App\Month(7);
-            $seventhMonth = $month -> getName(7);
+            $seventhMonth = $month -> getName();
             $this -> assertEquals('July',$seventhMonth);
         }
 

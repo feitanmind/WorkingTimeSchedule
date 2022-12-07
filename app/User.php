@@ -142,7 +142,7 @@ namespace App;
                 return true;
                 
             }
-            catch (Exception $e)
+            catch (\Exception $e)
             {
                 unset($connectionToDatabase);
                 return $e;

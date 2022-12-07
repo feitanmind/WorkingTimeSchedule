@@ -67,10 +67,10 @@
     $user2 = new User(2);
     array_push($md->Days[0]->Shifts[0]->EmployeesWorking, $user);
     array_push($md->Days[0]->Shifts[0]->EmployeesWorking, $user2);
-    echo "hh";
+    //echo "hh";
     //$md->DrawMonth();
 
-    
+    $tyyy = true;
     
     //removing user 
     $keyToDelete = array_search($user2,$md->Days[0]->Shifts[0]->EmployeesWorking);
@@ -82,11 +82,15 @@
 
     //substractiong hours
     $how->SubstractTimeOfWork(8);
-    echo "Hours - $how->Hours";
+    //echo "Hours - $how->Hours";
     $md->Department = 1;
 
     
-    echo $md->JsonEncodeMonth();
+    $mdd =  $md->JsonEncodeMonth();
+    //echo $mdd;
+    $dm = b_Month::JsonDecodeMonth($mdd);
+
+    
     ?>
 </body>
 </html>

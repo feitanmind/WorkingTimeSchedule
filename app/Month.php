@@ -32,7 +32,7 @@ error_reporting(E_ALL);
     public function getName()
     {
         if($this->numberInYear > 12 || $this->numberInYear < 1){
-            throw new Exception('Invalid Month Number');
+            throw new \Exception('Invalid Month Number');
         }else{
             return $this -> nameOfMonths[$this->numberInYear-1];
         }

@@ -15,7 +15,7 @@ class HoursOfWork
     {
         $this->User = $user;
         $this->Month = $month;
-        $this->Yeat = $year;
+        $this->Year = $year;
         $resTime = $this->SetNewTimeOfWork($month,$year,$jobHours);
         $this->Time = $resTime[1];
         //echo "TimeOfWork: $resTime[0]";
