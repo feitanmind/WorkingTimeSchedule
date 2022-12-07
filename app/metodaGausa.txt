@@ -1,0 +1,31 @@
+ // //I METODA C.F. GAUSSA - średnia bo trzeba znać
+        // // Wyliczanie Wielkanocy za pomocą tabeli C.F. Gaussa
+        // // W latach 1900–2099 x = 24 y =  5 wyjątki i rodzaju (1981, 2076) wyjątki 2 rozaju( 1954, 2049)
+        // // W latach 2100–2199 x = 24 y = 6 wyjątki I rozaju(2133) Wyjątki drugiego rodzaju (2106)\
+        // if($year > 1900 && $year <= 2099)
+        // {
+        //     $x = 24;
+        //     $y = 5;
+        //     $ex1 = [1981,2076];
+        //     $ex2 = [1954,2049];
+        // }
+        // else
+        // {
+        //     $x = 24;
+        //     $y = 6;
+        // }
+        // $a = $year % 19;
+        // $b = $year % 4;
+        // $c = $year % 7;
+        // $d = (($a * 19)+$x) % 30;
+        // $e = ((2 * $b) + (4 * c) + (6 * d) + $y) % 7;
+        // if(($e+$d)>10)
+        // {
+        //     $resDay = (($e+$d)-9);
+        //     return "$year-04-$resDay";
+        // }
+        // else
+        // {
+        //     $resDay = 22+($e+$d);
+        //     return "$year-03-$resDay";
+        // }
