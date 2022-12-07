@@ -88,7 +88,7 @@
     
     $mdd =  $md->JsonEncodeMonth();
     //echo $mdd;
-    $dm = b_Month::JsonDecodeMonth($mdd);
+    b_Month::JsonDecodeMonth($mdd);
 
     
     ?>

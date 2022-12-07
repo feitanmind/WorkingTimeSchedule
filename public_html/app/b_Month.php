@@ -193,6 +193,7 @@ class b_Month
                 $step = substr($step,0, $positionNextShiftID);
                 $_shiftId = substr($step,0,strpos($step,","));
                 echo "____Shift Id: ".$_shiftId ."<br>";
+                $_arrayOfUsers = array();
                 $position = strpos($step,"[");
                 $step = substr($step,$position);
                 $positionEndOfWorking = strpos($step,"EmployeesVacation");
@@ -204,7 +205,10 @@ class b_Month
                         $position = strpos($step,"UserId");
                         $step = substr($step, $position+8);
                         $_userId = substr($step,0, strpos($step,"}"));
-                        echo "_______User-Id: $_userId <br>";                
+                        //dodanie użytkownika do shiftu
+                        array_push($_arrayOfUsers, new User($_userId));
+                        echo "_______User-Id: $_userId <br>"; 
+
                     }
                 $step = $step2;
             }

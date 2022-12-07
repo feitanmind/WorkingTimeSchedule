@@ -9,9 +9,9 @@
     error_reporting(E_ALL);
  
    
-    require "/var/www/html/wokingTimeSchedule/app/Encrypt.php";
-    require "/var/www/html/wokingTimeSchedule/app/ConnectToDatabase.php";
-    require "/var/www/html/wokingTimeSchedule/app/Login.php";
+    require __DIR__.'/../../app/Encrypt.php';
+    require __DIR__.'/../../app/ConnectToDatabase.php';
+    require __DIR__.'/../../app/Login.php';
     $log = new Login;
     if(isset($_SESSION['header'])) header($_SESSION['header']);
     ?>
