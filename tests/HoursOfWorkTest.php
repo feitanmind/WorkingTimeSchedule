@@ -37,6 +37,12 @@
             $hoursAfterAsInt = intval(substr($hoursAfter,0,3));
             $this->assertEquals($hoursBeforeAsInt+$addingHours, $hoursAfterAsInt);
         }
+        public function test_ShouldReturnEasterDate()
+        {
+            $easterDateIn2024 = "2024-3-31";
+            $calculatedEasterDateIn2024 = App\HoursOfWork::GetEasterDate(2024);
+            $this->assertEquals($easterDateIn2024,$calculatedEasterDateIn2024);
+        }
     }
 
 

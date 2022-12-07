@@ -14,6 +14,7 @@ class Shift
     //Shift($row['name'],$row['dep_id'],$row['hours_per_shift'],$row['startHour'],$row['endHour']))
     public function __construct($id, $name, $depId, $hoursPerShift, $startHour, $endHour)
     {
+        $this->Id = $id;
         $this->Name = $name;
         $this->Department = $depId;
         $this->HoursPerShift = $hoursPerShift;

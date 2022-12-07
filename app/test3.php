@@ -56,7 +56,7 @@
     include("Shift.php");
     include("Day.php");
     include("b_Month.php");
-    include("HuorsOfWork.php");
+    include("HoursOfWork.php");
     // Warning: Undefined property: App\User::$Name in /var/www/html/wokingTimeSchedule/app/b_Month.php on line 70
 
     $md = new b_Month(1,2022,1);
@@ -69,21 +69,24 @@
     array_push($md->Days[0]->Shifts[0]->EmployeesWorking, $user2);
     echo "hh";
     //$md->DrawMonth();
-    $md->DrawMonth();
+
+    
+    
     //removing user 
     $keyToDelete = array_search($user2,$md->Days[0]->Shifts[0]->EmployeesWorking);
-    array_splice($md->Days[0]->Shifts[0]->EmployeesWorking,$keyToDelete);
-    $md->DrawMonth();
-    //echo HoursOfWork::GetEasterDate(2024);
-    echo "<br>";
-    echo HoursOfWork::GetWorkingDaysInMonth(2022,4);
+    //array_splice($md->Days[0]->Shifts[0]->EmployeesWorking,$keyToDelete);
+
 
     $how = new HoursOfWork($user,5,2022,'08:00:00');
-    echo "Hours - $how->Hours";
+
 
     //substractiong hours
     $how->SubstractTimeOfWork(8);
     echo "Hours - $how->Hours";
+    $md->Department = 1;
+
+    
+    echo $md->JsonEncodeMonth();
     ?>
 </body>
 </html>

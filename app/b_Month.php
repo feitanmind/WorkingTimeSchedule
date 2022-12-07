@@ -42,7 +42,7 @@ class b_Month
         $namesDaysOfWeek = array('Monday','Tuesday','Wednesday','Thursday','Saturday','Sunday');
 
         //Rysujemy początek
-        echo '<div class="mainCalendar">';
+        echo '<div id="calM" class="mainCalendar">';
  
         foreach($namesDaysOfWeek as $nameOfDay)
         {
@@ -81,6 +81,69 @@ class b_Month
         }
         //Koniec rysowania kalendarza
         echo '</div>';
+    }
+
+    public function JsonEncodeMonth()
+    {
+        $JSONMonthEncode = "";
+        $JSONMonthEncode=$JSONMonthEncode. "[{
+                            \"MonthNumber\":$this->MonthNumber,
+                            \"Year\":$this->Year,
+                            \"Days\":[
+                                ";
+                            foreach($this->Days as $day)
+                            {
+                              $JSONMonthEncode=$JSONMonthEncode."
+                                        {
+                                            \"NumberOfDay\": $day->NumberOfDay,
+                                            \"Shifts\": [
+                                                ";
+                                                foreach($day->Shifts as $shift)
+                                                {
+                                                    $JSONMonthEncode=$JSONMonthEncode. "{\"ShiftID\": $shift->Id,
+                                                                        \"EmployeesWorking\": [";
+                                                                        if(!empty($shift->EmployeesWorking))
+                                                                        {
+                                                                            foreach($shift->EmployeesWorking as $employee)
+                                                                            {
+                                                                                $JSONMonthEncode=$JSONMonthEncode."{UserId: $employee->user_id},"; 
+                                                                            }
+                                                                            $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
+                                                                        }
+                                                                        
+                                                                        $JSONMonthEncode=$JSONMonthEncode."],
+                                                                        \"EmployeesVacation\" : [";
+                                                                        if(!empty($shift->EmployeesVacation))
+                                                                        {
+                                                                            foreach($shift->EmployeesVacation as $employee)
+                                                                            {
+                                                                                $JSONMonthEncode=$JSONMonthEncode."{UserId: $employee->user_id},";
+                                                                            }
+                                                                            $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
+                                                                        }
+                                                                        
+                                                                        $JSONMonthEncode=$JSONMonthEncode."]
+                                                                        },";    
+                                                                        
+                                                }
+                                                $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
+                                                $JSONMonthEncode=$JSONMonthEncode."]
+                                            },";
+                                }
+                                $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
+                                $JSONMonthEncode=$JSONMonthEncode."]}]";
+        return $JSONMonthEncode;
+        
+    }
+    public function RemoveMonth()
+    {
+
+        echo "
+        <script>
+        document.getElementById('calM').remove();
+        </script>
+        
+        ";
     }
 
 }
