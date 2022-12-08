@@ -16,15 +16,35 @@ class Day
 
     private function CreateShiftsInDay($depID)
     {
-        $conn = new ConnectToDatabase;
-        $mysqliAdm = $conn -> connAdminPass();
-        $sql_SelectAllShifts = "SELECT * FROM shifts WHERE dep_id = $depID;";
-        $result = $mysqliAdm->query($sql_SelectAllShifts);
-        while($row = $result->fetch_assoc())
-        {               
-            array_push($this->Shifts, new Shift($row['id'],$row['name'],$row['dep_id'],$row['hours_per_shift'],$row['startHour'],$row['endHour']));
+       
+            $conn = new ConnectToDatabase;
+            $mysqliAdm = $conn -> connAdminPass();
+            $sql_SelectAllShifts = "SELECT * FROM shifts WHERE dep_id = $depID;";
+            $result = $mysqliAdm->query($sql_SelectAllShifts);
+            while($row = $result->fetch_assoc()) 
+            {
+                $shift = new Shift($row['id'], $row['dep_id']);
+                $shift->Name = $row['name'];
+                $shift->Department =$row['dep_id'];
+                $shift->HoursPerShift = $row['hours_per_shift'];
+                $shift->StartHour =$row['startHour'];
+                $shift->EndHour = $row['endHour'];
+                array_push($this->Shifts,$shift);
+            }
+            $result->free();
+            unset($conn);
+        
+        
+    }
+    public function ActualizeShifts($sh)
+    {
+        foreach ($this->Shifts as $shift)
+        {
+            if($shift->Id == $sh->Id)
+            {
+                $shift->EmployeesWorking = $sh->EmployeesWorking;
+                $shift->EmployeesVacation = $sh->EmployeesWorking;
+            }
         }
-        $result->free();
-        unset($conn);
     }
 }

@@ -55,25 +55,28 @@
     include("User.php");
     include("Shift.php");
     include("Day.php");
-    include("b_Month.php");
+    include("Calendar.php");
     include("HoursOfWork.php");
     // Warning: Undefined property: App\User::$Name in /var/www/html/wokingTimeSchedule/app/b_Month.php on line 70
 
-    $md = new b_Month(1,2022,1);
+    $md = new Calendar(1,2022,1);
     echo "Done";
-    $md->DrawMonth();
+    $md->DrawCalendar();
     //adding user
     $user = new User(1);
     $user2 = new User(2);
-    array_push($md->Days[0]->Shifts[0]->EmployeesWorking, $user);
-    array_push($md->Days[0]->Shifts[0]->EmployeesWorking, $user2);
+    $md->SignUserToWorkInDay($user, 0, 0);
+    $md->SignUserToWorkInDay($user2, 0, 0);
+    $md->SignUserVacation($user, 0, 0);
+    array_push($md->Days[0]->Shifts[0]->EmployeesVacation, $user2);
     //echo "hh";
-    //$md->DrawMonth();
+    $md->RemoveMonth();
+    $md->DrawCalendar();
 
     $tyyy = true;
     
     //removing user 
-    $keyToDelete = array_search($user2,$md->Days[0]->Shifts[0]->EmployeesWorking);
+    $keyToDelete = array_search($user2,$md->Days[0]->Shifts[0]->EmployeesVacation);
     //array_splice($md->Days[0]->Shifts[0]->EmployeesWorking,$keyToDelete);
 
 
@@ -86,9 +89,9 @@
     $md->Department = 1;
 
     
-    $mdd =  $md->JsonEncodeMonth();
+    $mdd =  $md->JsonEncodeCalendar();
     //echo $mdd;
-    b_Month::JsonDecodeMonth($mdd);
+    Calendar::JsonDecodeCalendar($mdd,1);
 
     
     ?>

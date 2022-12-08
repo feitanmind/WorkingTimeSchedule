@@ -12,14 +12,14 @@ class Shift
     public $EmployeesVacation = array();
 
     //Shift($row['name'],$row['dep_id'],$row['hours_per_shift'],$row['startHour'],$row['endHour']))
-    public function __construct($id, $name, $depId, $hoursPerShift, $startHour, $endHour)
+    public function __construct($id, $depId)
     {
         $this->Id = $id;
-        $this->Name = $name;
+        // $this->Name = $name;
         $this->Department = $depId;
-        $this->HoursPerShift = $hoursPerShift;
-        $this->StartHour = $startHour;
-        $this->EndHour = $endHour;
+        // $this->HoursPerShift = $hoursPerShift;
+        // $this->StartHour = $startHour;
+        // $this->EndHour = $endHour;
     }
     public function AddUserToWork(User $user)
     {
