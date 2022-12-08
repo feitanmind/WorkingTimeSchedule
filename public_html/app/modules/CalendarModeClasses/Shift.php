@@ -16,6 +16,7 @@ class Shift
     {
         $this->Id = $id;
         // $this->Name = $name;
+        echo "DEPS".$depId;
         $this->Department = $depId;
         // $this->HoursPerShift = $hoursPerShift;
         // $this->StartHour = $startHour;
@@ -30,25 +31,25 @@ class Shift
         array_push($this->EmployeesVacation, $user);
     }
 
-    public static function displaySelectShiftsForUser(string $depID)
+    //Funcja Generuje formularz dzięki któremu będzie można wybrać konkretną zmianę dla której ustalamy grafik
+    public static function GenerateFormSelectForShifts(string $department_ID)
     {
-        $shiftsArray = array();
-
-        $conn = new ConnectToDatabase;
-        $mysqliAdm = $conn -> connAdminPass();
-        $sqlSelectAllRoles = "SELECT * FROM shifts WHERE dep_id = $depID;";
-        $result = $mysqliAdm->query($sqlSelectAllRoles);
+        //Połączenie z bazą danych
+        $access_Connection = ConnectToDatabase::connAdminPass();
+        //Polecenie SQL do wybrania wszytskich zmian z tabeli shifts dla konkretnego działu
+        $sql_Query_Selection = "SELECT * FROM shifts WHERE dep_id = $department_ID;";
+        //Przypisanie rezultatu wykonania zapytania do bazy danych
+        $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
+        //Generowanie formularza w HTMLu
         echo '<form method="post">';
         echo '<select font-size: 1vw" name="shiftID">';
-        while($row = $result->fetch_assoc())
-        {               
+        while($row = $result_Of_Selection->fetch_assoc())
+        {   
+            //Stworzenie opcji które po wybraniu wysyłają cały formularz            
             echo '<option onclick="this.form.submit();" value='.$row['id'].'>'.$row['startHour'].'-'.$row['endHour'].'<i> ('.$row['name'].')</i></option>';
         }
         echo '</select>';
-        echo '</form>';
-        $result->free();
-        unset($conn);
-        
+        echo '</form>';        
     }
 
 

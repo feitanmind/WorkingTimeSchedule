@@ -23,9 +23,8 @@ class ConnectToDatabaseTest extends \PHPUnit\Framework\TestCase
 
     public function test_ShouldReturnStringWhenFunctionWasInvoked()
     {
-        $conn = new App\ConnectToDatabase;
-        $sql = $conn -> connAdminPass();
-        $status = $sql->stat();
+        $access_Connection = App\ConnectToDatabase::connAdminPass();
+        $status = $access_Connection->stat();
         $this -> assertStringContainsString("Uptime", $status);
         unset($conn); 
     }

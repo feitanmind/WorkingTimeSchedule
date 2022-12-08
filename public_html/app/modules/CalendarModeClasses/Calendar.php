@@ -1,5 +1,9 @@
 <?php
 namespace App;
+
+use PHPUnit\Util\Exception;
+use function PHPUnit\Framework\throwException;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -50,26 +54,26 @@ class Calendar
         //Sprawdzamy jaka odległość w dniach dzieli ostatni dzień miesiąca od końca naszej tabeli
         $daysOut = $drawingFields - ($spaceFromMonday + $numberDaysInMonth);
         //Ustawiamy dni tygodnia
-        $namesDaysOfWeek = array('Monday','Tuesday','Wednesday','Thursday','Saturday','Sunday');
+        $namesDaysOfWeek = array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
 
         //Rysujemy początek
         echo '<div id="calM" class="mainCalendar">';
  
         foreach($namesDaysOfWeek as $nameOfDay)
         {
-            echo "<div class=\"dayOfTheWeek\" name>$nameOfDay</div>";
+            echo "<div class=\"dayOfTheWeek nameDayOfTheWeek\" name>$nameOfDay</div>";
         }
         //Rysujemy odstęp który wcześniej wyliczylismy
         for ($i = $spaceFromMonday; $i > 0; $i--)
         {
-            echo '<div class="dayOfTheWeek outDay" style="background-color: grey;"></div>';
+            echo '<div class="dayOfTheWeek outDay"></div>';
         }
         
         //Rysujemy wszsytkie pola miesiąca 
         for($j = 1; $j <= $numberDaysInMonth; $j++)
         {
             $workingPeople = $this->Days[$j-1]->Shifts[0]->EmployeesWorking;
-            $vacationPeople = $this->Days[$j-1]->Shifts[0]->EmployeesWorking;
+            $vacationPeople = $this->Days[$j-1]->Shifts[0]->EmployeesVacation;
 
             echo '<div class="dayOfTheWeek"  id="day'.$j.'">'
                     .'<div class="numberOfDay"><p>'.$j.'</p>
@@ -77,25 +81,25 @@ class Calendar
                         <div id="remP" onclick="createFormToRemovePersonFormShift(this);">REMOVE</div>
                      </div>'
                     ."<div class=\"dayBody\">";
-                    echo "Working:";
+                    echo "Working:<div id=\"working\">";
                     foreach($workingPeople as $workingPerson)
                     {
-                        echo $workingPerson->name;
+                        echo  "<div class=\"userW\">$workingPerson->name</div>";
                     }
-                    echo "<br>Vacation:";
+                    echo "</div>Vacation:<div id=\"vacation\">";
                     foreach($vacationPeople as $vacationingPerson)
                     {
-                        echo $vacationingPerson->name;
+                        echo "<div class=\"userV\">$vacationingPerson->name</div>";
                     }
                     
-                    echo "</div>
+                    echo "</div></div>
                              
                   </div>";
         }
         //Rysujemy dni po końcu miesiąca
         for($l = $daysOut; $l > 0; $l--)
         {
-            echo '<div class="dayOfTheWeek outDay" style="background-color: grey;"></div>';
+            echo '<div class="dayOfTheWeek outDay"></div>';
         }
         //Koniec rysowania kalendarza
         echo '</div>';
@@ -132,9 +136,9 @@ class Calendar
                                                                         \"EmployeesVacation\" : [";
                                                                         if(!empty($shift->EmployeesVacation))
                                                                         {
-                                                                            foreach($shift->EmployeesVacation as $employee)
+                                                                            foreach($shift->EmployeesVacation as $kemployee)
                                                                             {
-                                                                                $JSONMonthEncode=$JSONMonthEncode."{UserId: $employee->user_id},";
+                                                                                $JSONMonthEncode=$JSONMonthEncode."{UserId: $kemployee->user_id},";
                                                                             }
                                                                             $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
                                                                         }
@@ -168,7 +172,8 @@ class Calendar
         //echo "____________<br>";
         //$JSONMonthDecode = new b_Month();
         $month = new Calendar($_monthNumber, $_year,$depId);
-        
+        $t = false;
+        $u = 1;
         while(strpos($step, "NumberOfDay") != false)
         {
             $position = strpos($step, "NumberOfDay");
@@ -195,6 +200,7 @@ class Calendar
             $day = new Day($_numberOfDay, $depId);
             //echo $step;
             //while
+            
             while(strpos($step, "ShiftID"))
             {
                 $position = strpos($step, "ShiftID");
@@ -232,22 +238,35 @@ class Calendar
 
                     }
                 $_shift->EmployeesWorking = $_arrayOfUsers;
-                $_arrayOfUsers = array();
+                unset($_arrayOfUsers);
+                $_arrayOfUsers2 = array();
 
                 $step = $step4;
                 $step = substr($step, $positionEndOfWorking);
+                
+                    
+                
                 //echo "_____________VACATION<br>";
+
                 while(strpos($step,"UserId") != false)
                     {
                         $position = strpos($step,"UserId");
                         $step = substr($step, $position+8);
+                    //     if(!$t){
+
+                    //         $step8 = $step;
+                    // $t = true;
+                    //     echo $step8;
+                    //     throw new Exception("hh");
+                    // }
                         $_userId = substr($step,0, strpos($step,"}"));
+                    //echo "shift id:" . $_shiftId . "vac: " . $_userId."<br>"; 
                         //dodanie użytkownika do shiftu
-                        array_push($_arrayOfUsers, new User($_userId));
+                        array_push($_arrayOfUsers2, new User($_userId));
                         //echo "______________________User-Id: $_userId <br>"; 
 
                     }
-                $_shift->EmployeesVacation = $_arrayOfUsers;
+                $_shift->EmployeesVacation = $_arrayOfUsers2;
                 $day->ActualizeShifts($_shift);
                 $step = $step2;
             }
@@ -256,9 +275,12 @@ class Calendar
 
         }
 
-        echo "TEST<br>";
-    //    echo $month->Days[0]->Shifts[0]->EmployeesWorking[0]->name;
-
+        //echo "TEST<br>";
+        //echo $month->Days[0]->Shifts[0]->EmployeesVacation[1]->name;
+        //echo $step8;
+        echo "<div style=\"width: 200px; height: 400px; overflow: auto;\">";
+        print_r($month->Days[0]->Shifts[0]->EmployeesVacation);
+        echo "</div>";
         return $month;
     }
     public function SignUserToWorkInDay($user,$dayId, $shiftId)
@@ -278,6 +300,59 @@ class Calendar
     {
         $keyToDelete = array_search($user,$this->Days[$dayId]->Shifts[$shiftId]->EmployeesVacation);
         array_splice($this->Days[$dayId]->Shifts[$shiftId]->EmployeesWorking,$keyToDelete);
+    }
+    //Dodawanie nowego kalendarza do bazy danych
+    public function PushCalendarToDataBase($role_Id,$calendar)
+    {
+        //Połączenie się do bazy danych
+        $access_Connection = ConnectToDatabase::connAdminPass();
+        //Serializacja obiektu Calendar do formatu JSON
+        $encoded_Calendar = json_encode($calendar);
+        //Liczba lat ma być przetrzymywany kalendarz
+        $expire_Years = 2;
+        //Miesiąc w formacie daty
+        $month = date("Y-m-d", mktime(0,0,0,$this->MonthNumber,1,$this->Year));
+        //Data wygaśnięcia
+        $expire = date("Y-m-d", mktime(0,0,0,$this->MonthNumber,1,$this->Year + $expire_Years));
+        //Identyfikator działu/oddziału
+        $department_Id = $this->Department;
+        //Dodawanie do bazy danych rekordu - do tabeli calendar dodawany jest nowy kalendarz
+        $sql_Insertion_Query = "INSERT INTO calendar(monthDate,depId,roleId,days,expireDate) VALUES('$month',$department_Id,$role_Id,'$encoded_Calendar','$expire');";
+        //Egzekwowanie powyższego polecenia sql
+        $access_Connection->query($sql_Insertion_Query);
+    }
+    public function UpdateCalendarInDatabase()
+    {
+
+    }
+    //Funkcja zwraca obiekt Calendar - gdy istnieje w bazie danych to z bazy -gdy nie istnieje w bazie danych to tworzy nowy obiekt
+    public static function CreateWorkingCalendar($department_ID, $role_ID,$month_Number,$year)
+    {
+        //Data miesiąca
+        $month_Date = date("Y-m-d",mktime(0,0,0,$month_Number,1,$year));
+        //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
+        $access_Connection= ConnectToDatabase::connAdminPass();
+        //Znalezienie zserialiowanego kalendarza
+        $sql = "SELECT days FROM calendar WHERE monthDate = '$month_Date' AND roleId = $role_ID AND depId = $department_ID";
+        //Przypisanie wyniku zapytania do zmiennej
+        $result_Of_Query = $access_Connection ->query($sql);
+        //Sprawdzenie czy istnieje podany wpis poprzez weryfikację rezultatu
+        if ($result_Of_Query->num_rows <= 0)
+        {
+            //Zwracanie nowostworzonego kalendarza
+            return new Calendar($month_Number, $year, $department_ID);
+        }
+        else
+        {
+            echo "hope";
+            //Przypisanie wyniku do postaci tablicy asocjacyjnej
+            $row = $result_Of_Query->fetch_assoc();
+            //Zwracanie zdeserializowanego obiektu typu Calendar
+            $calend = json_decode($row['days']);
+            $calend2 = new Calendar($month_Number, $year, $department_ID);
+            foreach ($calend as $key => $value) $calend2->{$key} = $value;
+            return $calend2;
+        }
     }
 
     public function RemoveMonth()

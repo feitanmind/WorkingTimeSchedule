@@ -185,36 +185,66 @@ input{
     flex-direction: column;
     align-items: center;
 }
-.calendarMode table{
-    all:unset;
-}
-.calendarMode td{
-    width: 9vw;
-}
+
 .mainCalendar{
     display: flex;
     flex-wrap:wrap;
     width: 95%;
-    height: 73%;
+    height: 70%;
     /* margin-left: 2vw; */
 }
 .dayOfTheWeek{
     background-color: #fff;
     width: 9vw;
-    height: 12vh;
+    height: 13vh;
     outline: 0.15vw solid #969696;
 }
 .outDay{
     background-color: #cacaca;
+
+}
+.nameDayOfTheWeek
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 5%;
+    /* outline-color: white; */
+    
 }
 .printCalendar{
     align-self: flex-end;
     margin-right: 2vw;
     color: white;
 }
+#working
+{
+    display: flex;
+    gap: 0.2vw;
+}
+.userW
+{
+    background-color: rgb(202, 216, 243);
+    padding: 0.1vw;
+    border: solid 0.1vw cornflowerblue;
+    border-radius: 0.1vw;
+}
+#vacation
+{
+    display: flex;
+    gap: 0.1vw;
+}
+.userV
+{
+    background-color: rgb(183, 188, 197);
+    padding: 0.1vw;
+    border: solid 0.1vw rgb(42, 53, 75);
+    border-radius: 0.1vw;
+}
 select{
     width: 100%;
 }
+
 /* PANEL RIGHT  */
 .rightPanel
 {

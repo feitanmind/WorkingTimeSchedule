@@ -131,7 +131,7 @@ error_reporting(E_ALL);
         // How many roles ?
         for($r = 1; $r <= $this->howManyRoles(); $r++)
         {
-            $createNewMonth = "INSERT INTO calendar (month,dep_id,role_id,days,expire,working_days) VALUES ('$month',$dep_id,$r,'$dayBody','$expire',$countWorkingDays)";
+            $createNewMonth = "INSERT INTO calendar (month,dep_id,role_id,days,expire) VALUES ('$month',$dep_id,$r,'$dayBody','$expire')";
             if($mysqliAdm ->query($createNewMonth) !== TRUE)
             {
                 unset($conn);

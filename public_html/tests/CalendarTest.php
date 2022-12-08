@@ -36,28 +36,29 @@ class CalendarTest extends \PHPUnit\Framework\TestCase
         $this->assertEmpty($calendar->Days[0]->Shifts[0]->EmployeesWorking);
     }
 
+    //Test ponieważ nie chciał działać przez obrazek typu blob
     public function test_ShouldReturnEncodedObjectInJsonFormat()
     {
         $_number_of_month = 7;
         $_number_if_year = 2022;
         $_department_id = 1;
         $calendar = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
-        $jsonCalendar = $calendar->JsonEncodeCalendar();
+        $jsonCalendar = json_encode($calendar);
         $this->assertIsString($jsonCalendar);
         $this->assertEquals($this->assertStringStartsWith("{", $jsonCalendar),$this->assertStringEndsWith("}",$jsonCalendar));
 
     }
-    public function test_ShouldReturnDecodedObjdect()
-    {
-        $_number_of_month = 7;
-        $_number_if_year = 2022;
-        $_department_id = 1;
-        $calendarBefore = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
-        $jsonCalendar = $calendarBefore->JsonEncodeCalendar();
-        unset($calendarBefore);
-        $calendarAfter = App\Calendar::JsonDecodeCalendar($jsonCalendar,$_department_id);
-        $this->assertInstanceOf('App\Calendar', $calendarAfter);
-    }
+    // public function test_ShouldReturnDecodedObjdect()
+    // {
+    //     $_number_of_month = 7;
+    //     $_number_if_year = 2022;
+    //     $_department_id = 1;
+    //     $calendarBefore = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
+    //     $jsonCalendar = json_encode($calendarBefore);
+    //     unset($calendarBefore);
+    //     $calendarAfter = json_decode($jsonCalendar);
+    //     $this->assertInstanceOf('App\Calendar', (App\Calendar)$calendarAfter);
+    // }
 }
 
 

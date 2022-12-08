@@ -13,6 +13,7 @@
     require __DIR__.'/../../app/ConnectToDatabase.php';
     require __DIR__.'/../../app/Login.php';
     $log = new Login;
+    unset($_SESSION['cal']);
     if(isset($_SESSION['header'])) header($_SESSION['header']);
     ?>
     <meta charset="UTF-8">

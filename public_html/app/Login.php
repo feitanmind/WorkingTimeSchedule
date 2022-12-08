@@ -23,12 +23,10 @@ class Login
 
             $userLogin = $_POST['usrlogin'];
             $cipher = new Encrypt;
-            $conn = new ConnectToDatabase;
             $userPassword = $cipher->encryptString($_POST['usrpass']);
-
-            $mysqliAdm = $conn -> connAdminPass();
+            $access_Connection = ConnectToDatabase::connAdminPass();
             $searchUserInDb = "SELECT users.id, users.login, users.password, users.email FROM users WHERE users.login = '$userLogin' OR users.email = '$userLogin'";
-            $result = $mysqliAdm ->query($searchUserInDb);
+            $result = $access_Connection ->query($searchUserInDb);
             if($result->num_rows > 0)
             {
                 $row = $result->fetch_assoc();

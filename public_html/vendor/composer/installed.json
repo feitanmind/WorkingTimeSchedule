@@ -74,6 +74,178 @@
             "install-path": "../doctrine/instantiator"
         },
         {
+            "name": "hiper/gateway-core",
+            "version": "1.0.2",
+            "version_normalized": "1.0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xiaonian0430/gateway-core.git",
+                "reference": "828611563de6c24b388cb38012fd139f269b1b40"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xiaonian0430/gateway-core/zipball/828611563de6c24b388cb38012fd139f269b1b40",
+                "reference": "828611563de6c24b388cb38012fd139f269b1b40",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.2"
+            },
+            "time": "2021-11-08T07:23:58+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "nikic/fast-route/src/functions.php",
+                    "phpunit/phpunit/src/Framework/Assert/Functions.php",
+                    "myclabs/deep-copy/src/DeepCopy/deep_copy.php",
+                    "symfony/polyfill-ctype/bootstrap.php",
+                    "opis/closure/functions.php",
+                    "guzzlehttp/guzzle/src/functions_include.php",
+                    "guzzlehttp/promises/src/functions_include.php"
+                ],
+                "psr-4": {
+                    "Cron\\": "dragonmantank/cron-expression/src/Cron/",
+                    "DeepCopy\\": "myclabs/deep-copy/src/DeepCopy/",
+                    "Prophecy\\": "phpspec/prophecy/src/Prophecy",
+                    "FastRoute\\": "nikic/fast-route/src/",
+                    "PhpParser\\": "nikic/php-parser/lib/PhpParser",
+                    "GuzzleHttp\\": "guzzlehttp/guzzle/src/",
+                    "Firebase\\JWT\\": "firebase/php-jwt/src",
+                    "Opis\\Closure\\": "opis/closure/src/",
+                    "EasySwoole\\DDL\\": "swoole-framework/ddl/src/",
+                    "EasySwoole\\Jwt\\": "swoole-framework/jwt/src/",
+                    "EasySwoole\\Log\\": "swoole-framework/log/src/",
+                    "EasySwoole\\ORM\\": "swoole-framework/orm/src/",
+                    "EasySwoole\\Rpc\\": "swoole-framework/rpc/src/",
+                    "EasySwoole\\Spl\\": "swoole-framework/spl/src/",
+                    "EasySwoole\\Http\\": "swoole-framework/http/src/",
+                    "EasySwoole\\Pool\\": "swoole-framework/pool/src/",
+                    "EasySwoole\\Task\\": "swoole-framework/task/src/",
+                    "GuzzleHttp\\Psr7\\": "guzzlehttp/psr7/src/",
+                    "EasySwoole\\Kafka\\": "swoole-framework/kafka/src/",
+                    "EasySwoole\\Redis\\": "swoole-framework/redis/src/",
+                    "Webmozart\\Assert\\": "webmozart/assert/src/",
+                    "EasySwoole\\Bridge\\": "swoole-framework/bridge/src/",
+                    "EasySwoole\\Config\\": "swoole-framework/config/src/",
+                    "EasySwoole\\Mysqli\\": "swoole-framework/mysqli/src/",
+                    "EasySwoole\\Socket\\": "swoole-framework/socket/src/",
+                    "EasySwoole\\Command\\": "swoole-framework/command/src/",
+                    "EasySwoole\\Phpunit\\": "swoole-framework/phpunit/src/",
+                    "EasySwoole\\Session\\": "swoole-framework/session/src/",
+                    "EasySwoole\\Trigger\\": "swoole-framework/trigger/src/",
+                    "EasySwoole\\Utility\\": "swoole-framework/utility/src/",
+                    "GuzzleHttp\\Promise\\": "guzzlehttp/promises/src/",
+                    "EasySwoole\\Validate\\": "swoole-framework/validate/src/",
+                    "EasySwoole\\Component\\": "swoole-framework/component/src/",
+                    "EasySwoole\\RedisPool\\": "swoole-framework/redis-pool/src/",
+                    "Doctrine\\Instantiator\\": "doctrine/instantiator/src/Doctrine/Instantiator/",
+                    "EasySwoole\\Annotation\\": "swoole-framework/annotation/src/",
+                    "EasySwoole\\EasySwoole\\": "swoole-framework/easyswoole/src/",
+                    "EasySwoole\\MysqliPool\\": "swoole-framework/mysqli-pool/src/",
+                    "EasySwoole\\ParserDown\\": "swoole-framework/parsedown/src/",
+                    "Symfony\\Polyfill\\Ctype\\": "symfony/polyfill-ctype",
+                    "EasySwoole\\HttpAnnotation\\": "swoole-framework/http-annotation/src/",
+                    "EasySwoole\\DoctrineAnnotation\\": "swoole-framework/doctrine-annotations/src/"
+                },
+                "classmap": [
+                    "phpunit/phpunit/src/",
+                    "phpunit/php-code-coverage/src/",
+                    "phpunit/php-file-iterator/src/",
+                    "phpunit/php-text-template/src/",
+                    "phpunit/php-invoker/src/",
+                    "phpunit/php-timer/src/",
+                    "sebastian/code-unit-reverse-lookup/src/",
+                    "sebastian/complexity/src/",
+                    "sebastian/environment/src/",
+                    "sebastian/lines-of-code/src/",
+                    "sebastian/version/src/",
+                    "sebastian/comparator/src/",
+                    "sebastian/diff/src/",
+                    "sebastian/exporter/src/",
+                    "sebastian/recursion-context/src/",
+                    "sebastian/cli-parser/src/",
+                    "sebastian/code-unit/src/",
+                    "sebastian/global-state/src/",
+                    "sebastian/object-reflector/src/",
+                    "sebastian/object-enumerator/src/",
+                    "sebastian/resource-operations/src/",
+                    "sebastian/type/src/",
+                    "phar-io/manifest/src/",
+                    "phar-io/version/src/",
+                    "theseer/tokenizer/src/",
+                    "ralouphie/getallheaders/src/getallheaders.php",
+                    "psr/http-factory/src/",
+                    "psr/http-message/src/",
+                    "psr/http-client/src/",
+                    "phpdocumentor/reflection-common/src/",
+                    "phpdocumentor/type-resolver/src/",
+                    "phpdocumentor/reflection-docblock/src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/xiaonian0430/gateway-core/issues",
+                "source": "https://github.com/xiaonian0430/gateway-core/tree/1.0.2"
+            },
+            "install-path": "../hiper/gateway-core"
+        },
+        {
+            "name": "karriere/json-decoder",
+            "version": "v4.2.0",
+            "version_normalized": "4.2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/karriereat/json-decoder.git",
+                "reference": "e40e6033c9b3d67c700bb4170468ef3be4c4ade1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/karriereat/json-decoder/zipball/e40e6033c9b3d67c700bb4170468ef3be4c4ade1",
+                "reference": "e40e6033c9b3d67c700bb4170468ef3be4c4ade1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 | ^8.0",
+                "php-di/phpdoc-reader": "^2.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^8.0 || ^9.0"
+            },
+            "time": "2022-11-11T10:36:37+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Karriere\\JsonDecoder\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes Pichler",
+                    "email": "johannes.pichler@karriere.at",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "JsonDecoder implementation that allows you to convert your JSON data into PHP class objects",
+            "keywords": [
+                "decoder",
+                "json"
+            ],
+            "support": {
+                "issues": "https://github.com/karriereat/json-decoder/issues",
+                "source": "https://github.com/karriereat/json-decoder/tree/v4.2.0"
+            },
+            "install-path": "../karriere/json-decoder"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.11.0",
             "version_normalized": "1.11.0.0",
@@ -312,18 +484,63 @@
             "install-path": "../phar-io/version"
         },
         {
-            "name": "phpmailer/phpmailer",
-            "version": "v6.7",
-            "version_normalized": "6.7.0.0",
+            "name": "php-di/phpdoc-reader",
+            "version": "2.2.1",
+            "version_normalized": "2.2.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "80fc8686fcd070267b98dae0ec228d5d67d94310"
+                "url": "https://github.com/PHP-DI/PhpDocReader.git",
+                "reference": "66daff34cbd2627740ffec9469ffbac9f8c8185c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/80fc8686fcd070267b98dae0ec228d5d67d94310",
-                "reference": "80fc8686fcd070267b98dae0ec228d5d67d94310",
+                "url": "https://api.github.com/repos/PHP-DI/PhpDocReader/zipball/66daff34cbd2627740ffec9469ffbac9f8c8185c",
+                "reference": "66daff34cbd2627740ffec9469ffbac9f8c8185c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "mnapoli/hard-mode": "~0.3.0",
+                "phpunit/phpunit": "^8.5|^9.0"
+            },
+            "time": "2020-10-12T12:39:22+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PhpDocReader\\": "src/PhpDocReader"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PhpDocReader parses @var and @param values in PHP docblocks (supports namespaced class names with the same resolution rules as PHP)",
+            "keywords": [
+                "phpdoc",
+                "reflection"
+            ],
+            "support": {
+                "issues": "https://github.com/PHP-DI/PhpDocReader/issues",
+                "source": "https://github.com/PHP-DI/PhpDocReader/tree/2.2.1"
+            },
+            "install-path": "../php-di/phpdoc-reader"
+        },
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "v6.7.1",
+            "version_normalized": "6.7.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "49cd7ea3d2563f028d7811f06864a53b1f15ff55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/49cd7ea3d2563f028d7811f06864a53b1f15ff55",
+                "reference": "49cd7ea3d2563f028d7811f06864a53b1f15ff55",
                 "shasum": ""
             },
             "require": {
@@ -333,17 +550,18 @@
                 "php": ">=5.5.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "doctrine/annotations": "^1.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+                "doctrine/annotations": "^1.2.6 || ^1.13.3",
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcompatibility/php-compatibility": "^9.3.5",
                 "roave/security-advisories": "dev-latest",
                 "squizlabs/php_codesniffer": "^3.7.1",
-                "yoast/phpunit-polyfills": "^1.0.0"
+                "yoast/phpunit-polyfills": "^1.0.4"
             },
             "suggest": {
                 "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
+                "ext-openssl": "Needed for secure SMTP sending and DKIM signing",
                 "greew/oauth2-azure-provider": "Needed for Microsoft Azure XOAUTH2 authentication",
                 "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
                 "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
@@ -351,7 +569,7 @@
                 "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
                 "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
             },
-            "time": "2022-12-05T10:56:35+00:00",
+            "time": "2022-12-08T13:30:06+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -383,7 +601,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.7"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.7.1"
             },
             "funding": [
                 {

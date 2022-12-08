@@ -9,81 +9,73 @@ namespace App;
         public $email;
         public $department;
         public $role;
-        public $avatar;
+        //public $avatar;
         public $user_id;
         public $custom_id;
         public $full_time;
         public $dep_id;
+        public $role_id;
 
-        // wyciąganie nazwy z tabeli po id
+
+        // Wyciąganie nazwy z tabeli po id
         static private function selectName($id, $tableName)
         {
-            //połączenie z bazą danych
-            $conn = new ConnectToDatabase;
-            $connectionWithAdminCredentials = $conn-> connAdminPass();
-            //zapytanie do bazy
+            //Połączenie z bazą danych
+            $access_Connection = ConnectToDatabase::connAdminPass();
+            //Zapytanie SQL do bazy 
             $sql = "SELECT name FROM $tableName WHERE id=$id";
-            $res = $connectionWithAdminCredentials -> query($sql);
+            $res = $access_Connection -> query($sql);
             //zamienienie wyniku na tablicę asocjacyjną
             $row = $res->fetch_assoc();
-            //wyciągnięcie wyniku pod indexem name
+            //Wyciągnięcie wyniku pod indexem name
             $nameOfObj = $row['name'];
-            //zakończenie połączenia z bazą danych
-            $res->free();
-            unset($conn);
-            //zwrócenie wartości
+            //Zwrócenie wartości
             return $nameOfObj;
 
         }
 
         public function __construct($user_id)
         {
-            // Tworzymy nowe połączenie do bazy danych 
-            $connectionToDatabase = new ConnectToDatabase;
-            // Łączymy się przy pomocy poświadczeń administratora
-            $connectionWithAdminCredentials = $connectionToDatabase -> connAdminPass();
+            //Połączenie z bazą danych
+            $access_Connection = ConnectToDatabase::connAdminPass();
 
             //Zapytanie do bazy danych w języku SQL 
-            $selectAllUserData = "SELECT * FROM users INNER JOIN user_data ON users.id = user_data.usr_id WHERE users.id = $user_id";
+            $sql_Query_Selection= "SELECT * FROM users INNER JOIN user_data ON users.id = user_data.usr_id WHERE users.id = $user_id";
             //Wywołanie polecenia poprzez połączenie z poświadczeniami Administratora
-            $resultUserData = $connectionWithAdminCredentials -> query($selectAllUserData);
+            $result_User_Data = $access_Connection -> query($sql_Query_Selection);
 
             //Sprawdzenie czy nie otrzymaliśmy pustej odpowiedzi sprawdzając pole obiektu zawierające liczbę wierszy odpowiedzi
-            if($resultUserData->num_rows > 0)
+            if($result_User_Data->num_rows > 0)
             {
                 //Pewność że otrzymamy tylko jeden wiersz gwarantuje nam że nie musimy zapętlać całej operacji
                 //Konwertujemy odpowiedź bazy danych na tablicę asocjacyjną
-                $row = $resultUserData->fetch_assoc();
+                $row = $result_User_Data->fetch_assoc();
                 $this->name =                   $row['name'];
                 $this->surname =                $row['surname'];
                 $this->encrypted_password =     $row['password'];
                 $this->email =                  $row['email'];
-                $this->avatar =                 $row['avatar'];
+                //$this->avatar =                 $row['avatar'];
                 $this->user_id =                $row['id'];
                 $this->custom_id =              $row['custom_id'];
                 $this->full_time =              $row['full_time'];
                 $this->dep_id =                 $row['dep_id'];
                 $dep_id =                       $row['dep_id'];
                 $role_id =                      $row['role_id'];
-
+                $this->role_id = $row['role_id'];
                 $this->department =             $this->selectName($dep_id,'department');
-                $this->role =                   $this->selectName($role_id,'roles');
-                
-                
+                $this->role =                   $this->selectName($role_id,'roles');      
             }
             else
             {
                 echo "Error: Can't find user in database";
             }
-            $resultUserData->free();
-            unset($connectionToDatabase);
-
         }
 
         // Zwraca dane użytkownika 
         public function getUserData()
         {
-            $userCredentials = '<img src="data:image/png;base64,'.base64_encode($this->avatar).'"/>'
+            //data:image/png;base64,'.base64_encode($this->avatar).'
+            $userCredentials = '<img src="https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916__340.png"/>'
             .'<h2>'.$this->name. ' '. $this->surname. '</h2>'
             .'<p>UserID: '.$this->user_id.'</p>'
             .'<p>Department: '.$this->department.'</p>'
@@ -97,29 +89,24 @@ namespace App;
         public function getListOfUsers()
         {
             // Tworzymy nowe połączenie do bazy danych 
-            $connectionToDatabase = new ConnectToDatabase;
-            // Łączymy się przy pomocy poświadczeń administratora
-            $connectionWithAdminCredentials = $connectionToDatabase -> connAdminPass();
+            $access_Connection = ConnectToDatabase::connAdminPass();
             $selectListOfUserSQL = "SELECT name, surname, usr_id FROM user_data WHERE dep_id = $this->dep_id";
-            $resultWorkersData = $connectionWithAdminCredentials -> query($selectListOfUserSQL);
-            echo '<select id="usersToAdd" style="width: 100%;height:80%; font-size: 1vw;" name="usersToAdd" multiple>';
+            $resultWorkersData = $access_Connection -> query($selectListOfUserSQL);
+            echo '<select id="usersToAdd" style="width: 100%;height:80%; font-size: 1vw;" name="usersToAdd[]" multiple="multiple">';
             while($row = $resultWorkersData->fetch_assoc())
             {
                 echo '<option value="'.$row['usr_id'].'">'.$row['name']. ' '. $row['surname'].'</option>';
             }
             echo '</select>';
-            unset($connectionToDatabase);
         }
 
         public function addUser($login, $password, $email, $name, $surname, $dep_id, $role_id, $avatar, $custom_id, $full_time)
         {
             // Tworzymy nowe połączenie do bazy danych 
-            $connectionToDatabase = new ConnectToDatabase;
-            // Dodawanie szyfrowania 
+            $access_Connection = ConnectToDatabase::connAdminPass();
             require_once "Encrypt.php";
             $cipher = new Encrypt;
-            // Łączymy się przy pomocy poświadczeń administratora
-            $connectionWithAdminCredentials = $connectionToDatabase -> connAdminPass();
+
             $encrypted_password = $cipher->encryptString($password);
             $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$password'";
             $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
@@ -128,30 +115,25 @@ namespace App;
 
             try
             {
-                $connectionWithAdminCredentials->query($sqlCreateUserInDataBase);
-                $connectionWithAdminCredentials->query($sqlInsertIntoUsers);
+                $access_Connection->query($sqlCreateUserInDataBase);
+                $access_Connection->query($sqlInsertIntoUsers);
 
-                $resultIdOfUser = $connectionWithAdminCredentials->query($selectUserId);
+                $resultIdOfUser = $access_Connection ->query($selectUserId);
                 $row = $resultIdOfUser->fetch_assoc();
                 $idOfUser = $row['id'];
                 $sqlInsertIntoUserData = "INSERT INTO user_data(name,surname,dep_id,role_id,avatar,usr_id,custom_id, full_time, hours_of_work, days_of_holiday) VALUES('$name','$surname',$dep_id,$role_id,'$avatar',$idOfUser,$custom_id,$full_time,'[]','[]');";
 
-                $connectionWithAdminCredentials->query($sqlInsertIntoUserData);
-                
-                unset($connectionToDatabase);
+                $access_Connection->query($sqlInsertIntoUserData);
+
                 return true;
                 
             }
             catch (\Exception $e)
             {
-                unset($connectionToDatabase);
                 return $e;
             }
         }
-        public function addUserToDay()
-        {
 
-        }
 
 
     }

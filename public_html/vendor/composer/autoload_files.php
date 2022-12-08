@@ -7,5 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+    '816fb4b06e8e5ad9d2ce823926282007' => $vendorDir . '/hiper/gateway-core/nikic/fast-route/src/functions.php',
+    'dbdb30b36ca0840a320208b10392fe5b' => $vendorDir . '/hiper/gateway-core/phpunit/phpunit/src/Framework/Assert/Functions.php',
+    'a78df3b67d316ba2fbef273b831830ed' => $vendorDir . '/hiper/gateway-core/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+    '8439c8e13ed98016718982799e5980f8' => $vendorDir . '/hiper/gateway-core/symfony/polyfill-ctype/bootstrap.php',
+    'd26456ac32af0f97aa871b0daf32c54f' => $vendorDir . '/hiper/gateway-core/opis/closure/functions.php',
+    'b3d4adde0ab569d1f7f0c5f8b7ec4579' => $vendorDir . '/hiper/gateway-core/guzzlehttp/guzzle/src/functions_include.php',
+    '132b6166b9c41e9589cb18f19a7e4db6' => $vendorDir . '/hiper/gateway-core/guzzlehttp/promises/src/functions_include.php',
     'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
 );

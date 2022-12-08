@@ -12,6 +12,7 @@
     require __DIR__.'/../../app/Encrypt.php';
     require __DIR__.'/../../app/ConnectToDatabase.php';
     require __DIR__.'/../../app/Login.php';
+    unset($_SESSION['cal']);
     $log = new Login;
     if(isset($_SESSION['header'])) header($_SESSION['header']);
     ?>
@@ -21,7 +22,7 @@
     <meta name="keywords" content="working, work, schedule, time">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Working Time Schedule</title>
-    <script src="/../wokingTimeSchedule/app/scripts/jquery-3.6.0.min.js"></script>
+    <script src="/../app/scripts/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../style/clear_css.css">
     <link rel="stylesheet" type="text/css" href="../style/style.css">
     <script src="/../app/scripts/loadingPage.js"></script>

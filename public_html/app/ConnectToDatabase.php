@@ -18,7 +18,7 @@ class ConnectToDatabase
     }
 
 
-    public function connAdminPass()
+    public static function connAdminPass()
     {
         $mysqli = new \MySQLi('localhost', 'testowy1','testowy1','app_commercial');
         if($mysqli->connect_errno)

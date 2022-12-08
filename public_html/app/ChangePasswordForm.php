@@ -60,15 +60,14 @@
                 $newPasswordDecrypted = $_POST['newpass'];
                 $cipher = new Encrypt();
                 $newPasswordForUser = $cipher->encryptString($_POST['newpass']);
-                $conn = new ConnectToDatabase;
-                $connAuth = $conn -> connAdminPass();
+                $access_Connection= ConnectToDatabase::connAdminPass();
                 //Change password in user field
                 $sqlUpdatePassword = "UPDATE users SET password='$newPasswordForUser' WHERE id = $uid;";
 
-                if($connAuth->query($sqlUpdatePassword) === TRUE)
+                if($access_Connection->query($sqlUpdatePassword) === TRUE)
                 {
                     $findUsernameInDatabase = "SELECT login FROM users WHERE id = $uid";
-                    $resultSelectLogin = $connAuth->query($findUsernameInDatabase);
+                    $resultSelectLogin = $access_Connection->query($findUsernameInDatabase);
                     $rowSelectLogin = $resultSelectLogin->fetch_assoc();
 
                     $changePasswordForDatabaseSQL = "SET PASSWORD FOR '".$rowSelectLogin['login']."'@'localhost' = PASSWORD('".$newPasswordDecrypted."');";
