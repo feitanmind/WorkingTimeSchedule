@@ -21,13 +21,13 @@
     <meta name="keywords" content="working, work, schedule, time">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Working Time Schedule</title>
-    <script src="/../wokingTimeSchedule/app/scripts/jquery-3.6.0.min.js"></script>
+    <script src="/../app/scripts/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../style/clear_css.css">
     <link rel="stylesheet" type="text/css" href="../style/style.css">
-    <script src="/../wokingTimeSchedule/app/scripts/loadingPage.js"></script>
-    <script src="/../wokingTimeSchedule/app/scripts/animation-login.js"></script>
-    <script src="/../wokingTimeSchedule/app/scripts/showpass.js"></script>
-    <script src="/../wokingTimeSchedule/app/scripts/closeRecoverPassForm.js"></script>
+    <script src="/../app/scripts/loadingPage.js"></script>
+    <script src="/../app/scripts/animation-login.js"></script>
+    <script src="/../app/scripts/showpass.js"></script>
+    <script src="/../app/scripts/closeRecoverPassForm.js"></script>
     <link rel="icon" type="image/x-icon" href="../style/img/favicon.ico">
 
 </head>
