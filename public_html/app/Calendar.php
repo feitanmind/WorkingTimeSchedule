@@ -257,7 +257,7 @@ class Calendar
         }
 
         echo "TEST<br>";
-        echo $month->Days[0]->Shifts[0]->EmployeesWorking[0]->name;
+    //    echo $month->Days[0]->Shifts[0]->EmployeesWorking[0]->name;
 
         return $month;
     }
