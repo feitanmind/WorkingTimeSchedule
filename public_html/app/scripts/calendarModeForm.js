@@ -5,7 +5,6 @@ function closeAddUser()
 // Tworzenie formularza przeznaczonego do dodania osoby do zmiany
 function createFormToAddPersonToDay(obj)
 {
-    console.log("chuj")
     // Sprawdzenie czy jest otwarty prompt na innym dniu // Jeśli tak niszczymy go
     if(document.getElementById("newPrompt")) $('#newPrompt').remove();
     // Stworzenie nowego obiektu typu div
@@ -22,7 +21,7 @@ function createFormToAddPersonToDay(obj)
     //console.log(obj.parentElement.parentElement.childNodes[0].childNodes[0].innerText);
     newPrompt.innerHTML =" \
     <div id=\"newPrompt\"> \
-        <h3>Add user to shift<p onclick=\"closeAddUser()\" id=\"closeAddPrompt\">x</p></h3> \
+        <h3>Add user to shift<p onclick=\"closeAddUser(); hideAllAddAndRemoveControls();\" id=\"closeAddPrompt\">x</p></h3> \
         <form method=\"get\">\
             \
             <div id=\"listOfUsers\"> \
@@ -50,16 +49,17 @@ function createFormToRemovePersonFormShift(obj)
     //Nadanie mu id
     newPrompt.setAttribute("id","ok");
     var listOfUserOnDayToRemove = "";
-    obj.parentElement.parentElement.childNodes[1].childNodes[1].childNodes.forEach(elem => listOfUserOnDayToRemove += '<option>'+elem.innerHTML+'</option>')
-    listOfUserOnDayToRemove = '<form><select name="userToRemove" multiple>'+listOfUserOnDayToRemove+'</select></form>';
+    obj.parentElement.parentElement.childNodes[1].childNodes[1].childNodes.forEach(elem => listOfUserOnDayToRemove += '<option value="'+elem.getAttribute("personId")+'">'+elem.innerHTML+'</option>')
+    listOfUserOnDayToRemove = '<select name="userToRemove[]" multiple="multiple">'+listOfUserOnDayToRemove+'</select>';
     obj.disabled = true;
     //Podmienienie go na przygotowany template prompta
     newPrompt.innerHTML ="\
         <div id=\"newPrompt\">\
-            <h3>Remove person from shift<p onclick=\"closeAddUser()\" id=\"closeAddPrompt\">x</p></h3>\
+            <h3>Remove person from shift<p onclick=\"closeAddUser(); hideAllAddAndRemoveControls();\" id=\"closeAddPrompt\">x</p></h3>\
             \
             <form method=\"get\">\
                 <div id=\"listOfUsers\" style=\"width: 100%;\"><p>Users working in this day</p>"+listOfUserOnDayToRemove+"</div>\
+                <input type=\"text\" name=\"dayId\" value=\""+obj.parentElement.parentElement.childNodes[0].childNodes[0].innerText+"\"/>\
                 <input style=\"background-color: pink;\" type=\"submit\" value=\"Remove\"/>\
             </form>\
         </div>";

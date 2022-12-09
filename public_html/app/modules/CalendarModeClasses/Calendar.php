@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use PhpParser\Node\Stmt\Foreach_;
 use PHPUnit\Util\Exception;
 use function PHPUnit\Framework\throwException;
 
@@ -79,7 +80,7 @@ class Calendar
             $workingPeople = $this->Days[$j-1]->Shifts[0]->EmployeesWorking;
             $vacationPeople = $this->Days[$j-1]->Shifts[0]->EmployeesVacation;
 
-            echo '<div class="dayOfTheWeek"  id="day'.$j.'" onmouseover="document.getElementById(\'day'.$j.'\').children[0].children[1].style.display = \'block\'">'
+            echo '<div class="dayOfTheWeek"  id="day'.$j.'" onmouseover="showAddAndRemoveControls('.$j.')" onmouseout="hideAddAndRemoveControls('.$j.')">'
                     .'<div class="numberOfDay"><p><b>'.$j.'</b></p>
                         <div id="addP" onclick="createFormToAddPersonToDay(this);">+</div>
                         <div id="remP" onclick="createFormToRemovePersonFormShift(this);">-</div>
@@ -88,12 +89,12 @@ class Calendar
                     echo "Working:<div id=\"working\">";
                     foreach($workingPeople as $workingPerson)
                     {
-                        echo  "<div class=\"userW\">$workingPerson->name</div>";
+                        echo  "<div class=\"userW\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
                     }
                     echo "</div>Vacation:<div id=\"vacation\">";
                     foreach($vacationPeople as $vacationingPerson)
                     {
-                        echo "<div class=\"userV\">$vacationingPerson->name</div>";
+                        echo "<div class=\"userV\" personID=\"$workingPerson->user_id\" >$vacationingPerson->name</div>";
                     }
                     
                     echo "</div></div>
@@ -297,13 +298,26 @@ class Calendar
     }
     public function UnsignWorkingUserFormDay($user,$dayId,$shiftId)
     {
-        $keyToDelete = array_search($user,$this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesWorking);
-        array_splice($this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesWorking,$keyToDelete);
+        
+        $indexUserToDel = 0;
+        foreach($this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesWorking as $employee)
+        {
+            
+            if($employee->user_id == $user->user_id) break;
+
+            $indexUserToDel++;
+        }
+        echo "<script>console.log(\"User To Del: ".$indexUserToDel."\")</script>";
+        
+        array_splice($this->Days[$dayId - 1]->Shifts[$shiftId - 1]->EmployeesWorking, $indexUserToDel);
+        
+        //
     }
     public function UnsignVacationUserFormDay($user,$dayId,$shiftId)
     {
+        
         $keyToDelete = array_search($user,$this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesVacation);
-        array_splice($this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesWorking,$keyToDelete);
+        array_splice($this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesVacation,$keyToDelete);
     }
     //Dodawanie nowego kalendarza do bazy danych
     public function PushCalendarToDataBase($role_Id,$calendar)

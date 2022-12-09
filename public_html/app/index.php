@@ -23,7 +23,12 @@ require "modules/CalendarModeClasses/Day.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
+
     <script language="JavaScript">
     // window.onbeforeunload = confirmExit;
     // function confirmExit() {
@@ -62,6 +67,7 @@ require "modules/CalendarModeClasses/Day.php";
             ?>
             <!-- //Sprawdzenie czy formularz z dodaniem użytkownika został wysłany i dodanie użytkownika do obiektu calendar -->
             <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
+            <?php PHPScripts::REMOVE_USER_FROM_Day_Of_Calendar();?>
             <script>
                 var listOfUsers = document.getElementById("usersToAdd").outerHTML;
             </script>
@@ -94,5 +100,6 @@ require "modules/CalendarModeClasses/Day.php";
             Shift::GenerateFormSelectForShifts($_SESSION['dep_id']);
             ?>
         </div>
+        <script src="scripts/showCalendarDayControls.js"></script>
 </body>
 </html>

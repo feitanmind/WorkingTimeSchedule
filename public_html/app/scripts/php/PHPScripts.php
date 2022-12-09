@@ -55,9 +55,37 @@ class PHPScripts
     $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
     header("Location: $actual_link");
         
-
     }
 
+
+    }
+    public static function REMOVE_USER_FROM_Day_Of_Calendar()
+    {
+        if(isset($_GET['userToRemove']) &&isset($_GET['dayId']))
+        {
+            $dayId = $_GET['dayId'];
+            $users = $_GET['userToRemove'];
+            $shiftId = $_SESSION['shift_id'];
+            $month_Number = 1;
+            $year = 2022;
+            $department_ID = 1;
+
+            $calend = json_decode($_SESSION['calendar']);
+            $calend2 = new Calendar($month_Number, $year, $department_ID);
+            foreach ($calend as $key => $value) $calend2->{$key} = $value;
+            foreach($users as $user)
+            {
+                //echo "<script>console.log(\"".$user->user_id."'\")</script>";
+                $user2 = new User($user);
+                echo "<script>console.log(\"".$user2->user_id."\")</script>";
+                
+                $calend2->UnsignWorkingUserFormDay($user2, $dayId, $shiftId);
+
+            }
+            $_SESSION['calendar'] = json_encode($calend2);
+            // $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+            // header("Location: $actual_link");
+        }
     }
 }
 
