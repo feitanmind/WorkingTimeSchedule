@@ -4,7 +4,7 @@ date_default_timezone_set('America/Los_Angeles');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+require("../GeneralClasses/ConnectToDatabase.php");
 
 class EmailNotification
 {
@@ -18,7 +18,7 @@ public function recoverPass(string $userMail)
         $iv = 'dsadadas8f3ed6ft';
 
         //Connect to Db
-        $mysqli = new \MySQLi('localhost','testowy1','testowy1','app_comercial');
+        $mysqli = ConnectToDatabase::connAdminPass();
         $sql = "SELECT email, id FROM users WHERE email = '$userMail'";
         $res = $mysqli->query($sql);
         //Find Mail in database

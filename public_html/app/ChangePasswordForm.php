@@ -1,7 +1,7 @@
 <?php
     namespace App;
-    require "Encrypt.php";
-    require "ConnectToDatabase.php";
+    require "app/modules/GeneralClasses/Encrypt.php";
+    require "app/modules/GeneralClasses/ConnectToDatabase.php";
 ?>
 <html>
 <head>

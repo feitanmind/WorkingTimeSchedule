@@ -36,10 +36,14 @@ use PhpParser\JsonDecoder;
     }
     else
     {
-    echo $_SESSION['calendar'];
-    $cal23 = json_decode($_SESSION['calendar']);
+    //echo $_SESSION['calendar'];
+    //$cal23 = json_decode($_SESSION['calendar']);
+    
+
+    $calend = json_decode($_SESSION['calendar']);
     $cal = new Calendar(1,2022,1);
-    foreach ($cal23 as $key => $value) $class->{$key} = $value;
+    foreach ($calend as $key => $value) $cal->{$key} = $value;
+    //foreach ($cal23 as $key => $value) $class->{$key} = $value;
     // $cal = $jsonDecoder->decode($cal23);
     $cal->DrawCalendar();
     }

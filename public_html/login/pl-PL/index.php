@@ -9,9 +9,9 @@
     error_reporting(E_ALL);
  
    
-    require __DIR__.'/../../app/Encrypt.php';
-    require __DIR__.'/../../app/ConnectToDatabase.php';
-    require __DIR__.'/../../app/Login.php';
+    require __DIR__.'/../../app/modules/GeneralClasses/Encrypt.php';
+    require __DIR__.'/../../app/modules/GeneralClasses/ConnectToDatabase.php';
+    require __DIR__.'/../../app/modules/LoginClasses/Login.php';
     $log = new Login;
     unset($_SESSION['cal']);
     if(isset($_SESSION['header'])) header($_SESSION['header']);
@@ -115,7 +115,7 @@
     <div class="pong" id="pong3"></div>
     <div id="handguy"></div>
     <div id="dotguy"></div>
-    <iframe src="../../app/RequestToChangePassword.php" id="passchanger" style=" display: none; position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"></iframe>
+    <iframe src="../../app/modules/LoginClasses/RequestToChangePassword.php" id="passchanger" style=" display: none; position: absolute; z-index:2; width: 100vw; height: 100vh; margin:0;"></iframe>
     
 </body>
 </html>

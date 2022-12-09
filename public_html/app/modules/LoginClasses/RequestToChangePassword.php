@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="../login/style/frtpassstyle.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../login/style/frtpassstyle.css"/>
 </head>
 <body>
 <?php 
-    require "EmailNotification.php";
+    require "../GeneralClasses/EmailNotification.php";
     date_default_timezone_set('America/Los_Angeles');
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -18,7 +18,7 @@
 ?>
     <div class="pass-changer">
             <h1>Forgot password?</h1>        
-        <form method="post" action="../app/RequestToChangePassword.php">
+        <form method="post" action="RequestToChangePassword.php">
             <p>Insert your email below</p>
             <input type="text" name="umail" placeholder="INSERT YOUR EMAIL"/>
             <input type="submit" value="Send mail with recover"/>

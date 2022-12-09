@@ -16,7 +16,7 @@ class Shift
     {
         $this->Id = $id;
         // $this->Name = $name;
-        echo "DEPS".$depId;
+        //echo "DEPS".$depId;
         $this->Department = $depId;
         // $this->HoursPerShift = $hoursPerShift;
         // $this->StartHour = $startHour;

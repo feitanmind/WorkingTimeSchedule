@@ -3,15 +3,14 @@
 use PHPScripts;
 
 session_start();
-session_start();
 date_default_timezone_set('America/Los_Angeles');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+//Załączanie innych plików
 require "scripts/php/PHPScripts.php";
-require "ConnectToDatabase.php";
+require "modules/GeneralClasses/ConnectToDatabase.php";
 require "modules/CalendarModeClasses/User.php";
-// require "modules/CalendarModeClasses/Month.php";
 require "modules/CalendarModeClasses/Shift.php";
 require "modules/CalendarModeClasses/Role.php";
 require "modules/CalendarModeClasses/Calendar.php";
@@ -25,6 +24,12 @@ require "modules/CalendarModeClasses/Day.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    <script language="JavaScript">
+    // window.onbeforeunload = confirmExit;
+    // function confirmExit() {
+    //     return "Chcesz zamknąć stronę. Czy jesteś tego pewny? Wszystkie zmiany których nie zapisałeś zostaną utracone";
+    // }
+    // </script>
     <script src="scripts/jquery-3.6.0.min.js"></script>
     <title>Working time schedule</title>
 </head>
@@ -41,11 +46,13 @@ require "modules/CalendarModeClasses/Day.php";
         </div>
         
         <div class="userData">           
+            
+            <!-- //Sprawdzenie czy zostały ustawione zmienne sesyjne dla Shift i Role -->
+            <?php PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();?>
             <?php
-            //Sprawdzenie czy zostały ustawione zmienne sesyjne dla Shift i Role
-            PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();
             $user_id = $_SESSION['user_id'];
             $user = new User($user_id);
+            //echo $user->dep_id;
             $_SESSION['dep_id'] = $user->dep_id;
             // Wyświetlenie danych użytkownika
             echo $user->getUserData();
@@ -53,6 +60,8 @@ require "modules/CalendarModeClasses/Day.php";
             echo $user->getListOfUsers();
             echo '</div>';
             ?>
+            <!-- //Sprawdzenie czy formularz z dodaniem użytkownika został wysłany i dodanie użytkownika do obiektu calendar -->
+            <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
             <script>
                 var listOfUsers = document.getElementById("usersToAdd").outerHTML;
             </script>
@@ -62,15 +71,15 @@ require "modules/CalendarModeClasses/Day.php";
         <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block';document.getElementById('calendarMode').style.display = 'none'">Add user</div>
         <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Add shift</div>
     </div>
-
+    
     <!-- SECTION __________________________CENTER PANEL -->
     <div class="centerPanel">
-       
+        <!-- // Moduł: Dodawanie użytkownika / pracownika -->
         <div class="addUser" id="addUser">
             <?php include("modules/AddUserModule.php");?>
         </div>
 
-        
+        <!-- // Moduł: Obsługa grafiku w metodzie kalendarzowej -->
         <div class="calendarMode" id="calendarMode">
             <?php include("modules/CalendarModeModule.php");?>
         </div>
@@ -82,7 +91,7 @@ require "modules/CalendarModeClasses/Day.php";
             Role::displaySelectRolesForUser();   
             ?>
             <?php
-            Shift::GenerateFormSelectForShifts($user->dep_id);
+            Shift::GenerateFormSelectForShifts($_SESSION['dep_id']);
             ?>
         </div>
 </body>

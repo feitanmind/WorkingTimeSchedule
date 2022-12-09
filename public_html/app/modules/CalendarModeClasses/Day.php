@@ -10,7 +10,7 @@ class Day
     {
         $this->NumberOfDay = $numberOfDay;
         $this->Department = $department;
-        echo "DEPU".$department;
+        //echo "DEPU".$department;
         $this->InitializeShifts($department);
 
     }

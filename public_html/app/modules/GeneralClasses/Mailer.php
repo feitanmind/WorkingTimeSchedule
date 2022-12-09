@@ -4,7 +4,7 @@ namespace App;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../../../vendor/autoload.php';
 class Mailer
 {
     public function sendMail(string $nameAdrr, string $addrAdrr, string $mailSubject, string $mailBody)
