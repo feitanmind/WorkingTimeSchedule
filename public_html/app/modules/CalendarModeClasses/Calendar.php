@@ -22,6 +22,10 @@ class Calendar
         $this->Department = $department;
         $this->CreateDaysInMonth($monthNumber,$year,$department);
     }
+    public static function Get_Name_Of_Month($monthNumber,$year)
+    {
+        return date('F', mktime(0, 0, 0, 1, $monthNumber, $year));
+    }
     private function CreateDaysInMonth($monthNumber,$year,$department)
     {
         $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN,$monthNumber,$year);
@@ -55,13 +59,13 @@ class Calendar
         $daysOut = $drawingFields - ($spaceFromMonday + $numberDaysInMonth);
         //Ustawiamy dni tygodnia
         $namesDaysOfWeek = array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
-
+        echo '<div class="headerMainCalendar"><div class="monthArrow mArrowLeft">⤝</div><div id="nameOfMonth">' . $this::Get_Name_Of_Month($this->MonthNumber, $this->Year) . " ".$this->Year.'</div><div class="monthArrow mArrowRight";>⤞</div></div>';
         //Rysujemy początek
         echo '<div id="calM" class="mainCalendar">';
  
         foreach($namesDaysOfWeek as $nameOfDay)
         {
-            echo "<div class=\"dayOfTheWeek nameDayOfTheWeek\" name>$nameOfDay</div>";
+            echo "<div class=\"dayOfTheWeek nameDayOfTheWeek\">$nameOfDay</div>";
         }
         //Rysujemy odstęp który wcześniej wyliczylismy
         for ($i = $spaceFromMonday; $i > 0; $i--)
@@ -75,10 +79,10 @@ class Calendar
             $workingPeople = $this->Days[$j-1]->Shifts[0]->EmployeesWorking;
             $vacationPeople = $this->Days[$j-1]->Shifts[0]->EmployeesVacation;
 
-            echo '<div class="dayOfTheWeek"  id="day'.$j.'">'
-                    .'<div class="numberOfDay"><p>'.$j.'</p>
-                        <div id="addP" onclick="createFormToAddPersonToDay(this);">ADD</div>
-                        <div id="remP" onclick="createFormToRemovePersonFormShift(this);">REMOVE</div>
+            echo '<div class="dayOfTheWeek"  id="day'.$j.'" onmouseover="document.getElementById(\'day'.$j.'\').children[0].children[1].style.display = \'block\'">'
+                    .'<div class="numberOfDay"><p><b>'.$j.'</b></p>
+                        <div id="addP" onclick="createFormToAddPersonToDay(this);">+</div>
+                        <div id="remP" onclick="createFormToRemovePersonFormShift(this);">-</div>
                      </div>'
                     ."<div class=\"dayBody\">";
                     echo "Working:<div id=\"working\">";
@@ -104,202 +108,202 @@ class Calendar
         //Koniec rysowania kalendarza
         echo '</div>';
     }
-    public function JsonEncodeCalendar()
-    {
-        $JSONMonthEncode = "";
-        $JSONMonthEncode=$JSONMonthEncode. "{
-                            \"MonthNumber\":$this->MonthNumber,
-                            \"Year\":$this->Year,
-                            \"Days\":[
-                                ";
-                            foreach($this->Days as $day)
-                            {
-                              $JSONMonthEncode=$JSONMonthEncode."
-                                        {
-                                            \"NumberOfDay\": $day->NumberOfDay,
-                                            \"Shifts\": [
-                                                ";
-                                                foreach($day->Shifts as $shift)
-                                                {
-                                                    $JSONMonthEncode=$JSONMonthEncode. "{\"ShiftID\": $shift->Id,
-                                                                        \"EmployeesWorking\": [";
-                                                                        if(!empty($shift->EmployeesWorking))
-                                                                        {
-                                                                            foreach($shift->EmployeesWorking as $employee)
-                                                                            {
-                                                                                $JSONMonthEncode=$JSONMonthEncode."{UserId: $employee->user_id},"; 
-                                                                            }
-                                                                            $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
-                                                                        }
+    // public function JsonEncodeCalendar()
+    // {
+    //     $JSONMonthEncode = "";
+    //     $JSONMonthEncode=$JSONMonthEncode. "{
+    //                         \"MonthNumber\":$this->MonthNumber,
+    //                         \"Year\":$this->Year,
+    //                         \"Days\":[
+    //                             ";
+    //                         foreach($this->Days as $day)
+    //                         {
+    //                           $JSONMonthEncode=$JSONMonthEncode."
+    //                                     {
+    //                                         \"NumberOfDay\": $day->NumberOfDay,
+    //                                         \"Shifts\": [
+    //                                             ";
+    //                                             foreach($day->Shifts as $shift)
+    //                                             {
+    //                                                 $JSONMonthEncode=$JSONMonthEncode. "{\"ShiftID\": $shift->Id,
+    //                                                                     \"EmployeesWorking\": [";
+    //                                                                     if(!empty($shift->EmployeesWorking))
+    //                                                                     {
+    //                                                                         foreach($shift->EmployeesWorking as $employee)
+    //                                                                         {
+    //                                                                             $JSONMonthEncode=$JSONMonthEncode."{UserId: $employee->user_id},"; 
+    //                                                                         }
+    //                                                                         $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
+    //                                                                     }
                                                                         
-                                                                        $JSONMonthEncode=$JSONMonthEncode."],
-                                                                        \"EmployeesVacation\" : [";
-                                                                        if(!empty($shift->EmployeesVacation))
-                                                                        {
-                                                                            foreach($shift->EmployeesVacation as $kemployee)
-                                                                            {
-                                                                                $JSONMonthEncode=$JSONMonthEncode."{UserId: $kemployee->user_id},";
-                                                                            }
-                                                                            $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
-                                                                        }
+    //                                                                     $JSONMonthEncode=$JSONMonthEncode."],
+    //                                                                     \"EmployeesVacation\" : [";
+    //                                                                     if(!empty($shift->EmployeesVacation))
+    //                                                                     {
+    //                                                                         foreach($shift->EmployeesVacation as $kemployee)
+    //                                                                         {
+    //                                                                             $JSONMonthEncode=$JSONMonthEncode."{UserId: $kemployee->user_id},";
+    //                                                                         }
+    //                                                                         $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
+    //                                                                     }
                                                                         
-                                                                        $JSONMonthEncode=$JSONMonthEncode."]
-                                                                        },";    
+    //                                                                     $JSONMonthEncode=$JSONMonthEncode."]
+    //                                                                     },";    
                                                                         
-                                                }
-                                                $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
-                                                $JSONMonthEncode=$JSONMonthEncode."]
-                                            },";
-                                }
-                                $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
-                                $JSONMonthEncode=$JSONMonthEncode."]}";
-        return trim($JSONMonthEncode);
+    //                                             }
+    //                                             $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
+    //                                             $JSONMonthEncode=$JSONMonthEncode."]
+    //                                         },";
+    //                             }
+    //                             $JSONMonthEncode = substr($JSONMonthEncode,0,-1);
+    //                             $JSONMonthEncode=$JSONMonthEncode."]}";
+    //     return trim($JSONMonthEncode);
         
-    }
-    public static function JsonDecodeCalendar($json,$depId)
-    {
-        $position = strpos($json, "MonthNumber");
-        //echo "Pos num: ". $posMonthNumber;
-        $step = substr($json, $position+13);
+    // }
+    // public static function JsonDecodeCalendar($json,$depId)
+    // {
+    //     $position = strpos($json, "MonthNumber");
+    //     //echo "Pos num: ". $posMonthNumber;
+    //     $step = substr($json, $position+13);
         
-        $_monthNumber = substr($step, 0, strpos($step, ","));
-        //echo "Month number: ".$_monthNumber."<br>";
+    //     $_monthNumber = substr($step, 0, strpos($step, ","));
+    //     //echo "Month number: ".$_monthNumber."<br>";
         
-        $position = strpos($step, "Year");
-        $step = substr($step, $position+6);
-        $_year = substr($step, 0, strpos($step,","));
-        //echo "Year: " .$_year. "<br>";
-        //echo "____________<br>";
-        //$JSONMonthDecode = new b_Month();
-        $month = new Calendar($_monthNumber, $_year,$depId);
-        $t = false;
-        $u = 1;
-        while(strpos($step, "NumberOfDay") != false)
-        {
-            $position = strpos($step, "NumberOfDay");
-            $step = substr($step, $position+14);
-            $step3 = $step;
-            if(strpos($step,"NumberOfDay"))
-            {
-                $positionNextNumberOfDay = strpos($step, "NumberOfDay");
-                $step = substr($step,0, $positionNextNumberOfDay);
-                $_numberOfDay = substr($step, 0, strpos($step,","));
-            }
-            else
-            {
+    //     $position = strpos($step, "Year");
+    //     $step = substr($step, $position+6);
+    //     $_year = substr($step, 0, strpos($step,","));
+    //     //echo "Year: " .$_year. "<br>";
+    //     //echo "____________<br>";
+    //     //$JSONMonthDecode = new b_Month();
+    //     $month = new Calendar($_monthNumber, $_year,$depId);
+    //     $t = false;
+    //     $u = 1;
+    //     while(strpos($step, "NumberOfDay") != false)
+    //     {
+    //         $position = strpos($step, "NumberOfDay");
+    //         $step = substr($step, $position+14);
+    //         $step3 = $step;
+    //         if(strpos($step,"NumberOfDay"))
+    //         {
+    //             $positionNextNumberOfDay = strpos($step, "NumberOfDay");
+    //             $step = substr($step,0, $positionNextNumberOfDay);
+    //             $_numberOfDay = substr($step, 0, strpos($step,","));
+    //         }
+    //         else
+    //         {
 
-                $positionNextNumberOfDay = strpos($step, "}]");
-                $step = substr($step,0, $positionNextNumberOfDay);
-                $_numberOfDay = substr($step, 0, strpos($step,","));
-            }
+    //             $positionNextNumberOfDay = strpos($step, "}]");
+    //             $step = substr($step,0, $positionNextNumberOfDay);
+    //             $_numberOfDay = substr($step, 0, strpos($step,","));
+    //         }
         
-            //echo $step;
-            // $step = substr($step,0, $positionNextNumberOfDay);
-            // $_numberOfDay = substr($step, 0, strpos($step,","));
-            //echo "NumberOfDay: $_numberOfDay <br>";
-            $day = new Day($_numberOfDay, $depId);
-            //echo $step;
-            //while
+    //         //echo $step;
+    //         // $step = substr($step,0, $positionNextNumberOfDay);
+    //         // $_numberOfDay = substr($step, 0, strpos($step,","));
+    //         //echo "NumberOfDay: $_numberOfDay <br>";
+    //         $day = new Day($_numberOfDay, $depId);
+    //         //echo $step;
+    //         //while
             
-            while(strpos($step, "ShiftID"))
-            {
-                $position = strpos($step, "ShiftID");
-                $step = substr($step, $position+10);
-                $step2 = $step;
-                if(strpos($step,"ShiftID"))
-                {
-                    $positionNextShiftID = strpos($step,"ShiftID");
-                }
-                else
-                {
-                    $positionNextShiftID = strlen($step);
-                }
+    //         while(strpos($step, "ShiftID"))
+    //         {
+    //             $position = strpos($step, "ShiftID");
+    //             $step = substr($step, $position+10);
+    //             $step2 = $step;
+    //             if(strpos($step,"ShiftID"))
+    //             {
+    //                 $positionNextShiftID = strpos($step,"ShiftID");
+    //             }
+    //             else
+    //             {
+    //                 $positionNextShiftID = strlen($step);
+    //             }
                 
-                $step = substr($step,0, $positionNextShiftID);
-                $_shiftId = substr($step,0,strpos($step,","));
-                //echo "____Shift Id: ".$_shiftId ."<br>";
-                $_shift = new Shift($_shiftId, $depId);
-                $_arrayOfUsers = array();
-                $position = strpos($step,"[");
-                $step = substr($step,$position);
-                $step4 = $step;
-                $positionEndOfWorking = strpos($step,"EmployeesVacation");
-                $step = substr($step,0,$positionEndOfWorking);
-                    //while
-                //echo "_____________WORKING<br>";
-                    while(strpos($step,"UserId") != false)
-                    {
-                        $position = strpos($step,"UserId");
-                        $step = substr($step, $position+8);
-                        $_userId = substr($step,0, strpos($step,"}"));
-                        //dodanie użytkownika do shiftu
-                        array_push($_arrayOfUsers, new User($_userId));
-                        //echo "______________________User-Id: $_userId <br>"; 
+    //             $step = substr($step,0, $positionNextShiftID);
+    //             $_shiftId = substr($step,0,strpos($step,","));
+    //             //echo "____Shift Id: ".$_shiftId ."<br>";
+    //             $_shift = new Shift($_shiftId, $depId);
+    //             $_arrayOfUsers = array();
+    //             $position = strpos($step,"[");
+    //             $step = substr($step,$position);
+    //             $step4 = $step;
+    //             $positionEndOfWorking = strpos($step,"EmployeesVacation");
+    //             $step = substr($step,0,$positionEndOfWorking);
+    //                 //while
+    //             //echo "_____________WORKING<br>";
+    //                 while(strpos($step,"UserId") != false)
+    //                 {
+    //                     $position = strpos($step,"UserId");
+    //                     $step = substr($step, $position+8);
+    //                     $_userId = substr($step,0, strpos($step,"}"));
+    //                     //dodanie użytkownika do shiftu
+    //                     array_push($_arrayOfUsers, new User($_userId));
+    //                     //echo "______________________User-Id: $_userId <br>"; 
 
-                    }
-                $_shift->EmployeesWorking = $_arrayOfUsers;
-                unset($_arrayOfUsers);
-                $_arrayOfUsers2 = array();
+    //                 }
+    //             $_shift->EmployeesWorking = $_arrayOfUsers;
+    //             unset($_arrayOfUsers);
+    //             $_arrayOfUsers2 = array();
 
-                $step = $step4;
-                $step = substr($step, $positionEndOfWorking);
+    //             $step = $step4;
+    //             $step = substr($step, $positionEndOfWorking);
                 
                     
                 
-                //echo "_____________VACATION<br>";
+    //             //echo "_____________VACATION<br>";
 
-                while(strpos($step,"UserId") != false)
-                    {
-                        $position = strpos($step,"UserId");
-                        $step = substr($step, $position+8);
-                    //     if(!$t){
+    //             while(strpos($step,"UserId") != false)
+    //                 {
+    //                     $position = strpos($step,"UserId");
+    //                     $step = substr($step, $position+8);
+    //                 //     if(!$t){
 
-                    //         $step8 = $step;
-                    // $t = true;
-                    //     echo $step8;
-                    //     throw new Exception("hh");
-                    // }
-                        $_userId = substr($step,0, strpos($step,"}"));
-                    //echo "shift id:" . $_shiftId . "vac: " . $_userId."<br>"; 
-                        //dodanie użytkownika do shiftu
-                        array_push($_arrayOfUsers2, new User($_userId));
-                        //echo "______________________User-Id: $_userId <br>"; 
+    //                 //         $step8 = $step;
+    //                 // $t = true;
+    //                 //     echo $step8;
+    //                 //     throw new Exception("hh");
+    //                 // }
+    //                     $_userId = substr($step,0, strpos($step,"}"));
+    //                 //echo "shift id:" . $_shiftId . "vac: " . $_userId."<br>"; 
+    //                     //dodanie użytkownika do shiftu
+    //                     array_push($_arrayOfUsers2, new User($_userId));
+    //                     //echo "______________________User-Id: $_userId <br>"; 
 
-                    }
-                $_shift->EmployeesVacation = $_arrayOfUsers2;
-                $day->ActualizeShifts($_shift);
-                $step = $step2;
-            }
-        $month->ActualizeDays($day);
-        $step = $step3;
+    //                 }
+    //             $_shift->EmployeesVacation = $_arrayOfUsers2;
+    //             $day->ActualizeShifts($_shift);
+    //             $step = $step2;
+    //         }
+    //     $month->ActualizeDays($day);
+    //     $step = $step3;
 
-        }
+    //     }
 
-        //echo "TEST<br>";
-        //echo $month->Days[0]->Shifts[0]->EmployeesVacation[1]->name;
-        //echo $step8;
-        echo "<div style=\"width: 200px; height: 400px; overflow: auto;\">";
-        print_r($month->Days[0]->Shifts[0]->EmployeesVacation);
-        echo "</div>";
-        return $month;
-    }
+    //     //echo "TEST<br>";
+    //     //echo $month->Days[0]->Shifts[0]->EmployeesVacation[1]->name;
+    //     //echo $step8;
+    //     echo "<div style=\"width: 200px; height: 400px; overflow: auto;\">";
+    //     print_r($month->Days[0]->Shifts[0]->EmployeesVacation);
+    //     echo "</div>";
+    //     return $month;
+    // }
     public function SignUserToWorkInDay($user,$dayId, $shiftId)
     {
-        array_push($this->Days[$dayId]->Shifts[$shiftId]->EmployeesWorking, $user);
+        array_push($this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesWorking, $user);
     }
     public function SignUserVacation($user,$dayId, $shiftId)
     {
-        array_push($this->Days[$dayId]->Shifts[$shiftId]->EmployeesVacation, $user);
+        array_push($this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesVacation, $user);
     }
     public function UnsignWorkingUserFormDay($user,$dayId,$shiftId)
     {
-        $keyToDelete = array_search($user,$this->Days[$dayId]->Shifts[$shiftId]->EmployeesWorking);
-        array_splice($this->Days[$dayId]->Shifts[$shiftId]->EmployeesWorking,$keyToDelete);
+        $keyToDelete = array_search($user,$this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesWorking);
+        array_splice($this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesWorking,$keyToDelete);
     }
     public function UnsignVacationUserFormDay($user,$dayId,$shiftId)
     {
-        $keyToDelete = array_search($user,$this->Days[$dayId]->Shifts[$shiftId]->EmployeesVacation);
-        array_splice($this->Days[$dayId]->Shifts[$shiftId]->EmployeesWorking,$keyToDelete);
+        $keyToDelete = array_search($user,$this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesVacation);
+        array_splice($this->Days[$dayId-1]->Shifts[$shiftId-1]->EmployeesWorking,$keyToDelete);
     }
     //Dodawanie nowego kalendarza do bazy danych
     public function PushCalendarToDataBase($role_Id,$calendar)

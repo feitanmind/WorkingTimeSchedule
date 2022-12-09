@@ -39,7 +39,7 @@ require "modules/CalendarModeClasses/Day.php";
     <div class="userLeftPanel">
         <div class="userLogout">
         <img src="style/img/logo.png"/>
-            <a href="Logout.php">Logout</a><br>
+            <a href="modules/LoginClasses/Logout.php">Logout</a><br>
             <!-- <div id="includedConstent" style="width: 20vw; height: 10vh; background-color: green;"></div> -->
             <div class="timeToLogout"><p>Time to logout:</p><p>20min</p></div>
             

@@ -9,8 +9,8 @@ class CalendarTest extends \PHPUnit\Framework\TestCase
         $_department_id = 1;
         $_user_id = 1;
 
-        $day_id_in_calendar = 0;
-        $shift_id_in_calendar = 0;
+        $day_id_in_calendar = 1;
+        $shift_id_in_calendar = 1;
         $calendar = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
         $user1 = new App\User( $_user_id );
         $calendar->SignUserToWorkInDay($user1, $day_id_in_calendar, $shift_id_in_calendar);
@@ -25,8 +25,8 @@ class CalendarTest extends \PHPUnit\Framework\TestCase
         $_department_id = 1;
         $_user_id = 1;
 
-        $day_id_in_calendar = 0;
-        $shift_id_in_calendar = 0;
+        $day_id_in_calendar = 1;
+        $shift_id_in_calendar = 1;
         $calendar = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
         $user2 = new App\User( $_user_id );
         $calendar->SignUserToWorkInDay($user2, $day_id_in_calendar, $shift_id_in_calendar);

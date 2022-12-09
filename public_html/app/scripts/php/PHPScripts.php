@@ -3,6 +3,10 @@
 use App\Shift;
 use App\User;
 use App\Calendar;
+use PHPUnit\TextUI\CliArguments\Exception;
+
+use function PHPUnit\Framework\throwException;
+
 class PHPScripts
 {
     public static function CHECK_User_Is_Logged()
@@ -22,6 +26,10 @@ class PHPScripts
     {
         $dayId = $_GET['dayId'];
         $users = $_GET['usersToAdd'];
+        $shiftId = $_SESSION['shift_id'];
+        //    echo '<script>console.log('.$shiftId.')</script>';
+            //throw new Exception("dsa");
+          //  throw new Exception("ds");
         $month_Number = 1;
         $year = 2022;
         $department_ID = 1;
@@ -39,7 +47,8 @@ class PHPScripts
             foreach($users as $user)
             {
                 $user2 = new User($user);
-                $calend2->SignUserToWorkInDay($user2, 0, 0);
+                $calend2->SignUserToWorkInDay($user2, $dayId, $shiftId);
+
             }
     $_SESSION['calendar'] = json_encode($calend2);
     //czyszczenie Get

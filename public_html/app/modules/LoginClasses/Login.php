@@ -40,6 +40,9 @@ class Login
                     $_SESSION['header'] = "Location: ../../app/";
                     $_SESSION['workers_role'] = 1;
                     $_SESSION['shift_id'] = 1;
+
+                    $_SESSION['Month_Number'] = date('m');
+                    $_SESSION['Year_Number'] = date('Y');
                     
                 }
                 else

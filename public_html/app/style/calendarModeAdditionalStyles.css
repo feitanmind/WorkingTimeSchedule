@@ -1,14 +1,55 @@
-
 #addP{
-    width: 2vw;
-    height: 2vh;
-    background-color: #0A85ED;
+    width: 1vw;
+    height: 1vw;
+    border-radius: 50%;
+    border: solid 0.1vw #8c8c8c;
+    background-color: white;
+    color: #8c8c8c;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    font-size: 1.3vw;
+    float: right;
+    margin-top: -1.5vh;
+    margin-left: 0.1vw;
+    display: none;
 }
+#addP:hover
+{
+    border: solid 0.1vw #0A85ED;
+    background-color: #e0f1fe;
+    color: #0A85ED;
+}
+/* .dayOfTheWeek:hover .numberOfWeek > div
+{
+    visibility: visible !important;
+    background-color: #0A85ED  !important;
+} */
+
 #remP{
-    background-color: red;
+    width: 1vw;
+    height: 1vw;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: solid 0.1vw #8c8c8c;
+    background-color: white;
+    color: #8c8c8c;
     cursor: pointer;
+    font-size: 1.6vw;
+    float: right;
+    margin-top: -1.5vh;
 }
+#remP:hover
+{
+    border: solid 0.1vw #d17d7d;
+    background-color: #efe7e7;
+    color: #d17d7d;
+}
+
 #newPrompt{
     position: absolute;
     background-color: white;
@@ -51,10 +92,43 @@
 #closeAddPrompt{
     cursor: pointer;
 }
-.numberOfDay{
+.headerMainCalendar{
+    display: flex;
+    align-items: center;
+    font-size: 2vw;
+    gap: 2vw;
+}
+.headerMainCalendar .numberOfDay{
     display: flex;
 }
-.numberOfDay p{
+.headerMainCalendar .numberOfDay p{
     margin-left: 0.5vw;
     margin-right: 1vw;
+}
+#nameOfMonth{
+    box-sizing: border-box;
+    padding: 0.5vw;
+    border-radius: 1vw;
+}
+#nameOfMonth:hover
+{
+    background-color: #e3e3e3;
+    cursor: pointer;
+}
+.monthArrow
+{
+    width: 3vw;
+    height: 3vw;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 50%;
+    margin-top: 2vh;
+    padding-left: 0.5vw;
+
+}
+.monthArrow:hover
+{
+    background-color: #e3e3e3;
+    cursor: pointer;
+
 }
