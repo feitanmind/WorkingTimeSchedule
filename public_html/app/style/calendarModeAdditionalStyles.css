@@ -16,6 +16,7 @@
     margin-left: 0.1vw;
     display: none; 
 }
+/* Start custom window buttons */
 #addP{
     margin-left: 0.1vw;
 }
@@ -51,7 +52,7 @@
     background-color: #dbc8dc;
     color: #ca7dd1
 }
-
+/* End of custom window buttons */
 #newWindow{
     position: absolute;
     background-color: white;
@@ -63,7 +64,12 @@
     padding: 0.3vw;
     padding-right: 0.5vw;
 }
-#newWindow #newWindowHeader{
+#newWindow select
+{
+    all: unset;
+    
+}
+#newWindow .newWindowHeader{
     display: flex;
     justify-content: space-between;
     font-family: Roboto-Regular;
@@ -74,36 +80,61 @@
     background-color: white;
     padding: 0.2vw;
 }
-#listOfUsers #headerListOfUsers
+#newWindow .listOfUsers #headerListOfUsers
 {
     font-size: 0.8vw;
-    background-color: #0661ac;
     color: white;
     padding: 0.8vw;
 }
-#newWindow select
-{
-    all: unset;
-    
-}
-#newWindow #usersToAdd option
+
+#newWindow #listOfUsersToAddToDay.listOfUsers #headerListOfUsers
 {
     background-color: #0A85ED;
-    color: white;
+}
+
+#newWindow #listOfUsersToGrantVacation.listOfUsers #headerListOfUsers
+{
+    background-color: #63cb55;
+}
+#newWindow #listOfUsersToRemoveFromDay.listOfUsers #headerListOfUsers
+{
+    background-color: #cb5555;
+}
+#newWindow #listOfUsersToRevokeVacation.listOfUsers #headerListOfUsers
+{
+    background-color: #c47985;
+
+}
+#newWindow.revokingWindow input[type="submit"]
+{
+    background-color: #c47985;
+}
+#newWindow.removingWindow input[type="submit"]
+{
+    background-color: #cb5555;
+}
+#newWindow option{
     font-size: 0.8vw;
     padding: 0.2vw;
     padding-top: 0.5vw;
     padding-left: 0.8vw;
 }
+#newWindow.addingUserWindow option
+{
+    background-color: #a4caea;
+    color: black;
+    
+
+}
 
 #newWindow select option::after
 {
     display: block;
-    color:rgb(162, 182, 242);
+    /* color:rgb(162, 182, 242); */
     font-size: 0.6vw;
     content: ' UserId:' attr(value) '';
 }
-#listOfUsers{
+.listOfUsers{
     float: left;
     /* //background-color: #0A85ED; */
    
@@ -113,6 +144,18 @@
     border-radius: 0.2vw;
 }
 
+#newWindow.addingVacationWindow .listOfUsers select option
+{
+    background-color: #d5e4d4;
+}
+.addingVacationWindow input[type="submit"]
+{
+    background-color: #63cb55;
+}
+.addingVacationWindow .listOfUsers select option::after
+{
+    color: #306829;
+}
 #currentlyOnShift{
     float: right;
 }
