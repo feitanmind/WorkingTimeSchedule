@@ -96,7 +96,7 @@ class Calendar
                     echo "</div>Vacation:<div id=\"vacation\">";
                     foreach($vacationPeople as $vacationingPerson)
                     {
-                        echo "<div class=\"userV\" personID=\"$workingPerson->user_id\" >$vacationingPerson->name</div>";
+                        echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
                     }
                     
                     echo "</div></div>
