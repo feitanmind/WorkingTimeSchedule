@@ -59,17 +59,28 @@ require "modules/CalendarModeClasses/Day.php";
             $user = new User($user_id);
             //echo $user->dep_id;
             $_SESSION['dep_id'] = $user->dep_id;
-            // Wyświetlenie danych użytkownika
             echo $user->getUserData();
-            echo '<div style="display: none;">';
-            echo $user->getListOfUsers();
-            echo '</div>';
             ?>
+
+           
+            <div style="display: none;">
+                <select id="usersToAdd" style="width: 100%;height:80%; font-size: 1vw;" name="usersToAdd[]" multiple="multiple">
+                <?php echo $user->createOptionsListOfAllUsers(); ?>
+                </select>
+
+                <select id="usersToVacation" style="width: 100%;height:80%; font-size: 1vw;" name="usersToVacation[]" multiple="multiple">
+                <?php echo $user->createOptionsListOfAllUsers(); ?>
+                </select>
+            </div>
+            
             <!-- //Sprawdzenie czy formularz z dodaniem użytkownika został wysłany i dodanie użytkownika do obiektu calendar -->
             <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
             <?php PHPScripts::REMOVE_USER_FROM_Day_Of_Calendar();?>
+            <?php PHPScripts::GRANT_USER_Vacation_In_Day_of_Calendar();?>
+            <?php PHPScripts::REVOKE_VACATION_For_A_User();?>
             <script>
-                var listOfUsers = document.getElementById("usersToAdd").outerHTML;
+                var listOfUsersToAdd = document.getElementById("usersToAdd").outerHTML;
+                var listOfUsersToGrantVacation = document.getElementById("usersToVacation").outerHTML;
             </script>
         </div>
         <div class="button1 addUserButtonLeft" onclick="document.getElementById('calendarMode').style.display = 'flex';document.getElementById('addUser').style.display = 'none'">Calendar Mode</div>
@@ -100,6 +111,9 @@ require "modules/CalendarModeClasses/Day.php";
             Shift::GenerateFormSelectForShifts($_SESSION['dep_id']);
             ?>
         </div>
+        <script src="scripts/closeNewWindow.js"></script>
+
+        </script>
         <script src="scripts/showCalendarDayControls.js"></script>
 </body>
 </html>

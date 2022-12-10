@@ -27,27 +27,49 @@ class PHPScripts
         $dayId = $_GET['dayId'];
         $users = $_GET['usersToAdd'];
         $shiftId = $_SESSION['shift_id'];
-        //    echo '<script>console.log('.$shiftId.')</script>';
-            //throw new Exception("dsa");
-          //  throw new Exception("ds");
-        $month_Number = 1;
-        $year = 2022;
+        $month_Number = $_SESSION['Month_Number'];
+        $year = $_SESSION['Year_Number'];
         $department_ID = 1;
-    //echo "MASTER";
-        //$cal = json_decode($_SESSION['calendar']);
-        //
-    // echo $_SESSION['calendar'];
+
         $calend = json_decode($_SESSION['calendar']);
-            $calend2 = new Calendar($month_Number, $year, $department_ID);
-            foreach ($calend as $key => $value) $calend2->{$key} = $value;
-
-        //
-
+        $calend2 = new Calendar($month_Number, $year, $department_ID);
+        foreach ($calend as $key => $value) $calend2->{$key} = $value;
 
             foreach($users as $user)
             {
                 $user2 = new User($user);
                 $calend2->SignUserToWorkInDay($user2, $dayId, $shiftId);
+
+            }
+        $_SESSION['calendar'] = json_encode($calend2);
+        //czyszczenie Get
+        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+        header("Location: $actual_link");
+        
+    }
+
+
+    }
+    public static function GRANT_USER_Vacation_In_Day_of_Calendar()
+    {
+        
+    if(isset($_GET['usersToVacation']) && isset($_GET['dayId']))
+    {
+        $dayId = $_GET['dayId'];
+        $users = $_GET['usersToVacation'];
+        $shiftId = $_SESSION['shift_id'];
+        $month_Number = $_SESSION['Month_Number'];
+        $year = $_SESSION['Year_Number'];
+        $department_ID = 1;
+
+        $calend = json_decode($_SESSION['calendar']);
+        $calend2 = new Calendar($month_Number, $year, $department_ID);
+        foreach ($calend as $key => $value) $calend2->{$key} = $value;
+
+            foreach($users as $user)
+            {
+                $user2 = new User($user);
+                $calend2->SignUserVacation($user2, $dayId, $shiftId);
 
             }
     $_SESSION['calendar'] = json_encode($calend2);
@@ -66,10 +88,9 @@ class PHPScripts
             $dayId = $_GET['dayId'];
             $users = $_GET['userToRemove'];
             $shiftId = $_SESSION['shift_id'];
-            $month_Number = 1;
-            $year = 2022;
+            $month_Number = $_SESSION['Month_Number'];
+            $year = $_SESSION['Year_Number'];
             $department_ID = 1;
-
             $calend = json_decode($_SESSION['calendar']);
             $calend2 = new Calendar($month_Number, $year, $department_ID);
             foreach ($calend as $key => $value) $calend2->{$key} = $value;
@@ -83,8 +104,35 @@ class PHPScripts
 
             }
             $_SESSION['calendar'] = json_encode($calend2);
-            // $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-            // header("Location: $actual_link");
+            $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+            header("Location: $actual_link");
+        }
+    }
+    public static function REVOKE_VACATION_For_A_User()
+    {
+        if(isset($_GET['userToRevokeVacation']) &&isset($_GET['dayId']))
+        {
+            $dayId = $_GET['dayId'];
+            $users = $_GET['userToRevokeVacation'];
+            $shiftId = $_SESSION['shift_id'];
+            $month_Number = $_SESSION['Month_Number'];
+            $year = $_SESSION['Year_Number'];
+            $department_ID = 1;
+            $calend = json_decode($_SESSION['calendar']);
+            $calend2 = new Calendar($month_Number, $year, $department_ID);
+            foreach ($calend as $key => $value) $calend2->{$key} = $value;
+            foreach($users as $user)
+            {
+                //echo "<script>console.log(\"".$user->user_id."'\")</script>";
+                $user2 = new User($user);
+                echo "<script>console.log(\"".$user2->user_id."\")</script>";
+                
+                $calend2->UnsignVacationUserFormDay($user2, $dayId, $shiftId);
+
+            }
+            $_SESSION['calendar'] = json_encode($calend2);
+            $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+            header("Location: $actual_link");
         }
     }
 }

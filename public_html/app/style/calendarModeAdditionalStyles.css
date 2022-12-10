@@ -1,4 +1,5 @@
-#addP{
+.windowButton
+{
     width: 1vw;
     height: 1vw;
     border-radius: 50%;
@@ -13,7 +14,10 @@
     float: right;
     margin-top: -1.5vh;
     margin-left: 0.1vw;
-    display: none;
+    display: none; 
+}
+#addP{
+    margin-left: 0.1vw;
 }
 #addP:hover
 {
@@ -21,74 +25,109 @@
     background-color: #e0f1fe;
     color: #0A85ED;
 }
-/* .dayOfTheWeek:hover .numberOfWeek > div
-{
-    visibility: visible !important;
-    background-color: #0A85ED  !important;
-} */
 
-#remP{
-    width: 1vw;
-    height: 1vw;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    border: solid 0.1vw #8c8c8c;
-    background-color: white;
-    color: #8c8c8c;
-    cursor: pointer;
-    font-size: 1.6vw;
-    float: right;
-    margin-top: -1.5vh;
-    display: none;
-}
 #remP:hover
 {
     border: solid 0.1vw #d17d7d;
     background-color: #efe7e7;
     color: #d17d7d;
 }
+#addV{
+    font-size: 0.8vw;
+}
+#addV:hover
+{
+    border: solid 0.1vw #87d17d;
+    background-color: #eaefe7;
+    color: #87d17d
+}
+#remV
+{
+    font-size: 0.8vw;
+}
+#remV:hover
+{
+    border: solid 0.1vw #ca7dd1;
+    background-color: #dbc8dc;
+    color: #ca7dd1
+}
 
-#newPrompt{
+#newWindow{
     position: absolute;
     background-color: white;
-    border-radius: 1vw;
-    outline: black solid 0.2vw;
+    border-radius: 0.5vw;
+    /* outline: rgb(183, 183, 183) solid 0.15vw; */
+    box-shadow: 0 0 2vw #565656 ;
     width: 15vw;
-    height: 20vh;
-    padding-left: 0.3vw;
+    height: 22vh;
+    padding: 0.3vw;
+    padding-right: 0.5vw;
 }
-#newPrompt h3{
+#newWindow #newWindowHeader{
     display: flex;
     justify-content: space-between;
-    font-size: 0.9vw;
+    font-family: Roboto-Regular;
+    font-size: 1vw;
     gap: 2vw;
-    border-top-left-radius: 1vw;
-    border-top-right-radius: 1vw;
+    border-top-left-radius: 0.5vw;
+    border-top-right-radius: 0.5vw;
     background-color: white;
+    padding: 0.2vw;
+}
+#listOfUsers #headerListOfUsers
+{
+    font-size: 0.8vw;
+    background-color: #0661ac;
+    color: white;
+    padding: 0.8vw;
+}
+#newWindow select
+{
+    all: unset;
+    
+}
+#newWindow #usersToAdd option
+{
+    background-color: #0A85ED;
+    color: white;
+    font-size: 0.8vw;
+    padding: 0.2vw;
+    padding-top: 0.5vw;
+    padding-left: 0.8vw;
+}
+
+#newWindow select option::after
+{
+    display: block;
+    color:rgb(162, 182, 242);
+    font-size: 0.6vw;
+    content: ' UserId:' attr(value) '';
 }
 #listOfUsers{
     float: left;
-    background-color: lightgrey;
-    border-right: solid 0.1vw black;
+    /* //background-color: #0A85ED; */
+   
     width: 50%;
-    height: 13vh;
+    height: 14vh;
+    overflow: auto;
+    border-radius: 0.2vw;
 }
+
 #currentlyOnShift{
     float: right;
 }
-#newPrompt input[type=submit]
+#newWindow input[type=submit]
 {
     position: absolute;
     bottom: 0;
     left:0;
     text-align: center;
     height: 5vh;
-    border-bottom-left-radius: 1vw;
-    border-bottom-right-radius: 1vw;
+    cursor: pointer;
+    border-bottom-left-radius: 0.5vw;
+    border-bottom-right-radius: 0.5vw;
     width: 100%; 
+    color: white;
 }
 #closeAddPrompt{
     cursor: pointer;

@@ -168,11 +168,6 @@ input{
 {
     display: none;
 }
-#addP{
-    width: 2vw;
-    height: 2vh;
-    background-color: #0A85ED;
-}
 /* Calendar */
 .calendarMode{
     font-size: 0.8vw;

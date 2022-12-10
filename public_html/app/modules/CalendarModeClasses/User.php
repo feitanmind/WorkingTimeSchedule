@@ -86,19 +86,20 @@ namespace App;
             return $userCredentials;
         }
 
-        public function getListOfUsers()
+        public function createOptionsListOfAllUsers()
         {
             // Tworzymy nowe połączenie do bazy danych 
             $access_Connection = ConnectToDatabase::connAdminPass();
             $selectListOfUserSQL = "SELECT name, surname, usr_id FROM user_data WHERE dep_id = $this->dep_id";
             $resultWorkersData = $access_Connection -> query($selectListOfUserSQL);
-            echo '<select id="usersToAdd" style="width: 100%;height:80%; font-size: 1vw;" name="usersToAdd[]" multiple="multiple">';
+            // echo '<select id="usersToAdd" style="width: 100%;height:80%; font-size: 1vw;" name="usersToAdd[]" multiple="multiple">';
             while($row = $resultWorkersData->fetch_assoc())
             {
-                echo '<option value="'.$row['usr_id'].'">'.$row['name']. ' '. $row['surname'].'</option>';
+                echo '<option value="'.$row['usr_id'].'">'.$row['name']. ' '. $row['surname'].'</p></option>';
             }
-            echo '</select>';
+            // echo '</select>';
         }
+
 
         public function addUser($login, $password, $email, $name, $surname, $dep_id, $role_id, $avatar, $custom_id, $full_time)
         {
