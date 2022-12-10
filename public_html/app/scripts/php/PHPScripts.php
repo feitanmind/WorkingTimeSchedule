@@ -19,6 +19,10 @@ class PHPScripts
         isset($_POST['shiftID']) ? $_SESSION['shift_id'] = $_POST['shiftID'] : $_SESSION['shift_id'] = 1;
         isset($_POST['roleID']) ? $_SESSION['role_id'] = $_POST['roleID'] : $_SESSION['role_id'] = 1;
     }
+    public static function CheckIfUserCanBeSign($dayId,$users,$shiftId,$month_Number,$year,$department_ID,$calend2)
+    {
+        
+    }
     public static function ADD_USER_TO_Day_of_Calendar()
     {
         
@@ -35,6 +39,8 @@ class PHPScripts
         $calend2 = new Calendar($month_Number, $year, $department_ID);
         foreach ($calend as $key => $value) $calend2->{$key} = $value;
 
+        //Sprawdzenie czy użytkownik już nie jest przypisany do dnia / zmiany 
+ 
             foreach($users as $user)
             {
                 $user2 = new User($user);
