@@ -222,9 +222,50 @@ class Calendar
         ";
     }
 
+    public function CanUserBeSignOnDay($user,$day_id, $shift_id)
+    {
+        // $shiftStartHour = $calendar->Days[1]->Shifts[0]->StartHour;
+        // $shiftStartHour = $calendar->Days[1]->Shifts[0]->EndHour;
+        $currentShift = $this->Days[$day_id - 1]->Shifts[$shift_id - 1];
+        $currentShift->CompleteHours();
 
+        $currentDay = $this->Days[$day_id-1]->NumberOfDay;
+        $_number_of_month = $this->MonthNumber;
+        $_number_of_year = $this->Year;
+
+        // $currentDateString = "$_number_of_year-$_number_of_month-$currentDay 00:00:00";
+        // $dateCurrentDay = new \DateTime($currentDateString);
+        // $dateNextDay = clone $dateCurrentDay;
+        // $dateNextDay->modify('+1 day');
+        // $datePreviousDay = clone $dateCurrentDay;
+        // $datePreviousDay->modify(('-1 day'));
+
+
+
+
+        if($currentShift->EmployeesWorking != null && $currentShift->EmployeesVacation == null)
+        {
+            foreach($currentShift->EmployeesWorking as $employee)
+            {
+                return $employee->user_id == $user->user_id ? false : true;   
+            }
+        }
+        else if($currentShift->EmployeesWorking == null && $currentShift->EmployeesVacation != null)
+        {
+            foreach($currentShift->EmployeesVacation as $employee)
+            {
+                return $employee->user_id == $user->user_id ? false : true;   
+            }
+        }
+        else
+        {
+            return true;
+        }
+        
+    }
 
 }
+
 
 
 ?>

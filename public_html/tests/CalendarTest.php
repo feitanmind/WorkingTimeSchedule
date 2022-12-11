@@ -1,63 +1,84 @@
 <?php
+declare(strict_types=1);
 
-class CalendarTest extends \PHPUnit\Framework\TestCase
+
+final class CalendarTest extends \PHPUnit\Framework\TestCase
 {
+    private static $NumberOfYear,
+    $DepartmentId,
+    $NumberOfMonth,
+    $DayIdInCalendar,
+    $ShiftId,
+    $TestUser;
+
+    public static function setUpBeforeClass(): void
+    {
+        self::$NumberOfYear = 2022;
+        self::$DepartmentId = 1;
+        self::$NumberOfMonth = 1;
+        self::$DayIdInCalendar = 2;
+        self::$ShiftId = 1;
+        self::$TestUser = new App\User(1);
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        self::$NumberOfYear = null;
+        self::$DepartmentId = null;
+        self::$NumberOfMonth = null;
+        self::$DayIdInCalendar = null;
+        self::$ShiftId = null;
+        self::$TestUser = null;
+
+    }
     public function test_ShouldReturnNameOfUserWhenSignUserBeforeToWorking()
     {
-        $_number_of_month = 7;
-        $_number_if_year = 2022;
-        $_department_id = 1;
-        $_user_id = 1;
-
-        $day_id_in_calendar = 1;
-        $shift_id_in_calendar = 1;
-        $calendar = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
-        $user1 = new App\User( $_user_id );
-        $calendar->SignUserToWorkInDay($user1, $day_id_in_calendar, $shift_id_in_calendar);
-
-        $this->assertEquals($calendar->Days[0]->Shifts[0]->EmployeesWorking[0]->name, 'Adam');
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
+        $calendar->SignUserToWorkInDay(self::$TestUser, self::$DayIdInCalendar, self::$ShiftId);
+        $this->assertEquals($calendar->Days[1]->Shifts[0]->EmployeesWorking[0]->name, 'Adam');
     }
-
     public function test_ShuldReturnEmptyArrayWhenDeleteLastUserFromShift()
     {
-        $_number_of_month = 7;
-        $_number_if_year = 2022;
-        $_department_id = 1;
-        $_user_id = 1;
-
-        $day_id_in_calendar = 1;
-        $shift_id_in_calendar = 1;
-        $calendar = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
-        $user2 = new App\User( $_user_id );
-        $calendar->SignUserToWorkInDay($user2, $day_id_in_calendar, $shift_id_in_calendar);
-
-        //Usuwanie użyrtkownika ze zmiany
-        $calendar->UnsignWorkingUserFormDay($user2, $day_id_in_calendar,$shift_id_in_calendar);
-        $this->assertEmpty($calendar->Days[0]->Shifts[0]->EmployeesWorking);
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
+        $calendar->SignUserToWorkInDay(self::$TestUser, self::$DayIdInCalendar, self::$ShiftId);
+        $calendar->UnsignWorkingUserFormDay(self::$TestUser, self::$DayIdInCalendar, self::$ShiftId);  
+        $this->assertEmpty($calendar->Days[1]->Shifts[0]->EmployeesWorking);
     }
-
-    //Test ponieważ nie chciał działać przez obrazek typu blob
     public function test_ShouldReturnEncodedObjectInJsonFormat()
     {
-        $_number_of_month = 7;
-        $_number_if_year = 2022;
-        $_department_id = 1;
-        $calendar = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
         $jsonCalendar = json_encode($calendar);
         $this->assertIsString($jsonCalendar);
         $this->assertEquals($this->assertStringStartsWith("{", $jsonCalendar),$this->assertStringEndsWith("}",$jsonCalendar));
 
     }
-    // public function test_ShouldReturnDecodedObjdect()
+    /**
+     * @group CanUserBeSignOnDay
+     */
+    public function test_ShouldReturnTrueWhenUserCanBeSignOnDay()
+    {
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
+        $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, self::$DayIdInCalendar,self::$ShiftId);
+        $this->assertTrue($CanBeSign);
+    }
+    public function test_ShouldReturnFalseWhenUserWasSignedOnCurrentDay()
+    {
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
+        $calendar->SignUserToWorkInDay(self::$TestUser, self::$DayIdInCalendar, self::$ShiftId);
+        $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, self::$DayIdInCalendar,self::$ShiftId);
+        $this->assertFalse($CanBeSign);
+    }
+    public function test_ShouldReturnFlaseWhenUserWasOnVacation()
+    {
+        $dayNumber = self::$DayIdInCalendar+2;
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
+        $calendar->SignUserVacation(self::$TestUser,$dayNumber, self::$ShiftId);
+        $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, $dayNumber,self::$ShiftId);
+        $this->assertFalse($CanBeSign);
+    }
+    // public function test_ShouldReturnTrueWhenDayIsTheFirstDayInMonth()
     // {
-    //     $_number_of_month = 7;
-    //     $_number_if_year = 2022;
-    //     $_department_id = 1;
-    //     $calendarBefore = new App\Calendar($_number_of_month, $_number_if_year,$_department_id);
-    //     $jsonCalendar = json_encode($calendarBefore);
-    //     unset($calendarBefore);
-    //     $calendarAfter = json_decode($jsonCalendar);
-    //     $this->assertInstanceOf('App\Calendar', (App\Calendar)$calendarAfter);
+
     // }
 }
 

@@ -45,8 +45,21 @@ class Day
             if($shift->Id == $sh->Id)
             {
                 $shift->EmployeesWorking = $sh->EmployeesWorking;
-                $shift->EmployeesVacation = $sh->EmployeesWorking;
+                $shift->EmployeesVacation = $sh->EmployeesVacation;
             }
         }
+    }
+    public function IsFirstDayOfMonth()
+    {
+        if ($this->NumberOfDay == 1)
+            return true;
+        return false;
+    }
+    public function IsLasDayOfMonth($month, $year)
+    {
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        if ($this->NumberOfDay == $daysInMonth)
+            return true;
+        return false;
     }
 }

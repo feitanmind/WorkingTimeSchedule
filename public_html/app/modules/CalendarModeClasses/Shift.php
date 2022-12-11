@@ -21,6 +21,23 @@ class Shift
         // $this->HoursPerShift = $hoursPerShift;
         // $this->StartHour = $startHour;
         // $this->EndHour = $endHour;
+
+    }
+    public function CompleteHours()
+    {
+        $department_ID = 1;
+        $shiftId = $this->Id;
+        $access_Connection = ConnectToDatabase::connAdminPass();
+        //Polecenie SQL do wybrania wszytskich zmian z tabeli shifts dla konkretnego działu
+        $sql_Query_Selection = "SELECT * FROM shifts WHERE dep_id = $department_ID AND id = $shiftId;";
+        //Przypisanie rezultatu wykonania zapytania do bazy danych
+        $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
+
+        while($row = $result_Of_Selection->fetch_assoc())
+        {
+            $this->StartHour = $row['startHour'];
+            $this->EndHour = $row['endHour'];
+        }
     }
     public function AddUserToWork(User $user)
     {
