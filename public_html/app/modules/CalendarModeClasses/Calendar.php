@@ -181,17 +181,46 @@ class Calendar
     {
 
     }
+    public static function ChceckCalendarInDb($department_ID, $role_ID,$month_Number,$year)
+    {
+                //Data miesiąca
+                $month_Date = date("Y-m-d",mktime(0,0,0,$month_Number,1,$year));
+                //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
+                $access_Connection= ConnectToDatabase::connAdminPass();
+                //Znalezienie zserialiowanego kalendarza
+                $sql = "SELECT days FROM calendar WHERE monthDate = '$month_Date' AND roleId = $role_ID AND depId = $department_ID";
+                //Przypisanie wyniku zapytania do zmiennej
+                $result_Of_Query = $access_Connection ->query($sql);
+                //Sprawdzenie czy istnieje podany wpis poprzez weryfikację rezultatu
+                if ($result_Of_Query->num_rows <= 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return $result_Of_Query;
+                }
+    }
+    public static function castObjToObj($instance, $className)
+    {
+        return unserialize(sprintf(
+            'O:%d:"%s"%s',
+            strlen($className),
+            $className,
+            strstr(strstr(serialize($instance), '"'), ':')
+        ));
+    }
     //Funkcja zwraca obiekt Calendar - gdy istnieje w bazie danych to z bazy -gdy nie istnieje w bazie danych to tworzy nowy obiekt
     public static function CreateWorkingCalendar($department_ID, $role_ID,$month_Number,$year)
     {
-        //Data miesiąca
-        $month_Date = date("Y-m-d",mktime(0,0,0,$month_Number,1,$year));
-        //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
-        $access_Connection= ConnectToDatabase::connAdminPass();
-        //Znalezienie zserialiowanego kalendarza
-        $sql = "SELECT days FROM calendar WHERE monthDate = '$month_Date' AND roleId = $role_ID AND depId = $department_ID";
-        //Przypisanie wyniku zapytania do zmiennej
-        $result_Of_Query = $access_Connection ->query($sql);
+           //Data miesiąca
+           $month_Date = date("Y-m-d",mktime(0,0,0,$month_Number,1,$year));
+           //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
+           $access_Connection= ConnectToDatabase::connAdminPass();
+           //Znalezienie zserialiowanego kalendarza
+           $sql = "SELECT days FROM calendar WHERE monthDate = '$month_Date' AND roleId = $role_ID AND depId = $department_ID";
+           //Przypisanie wyniku zapytania do zmiennej
+           $result_Of_Query = $access_Connection ->query($sql);
         //Sprawdzenie czy istnieje podany wpis poprzez weryfikację rezultatu
         if ($result_Of_Query->num_rows <= 0)
         {
@@ -200,14 +229,42 @@ class Calendar
         }
         else
         {
-            echo "hope";
             //Przypisanie wyniku do postaci tablicy asocjacyjnej
             $row = $result_Of_Query->fetch_assoc();
             //Zwracanie zdeserializowanego obiektu typu Calendar
-            $calend = json_decode($row['days']);
-            $calend2 = new Calendar($month_Number, $year, $department_ID);
-            foreach ($calend as $key => $value) $calend2->{$key} = $value;
-            return $calend2;
+            $calendarAsObjectAStdClass = json_decode($row['days']);
+            //_____
+            $calenadarObjectAsCalendar = new Calendar($month_Number, $year, $department_ID);
+            for($i = 0; $i <= sizeof($calendarAsObjectAStdClass->Days)-1; $i++ )
+            {
+                $shifts = array();
+                for($j = 0; $j <= sizeof($calendarAsObjectAStdClass->Days[$i]->Shifts)-1; $j++)
+                {
+                    $eWorking = array();
+                    $eVacation = array();
+                    if(!empty($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesWorking))
+                    {
+                        for($k = 0; $k <= sizeof($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesWorking)-1; $k++)
+                        {
+                            array_push($eWorking, new User($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesWorking[$k]->user_id));
+                        }
+                        $calenadarObjectAsCalendar->Days[$i]->Shifts[$j]->EmployeesWorking = $eWorking;
+                    }
+                    if(!empty($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesVacation))
+                    {
+                        for($k = 0; $k <= sizeof($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesVacation)-1; $k++)
+                        {
+                            array_push($eVacation, new User($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesVacation[$k]->user_id));
+                        }
+                    
+                        $calenadarObjectAsCalendar->Days[$i]->Shifts[$j]->EmployeesVacation = $eVacation;
+                    }
+                    
+                }   
+            }
+
+            // foreach ()
+            return $calenadarObjectAsCalendar;
         }
     }
 
@@ -224,14 +281,269 @@ class Calendar
 
     public function CanUserBeSignOnDay($user,$day_id, $shift_id)
     {
-        // $shiftStartHour = $calendar->Days[1]->Shifts[0]->StartHour;
-        // $shiftStartHour = $calendar->Days[1]->Shifts[0]->EndHour;
-        $currentShift = $this->Days[$day_id - 1]->Shifts[$shift_id - 1];
-        $currentShift->CompleteHours();
+        $dateOfMonth = date("Y-m", strtotime($this->Year .'-'.$this->MonthNumber));
+        //echo $dateOfMonth;
+        $enrolledShift = $this->Days[$day_id - 1]->Shifts[$shift_id - 1];
+        $enroledHours = $enrolledShift->GetIntArray_HoursOfShift();
 
-        $currentDay = $this->Days[$day_id-1]->NumberOfDay;
-        $_number_of_month = $this->MonthNumber;
-        $_number_of_year = $this->Year;
+        $currentShifts = $this->Days[$day_id - 1]->Shifts;
+        foreach($currentShifts as $shift)
+        {
+            $shift->CompleteHours();
+            if($shift->EmployeesWorking != null && $shift->EmployeesVacation == null)
+            {
+                foreach($shift->EmployeesWorking as $employee)
+                {
+                    if($employee->user_id == $user->user_id)
+                    {
+                        return false;
+                    } 
+                    else 
+                    {
+            // ____1
+                        if($day_id != 1)
+                        {
+                            $dayBeforeShifts = $this->Days[$day_id - 2]->Shifts;
+                            foreach($dayBeforeShifts as $bshift)
+                            {
+                                $bshift->CompleteHours();
+                                //DayBefore
+                                $bHours = $bshift->GetIntArray_HoursOfShift();
+                                if((24 / $enroledHours["StartHours"]) - (24 / $bHours["EndHours"]) > 11)
+                                {
+                                    continue;
+                                }
+                                else if((24 / $enroledHours["StartHours"]) - (24 / $bHours["EndHours"]) == 11)
+                                {
+                                    if($enroledHours["StartMinutes"] >= $bHours["EndMinutes"])
+                                    {
+                                        if(!empty($bshift->EmployeesWorking))
+                                        {
+                                            foreach($bshift->EmployeesWorking as $empl)
+                                            {
+                                                if($user->user_id == $empl->user_id)
+                                                {
+                                                    return false;
+                                                }
+                                            }
+                                    
+                                            }
+                                            continue;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                }
+                                else
+                                {
+                                    if(!empty($bshift->EmployeesWorking))
+                                    {
+                                        foreach($bshift->EmployeesWorking as $empl)
+                                        {
+                                            if($user->user_id == $empl->user_id)
+                                            {
+                                                return false;
+                                            }
+                                        }
+                                    }
+                                    continue;
+                                }  
+                            }
+                        }
+                        
+
+                    }
+            //_____1e
+                }
+            }
+            else if($shift->EmployeesWorking == null && $shift->EmployeesVacation != null)
+            {
+                foreach($shift->EmployeesVacation as $employee)
+                {
+                    if($employee->user_id == $user->user_id)
+                    {
+                        return false;
+                    }else{
+                        continue 2; 
+                    }     
+                }
+            }
+            else //EmployeesWorking null and EmloyeesVacation null
+            {
+                            // ____1
+                        //trzeba później weryfikację czy to pierszy dzień miesiąca
+                        if($day_id != 1)
+                        {
+                            $dayBeforeShifts = $this->Days[$day_id - 2]->Shifts;
+                                // ____2 
+                                foreach($dayBeforeShifts as $bshift)
+                                {
+    
+    
+                                $bshift->CompleteHours();
+                                    //DayBefore
+                                    $bHours = $bshift->GetIntArray_HoursOfShift();
+                                    //echo "[". 24-$enroledHours["StartHours"]."-". 24 -$bHours["EndHours"]."]";
+                                    //echo "(".$bHours["StartHours"]."<".$bHours["EndHours"].")";
+                                    //echo (24 / $enroledHours["StartHours"]) - (24 / $bHours["EndHours"]) > 11;
+                                    if($bHours["StartHours"] < $bHours["EndHours"])
+                                    {
+                                        $x = 24 - $bHours["EndHours"];
+                                        $hourDifference = $enroledHours["StartHours"] + $x;
+                                    }
+                                    else
+                                    {
+                                        $hourDifference = $enroledHours["StartHours"] - $bHours["EndHours"];
+                                    }
+    
+                                    if($hourDifference > 11)
+                                    {
+                                    continue;
+                                    }
+                                    else if($hourDifference == 11)
+                                    {
+                                        if($enroledHours["StartMinutes"] >= $bHours["EndMinutes"])
+                                        {
+                                            if(!empty($bshift->EmployeesWorking))
+                                            {
+                                                foreach($bshift->EmployeesWorking as $empl)
+                                                {
+                                                    if($user->user_id == $empl->user_id)
+                                                    {
+                                                        return false;
+                                                    }
+                                                }
+                                        
+                                                }
+                                        continue;
+                                        }
+                                        else
+                                        {
+                                            return false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                    //echo "done";
+                                    //print_r($bshift);
+                                        if($bshift->EmployeesWorking != null)
+                                        {
+                                           
+                                            foreach($bshift->EmployeesWorking as $empl)
+                                            {
+                                                if($user->user_id == $empl->user_id)
+                                                {
+                                                    return false;
+                                                }
+                                            }
+                                        }
+                                        continue;
+                                    }  
+                                }
+                                //End 2
+                        }
+                        else
+                        {
+                            $roleID = 1;
+                            $yearOfMonthBefore = intval(date('Y', strtotime("-1 months", strtotime($dateOfMonth))));
+                            $numberOfMonthBefore = intval(date('m', strtotime("-1 months", strtotime($dateOfMonth))));
+                            $numberOfDayBefore = cal_days_in_month(CAL_GREGORIAN,$numberOfMonthBefore,$yearOfMonthBefore);
+                            $checkMonthBeforeIsOnDb = Calendar::ChceckCalendarInDb($this->Department, $roleID, $numberOfMonthBefore, $yearOfMonthBefore);
+                            
+                            if(!$checkMonthBeforeIsOnDb)
+                            {
+                                //Będzie trzeba napisać gdy zmiana koliduje z dniem następnym 
+                                //narazie
+                                continue;
+                            }
+                            else
+                            {
+                        //echo $numberOfDayBefore;
+                                $calendarDayBefore1 = Calendar::CreateWorkingCalendar($this->Department, $roleID, $numberOfMonthBefore, $yearOfMonthBefore);
+                                $dayBeforeShifts = $calendarDayBefore1->Days[$numberOfDayBefore-1]->Shifts;
+                                print_r(get_class($calendarDayBefore1->Days[0]));
+                                // ____2 
+                            foreach($dayBeforeShifts as $bshift)
+                            {
+
+
+                            $bshift->CompleteHours();
+                                //DayBefore
+                                $bHours = $bshift->GetIntArray_HoursOfShift();
+                                //echo "[". 24-$enroledHours["StartHours"]."-". 24 -$bHours["EndHours"]."]";
+                                //echo "(".$bHours["StartHours"]."<".$bHours["EndHours"].")";
+                                //echo (24 / $enroledHours["StartHours"]) - (24 / $bHours["EndHours"]) > 11;
+                                if($bHours["StartHours"] < $bHours["EndHours"])
+                                {
+                                    $x = 24 - $bHours["EndHours"];
+                                    $hourDifference = $enroledHours["StartHours"] + $x;
+                                }
+                                else
+                                {
+                                    $hourDifference = $enroledHours["StartHours"] - $bHours["EndHours"];
+                                }
+
+                                if($hourDifference > 11)
+                                {
+                                continue;
+                                }
+                                else if($hourDifference == 11)
+                                {
+                                    if($enroledHours["StartMinutes"] >= $bHours["EndMinutes"])
+                                    {
+                                        if(!empty($bshift->EmployeesWorking))
+                                        {
+                                            foreach($bshift->EmployeesWorking as $empl)
+                                            {
+                                                if($user->user_id == $empl->user_id)
+                                                {
+                                                    return false;
+                                                }
+                                            }
+                                    
+                                            }
+                                    continue;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                }
+                                else
+                                {
+                                //echo "done";
+                                //print_r($bshift);
+                                    if($bshift->EmployeesWorking != null)
+                                    {
+                                       
+                                        foreach($bshift->EmployeesWorking as $empl)
+                                        {
+                                            if($user->user_id == $empl->user_id)
+                                            {
+                                                return false;
+                                            }
+                                        }
+                                    }
+                                    continue;
+                                }  
+                            }
+                            //End 2
+
+                            }
+                        
+                        }
+                        
+
+                    
+            
+            }
+            //_____1e
+           
+        }
+        return true;
+
+       
 
         // $currentDateString = "$_number_of_year-$_number_of_month-$currentDay 00:00:00";
         // $dateCurrentDay = new \DateTime($currentDateString);
@@ -243,24 +555,7 @@ class Calendar
 
 
 
-        if($currentShift->EmployeesWorking != null && $currentShift->EmployeesVacation == null)
-        {
-            foreach($currentShift->EmployeesWorking as $employee)
-            {
-                return $employee->user_id == $user->user_id ? false : true;   
-            }
-        }
-        else if($currentShift->EmployeesWorking == null && $currentShift->EmployeesVacation != null)
-        {
-            foreach($currentShift->EmployeesVacation as $employee)
-            {
-                return $employee->user_id == $user->user_id ? false : true;   
-            }
-        }
-        else
-        {
-            return true;
-        }
+        
         
     }
 

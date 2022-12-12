@@ -51,15 +51,18 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-    include("ConnectToDatabase.php");
-    include("User.php");
-    include("Shift.php");
-    include("Day.php");
-    include("Calendar.php");
-    include("HoursOfWork.php");
+    require "scripts/php/PHPScripts.php";
+    require "modules/GeneralClasses/ConnectToDatabase.php";
+    require "modules/CalendarModeClasses/User.php";
+    require "modules/CalendarModeClasses/Shift.php";
+    require "modules/CalendarModeClasses/Role.php";
+    require "modules/CalendarModeClasses/Calendar.php";
+    require "modules/CalendarModeClasses/Day.php";
+    require "modules/CalendarModeClasses/HoursOfWork.php";
     // Warning: Undefined property: App\User::$Name in /var/www/html/wokingTimeSchedule/app/b_Month.php on line 70
 
     $md = new Calendar(1,2022,1);
+    $md2 = new Calendar(12, 2021, 1);
 
     //echo "jsonenc1: ".json_encode($md)."<br>";
     //echo "Done";
@@ -73,7 +76,7 @@
     // $t3 = (array) $t2['EmployeesWorking'];
     // array_push($t3, $user);
 
-    array_push($md->Days[0]->Shifts[0]->EmployeesWorking, $user);
+    array_push($md->Days[30]->Shifts[0]->EmployeesWorking, $user);
 print_r(json_encode($md));
     //echo "jsonenc1: ".json_encode($md)."<br>";
     //$md->SignUserToWorkInDay($user2, 0, 0);
@@ -104,7 +107,7 @@ print_r(json_encode($md));
     //echo $mdd;
     //alendar::JsonDecodeCalendar($mdd,1);
     ////PushCalendar 
-    $md->PushCalendarToDataBase(1,$md);
+    $md2->PushCalendarToDataBase(1,$md2);
     //$cal2 = Calendar::CreateWorkingCalendar($dep_id, $role_id, 1, 2022);
     //$md->RemoveMonth();
     //$cal2->DrawCalendar();

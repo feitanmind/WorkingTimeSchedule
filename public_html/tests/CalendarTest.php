@@ -61,14 +61,21 @@ final class CalendarTest extends \PHPUnit\Framework\TestCase
         $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, self::$DayIdInCalendar,self::$ShiftId);
         $this->assertTrue($CanBeSign);
     }
-    public function test_ShouldReturnFalseWhenUserWasSignedOnCurrentDay()
+    public function test_ShouldReturnFalseWhenUserWasSignedOnCurrentDayOnSameShift()
     {
         $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
         $calendar->SignUserToWorkInDay(self::$TestUser, self::$DayIdInCalendar, self::$ShiftId);
         $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, self::$DayIdInCalendar,self::$ShiftId);
         $this->assertFalse($CanBeSign);
     }
-    public function test_ShouldReturnFlaseWhenUserWasOnVacation()
+    public function test_ShouldReturnFalseWhenUserWasSignedOnCurrentDayOnOtherShift()
+    {
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
+        $calendar->SignUserToWorkInDay(self::$TestUser, self::$DayIdInCalendar, self::$ShiftId + 1);
+        $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, self::$DayIdInCalendar,self::$ShiftId);
+        $this->assertFalse($CanBeSign);
+    }
+    public function test_ShouldReturnFlaseWhenUserWasOnVacationOnSameShiftInCurrentDay()
     {
         $dayNumber = self::$DayIdInCalendar+2;
         $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
@@ -76,10 +83,48 @@ final class CalendarTest extends \PHPUnit\Framework\TestCase
         $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, $dayNumber,self::$ShiftId);
         $this->assertFalse($CanBeSign);
     }
-    // public function test_ShouldReturnTrueWhenDayIsTheFirstDayInMonth()
-    // {
+    public function test_ShouldReturnFlaseWhenUserWasOnVacationOnOtherShiftInCurrentDay()
+    {
+        $dayNumber = self::$DayIdInCalendar+2;
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
+        $calendar->SignUserVacation(self::$TestUser,$dayNumber, self::$ShiftId+1);
+        $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, $dayNumber,self::$ShiftId);
+        $this->assertFalse($CanBeSign);
+    }
+    public function test_ShouldReturnFalseWhenUserWasSignedOnDayBeforeOnCollidingShift()
+    {
+        $dayNumber = 5;
+        $dayBeforeNumber = $dayNumber - 1;
+        $shiftCurrent = 1; // 7 - 15
+        $shiftCollising = 3; //19 - 7
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);       
+        $calendar->SignUserToWorkInDay(self::$TestUser,$dayBeforeNumber, $shiftCollising);
+        // $debug = $calendar->Days[3]->Shifts[2]->EmployeesWorking[0]->name;
+        // fwrite(STDERR, print_r($debug, TRUE)); 
+        $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, $dayNumber,$shiftCurrent); 
+        $this->assertFalse($CanBeSign);
+    }
+    public function test_ShouldReturnFalseWhenUserWasSignedOnDayBeforeOnCollidingShiftOnOtherMonth()
+    {
+        $dayNumber = 1;
+        $dayBeforeNumber = 31;
+        $shiftCurrent = 1;
+        $shiftCollising = 3;
+        $monthBefore = 12; // grudzień
+        $yearBefore = self::$NumberOfYear - 1; // 2021
+        //(STYCZEŃ 2022)
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);  
+        // (GRUDZIEŃ 2021)
+        //$calendarBefore = new App\Calendar($monthBefore, $yearBefore, self::$DepartmentId);
+        $calendarBefore = App\Calendar::CreateWorkingCalendar(self::$DepartmentId, 1, $monthBefore, $yearBefore);
+             
+        //$calendarBefore->SignUserToWorkInDay(self::$TestUser,$dayBeforeNumber, $shiftCollising);
+        // $debug = $calendarBefore->Days[30]->Shifts[2]->EmployeesWorking[0]->name;
+        // fwrite(STDERR, print_r($debug, TRUE)); 
+        $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, $dayNumber,$shiftCurrent);
+        $this->assertFalse($CanBeSign);
+    }
 
-    // }
 }
 
 

@@ -48,6 +48,32 @@ class Shift
         array_push($this->EmployeesVacation, $user);
     }
 
+    public function GetIntArray_HoursOfShift()
+    {
+        $hoursOfShift = array("StartHours"=>0,"StartMinutes"=>0,"EndHours"=>0,"EndMinutes"=>0);
+        if (strpos($this->EndHour, ":")) {
+            $hoursOfShift["EndHours"] = intval(substr($this->EndHour, 0, strpos($this->EndHour, ":")));
+            $hoursOfShift["EndMinutes"] = intval(substr($this->EndHour, strpos($this->EndHour, ":")));
+        }
+        else
+        {
+            $hoursOfShift["EndHours"] = intval($this->EndHour);
+        }
+        if (strpos($this->StartHour, ":")) {
+            $hoursOfShift["StartHours"] = intval(substr($this->StartHour, 0, strpos($this->StartHour, ":")));
+            $hoursOfShift["EndMinutes"] = intval(substr($this->StartHour, strpos($this->StartHour, ":")));
+        }
+        else
+        {
+            $hoursOfShift["StartHours"] = intval($this->StartHour);
+        }
+        return $hoursOfShift;
+
+    }
+
+
+
+
     //Funcja Generuje formularz dzięki któremu będzie można wybrać konkretną zmianę dla której ustalamy grafik
     public static function GenerateFormSelectForShifts(string $department_ID)
     {
