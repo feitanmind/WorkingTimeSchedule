@@ -41,8 +41,8 @@ use PhpParser\JsonDecoder;
     
 
     $calend = json_decode($_SESSION['calendar']);
-    $cal = new Calendar(1,2022,1);
-    foreach ($calend as $key => $value) $cal->{$key} = $value;
+    $cal = Calendar::DecodeJsonCalendar(1, 2022, 1, $calend);
+    
     //foreach ($cal23 as $key => $value) $class->{$key} = $value;
     // $cal = $jsonDecoder->decode($cal23);
     $cal->DrawCalendar();

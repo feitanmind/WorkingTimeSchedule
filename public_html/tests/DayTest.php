@@ -16,13 +16,13 @@ class DayTest extends \PHPUnit\Framework\TestCase
     function test_ShouldReturnTrueWhenDayIsLastDayInMonth()
     {
         $day = new App\Day(31, 1);
-        $isLastDayOfMonth = $day->IsLasDayOfMonth(1, 2022);
+        $isLastDayOfMonth = $day->IsLastDayOfMonth(1, 2022);
         $this->assertTrue($isLastDayOfMonth);
     }
     function test_ShouldReturnFalseWhenDayIsntLastDayInMonth()
     {
         $day = new App\Day(30, 1);
-        $isLastDayOfMonth = $day->IsLasDayOfMonth(1, 2022);
+        $isLastDayOfMonth = $day->IsLastDayOfMonth(1, 2022);
         $this->assertFalse($isLastDayOfMonth);
     }
 }

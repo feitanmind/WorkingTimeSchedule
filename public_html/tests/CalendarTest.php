@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Calendar;
+use PHPUnit\Framework\TestCase;
 
 final class CalendarTest extends \PHPUnit\Framework\TestCase
 {
@@ -115,7 +117,6 @@ final class CalendarTest extends \PHPUnit\Framework\TestCase
         //(STYCZEŃ 2022)
         $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);  
         // (GRUDZIEŃ 2021)
-        //$calendarBefore = new App\Calendar($monthBefore, $yearBefore, self::$DepartmentId);
         $calendarBefore = App\Calendar::CreateWorkingCalendar(self::$DepartmentId, 1, $monthBefore, $yearBefore);
              
         //$calendarBefore->SignUserToWorkInDay(self::$TestUser,$dayBeforeNumber, $shiftCollising);
@@ -124,6 +125,24 @@ final class CalendarTest extends \PHPUnit\Framework\TestCase
         $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, $dayNumber,$shiftCurrent);
         $this->assertFalse($CanBeSign);
     }
+    public function test_ShouldReturnFalseWhenUserWasSignedOnNextDayOnCollidingShiftOnOtherMonth()
+    {
+        $dayNumber = 31;
+        $nexDayNumber = 1;
+        $shiftCurrent = 3;
+        $shiftCollising = 1;
+        $nextMonth = 2; // grudzień
+        //(STYCZEŃ 2022)
+        $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);  
+        // (LUTY 2022)
+        $calendarNext = App\Calendar::CreateWorkingCalendar(self::$DepartmentId, 1, $nextMonth, self::$NumberOfYear);
+        // $debug = $calendarBefore->Days[30]->Shifts[2]->EmployeesWorking[0]->name;
+        // fwrite(STDERR, print_r($debug, TRUE)); 
+        $CanBeSign = $calendar->CanUserBeSignOnDay(self::$TestUser, $dayNumber,$shiftCurrent);
+        $this->assertFalse($CanBeSign);
+    }
+
+
 
 }
 

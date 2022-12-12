@@ -3,10 +3,11 @@
 use App\Shift;
 use App\User;
 use App\Calendar;
+use Exception as Ex;
 use PHPUnit\TextUI\CliArguments\Exception;
 
 use function PHPUnit\Framework\throwException;
-
+ 
 class PHPScripts
 {
     public static function CHECK_User_Is_Logged()
@@ -36,21 +37,41 @@ class PHPScripts
         $department_ID = 1;
 
         $calend = json_decode($_SESSION['calendar']);
-        $calend2 = new Calendar($month_Number, $year, $department_ID);
-        foreach ($calend as $key => $value) $calend2->{$key} = $value;
 
-        //Sprawdzenie czy użytkownik już nie jest przypisany do dnia / zmiany 
+            $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
+        
  
             foreach($users as $user)
             {
                 $user2 = new User($user);
-                $calend2->SignUserToWorkInDay($user2, $dayId, $shiftId);
+                
+                    if(!$calend2->SignUserToWorkInDay($user2, $dayId, $shiftId))
+                    {
+                        echo "<script>
+                        
+                        
+                       let toast = document.getElementById('toast');
+
+                        
+                        
+                        toast.style.width = '200px';
+                        toast.style.height = '200px';
+                        toast.style.position = 'absolute';
+                        toast.style.display = 'flex';
+                        
+                        </script>";
+                        
+                       
+                    
+                    }
+               
+                
 
             }
-        $_SESSION['calendar'] = json_encode($calend2);
-        //czyszczenie Get
-        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-        header("Location: $actual_link");
+        // $_SESSION['calendar'] = json_encode($calend2);
+        // //czyszczenie Get
+        // $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+        // header("Location: $actual_link");
         
     }
 
@@ -69,8 +90,7 @@ class PHPScripts
         $department_ID = 1;
 
         $calend = json_decode($_SESSION['calendar']);
-        $calend2 = new Calendar($month_Number, $year, $department_ID);
-        foreach ($calend as $key => $value) $calend2->{$key} = $value;
+        $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
 
             foreach($users as $user)
             {
@@ -98,8 +118,7 @@ class PHPScripts
             $year = $_SESSION['Year_Number'];
             $department_ID = 1;
             $calend = json_decode($_SESSION['calendar']);
-            $calend2 = new Calendar($month_Number, $year, $department_ID);
-            foreach ($calend as $key => $value) $calend2->{$key} = $value;
+            $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
             foreach($users as $user)
             {
                 //echo "<script>console.log(\"".$user->user_id."'\")</script>";
@@ -125,8 +144,7 @@ class PHPScripts
             $year = $_SESSION['Year_Number'];
             $department_ID = 1;
             $calend = json_decode($_SESSION['calendar']);
-            $calend2 = new Calendar($month_Number, $year, $department_ID);
-            foreach ($calend as $key => $value) $calend2->{$key} = $value;
+            $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
             foreach($users as $user)
             {
                 //echo "<script>console.log(\"".$user->user_id."'\")</script>";

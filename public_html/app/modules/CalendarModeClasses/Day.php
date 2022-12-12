@@ -55,7 +55,7 @@ class Day
             return true;
         return false;
     }
-    public function IsLasDayOfMonth($month, $year)
+    public function IsLastDayOfMonth($month, $year)
     {
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
         if ($this->NumberOfDay == $daysInMonth)

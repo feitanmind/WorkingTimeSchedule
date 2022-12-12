@@ -63,6 +63,7 @@
 
     $md = new Calendar(1,2022,1);
     $md2 = new Calendar(12, 2021, 1);
+    $md3 = new Calendar(2, 2022, 1);
 
     //echo "jsonenc1: ".json_encode($md)."<br>";
     //echo "Done";
@@ -76,10 +77,10 @@
     // $t3 = (array) $t2['EmployeesWorking'];
     // array_push($t3, $user);
 
-    array_push($md->Days[30]->Shifts[0]->EmployeesWorking, $user);
-print_r(json_encode($md));
+    //array_push($md->Days[30]->Shifts[0]->EmployeesWorking, $user);
+//print_r(json_encode($md));
     //echo "jsonenc1: ".json_encode($md)."<br>";
-    //$md->SignUserToWorkInDay($user2, 0, 0);
+$md3->SignUserToWorkInDay($user2, 1, 1);
     //$md->SignUserVacation($user, 0, 0);
     //array_push($md->Days[0]->Shifts[0]->EmployeesVacation, $user2);
     //echo "hh";
@@ -107,7 +108,7 @@ print_r(json_encode($md));
     //echo $mdd;
     //alendar::JsonDecodeCalendar($mdd,1);
     ////PushCalendar 
-    $md2->PushCalendarToDataBase(1,$md2);
+    $md3->PushCalendarToDataBase(1,$md3);
     //$cal2 = Calendar::CreateWorkingCalendar($dep_id, $role_id, 1, 2022);
     //$md->RemoveMonth();
     //$cal2->DrawCalendar();
