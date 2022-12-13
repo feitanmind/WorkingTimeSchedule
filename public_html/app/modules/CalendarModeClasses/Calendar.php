@@ -11,8 +11,8 @@ error_reporting(E_ALL);
 
 class Calendar
 {
-    private int $MonthNumber;
-    private int $Year;
+    public int $MonthNumber;
+    public int $Year;
     public int $Department;
     public $Days = array();
 
@@ -222,6 +222,7 @@ class Calendar
     //Funkcja zwraca obiekt Calendar - gdy istnieje w bazie danych to z bazy -gdy nie istnieje w bazie danych to tworzy nowy obiekt
     public static function CreateWorkingCalendar($department_ID, $role_ID, $month_Number, $year)
     {
+        
         //Data miesiąca
         $month_Date = date("Y-m-d", mktime(0, 0, 0, $month_Number, 1, $year));
         //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
@@ -243,6 +244,7 @@ class Calendar
             //Zwracanie zdeserializowanego obiektu typu Calendar
             $calendarAsObjectAStdClass = json_decode($row['days']);
             //_____
+
             return Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calendarAsObjectAStdClass);
 
             // foreach ()
@@ -252,7 +254,10 @@ class Calendar
 
     public static function DecodeJsonCalendar($month_Number, $year, $department_ID,$calendarAsObjectAStdClass)
     {
+        echo "<script>console.log('month:$month_Number, year: $year')</script>";
         $calenadarObjectAsCalendar = new Calendar($month_Number, $year, $department_ID);
+
+        
         for ($i = 0;$i <= sizeof($calendarAsObjectAStdClass->Days) - 1;$i++)
         {
             $shifts = array();
@@ -296,8 +301,11 @@ class Calendar
 
     public function CanUserBeSignOnDay($user, $day_id, $shift_id)
     {
-        $dateOfMonth = date("Y-m", strtotime($this->Year . '-' . $this->MonthNumber));
+        $dateString = $this->Year . '-' . $this->MonthNumber . '-1';
+        $dateOfMonth = date("Y-m", strtotime($dateString));
         //echo $dateOfMonth;
+        echo "<script>console.log('dom' +".$this->Year.")</script>";
+        //echo "<script>console.log('dom' +".date("Y", strtotime($dateString)).")</script>";
         $enrolledShift = $this->Days[$day_id - 1]->Shifts[$shift_id - 1];
         $enroledHours = $enrolledShift->GetIntArray_HoursOfShift();
 
@@ -353,20 +361,83 @@ class Calendar
                         else
                         {
                             $roleID = 1;
-                            $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
-                            $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
-                            $numberOfNextDay = 1;
-                            $checkNextMonthIsOnDb = Calendar::ChceckCalendarInDb($this->Department, $roleID, $numberNextOfMonth, $yearOfNextMonth);
-                            if (!$checkNextMonthIsOnDb)
-                                continue;
+                            $yearOfMonthBefore = intval(date('Y', strtotime("-1 months", strtotime($dateOfMonth))));
+                            $numberOfMonthBefore = intval(date('m', strtotime("-1 months", strtotime($dateOfMonth))));
+                            $numberOfDayBefore = cal_days_in_month(CAL_GREGORIAN, $numberOfMonthBefore, $yearOfMonthBefore);
+                            $checkMonthBeforeIsOnDb = Calendar::ChceckCalendarInDb($this->Department, $roleID, $numberOfMonthBefore, $yearOfMonthBefore);
+                            echo "<script>console.log('yearb' +$dateOfMonth)</script>";
+                            echo "<script>console.log('yearb' +$yearOfMonthBefore)</script>";
+                            if (!$checkMonthBeforeIsOnDb)
+                            {
+                                //Będzie trzeba napisać gdy zmiana koliduje z dniem następnym
+                                //narazie
+                                if (!$this->Days[$day_id - 1]->IsLastDayOfMonth($this->MonthNumber, $this->Year)) {
+                                    $dayNextShifts = $this->Days[$day_id]->Shifts;
+                                    if (Calendar::checkNextDay($dayNextShifts, $enroledHours, $user))
+                                        continue;
+                                    else
+                                        return false;
+                                }
+                                else
+                                {
+                                    $roleID = 1;
+                                    $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
+                                    $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
+                                    $numberOfNextDay = 1;
+                                    $checkNextMonthIsOnDb = Calendar::ChceckCalendarInDb($this->Department, $roleID, $numberNextOfMonth, $yearOfNextMonth);
+                                    if (!$checkNextMonthIsOnDb)
+                                        continue;
+                                    else
+                                    {
+                                        $calendarNextDay1 = Calendar::CreateWorkingCalendar($this->Department, $roleID, $numberNextOfMonth, $yearOfNextMonth);
+                                        $dayNextShifts = $calendarNextDay1->Days[0]->Shifts;
+                                        if (Calendar::checkNextDay($dayNextShifts, $enroledHours, $user))
+                                            continue;
+                                        else
+                                            return false;
+                                    }
+                                }
+                            }
                             else
                             {
-                                $calendarNextDay1 = Calendar::CreateWorkingCalendar($this->Department, $roleID, $numberNextOfMonth, $yearOfNextMonth);
-                                $dayNextShifts = $calendarNextDay1->Days[0]->Shifts;
-                                if (Calendar::checkNextDay($dayNextShifts, $enroledHours, $user))
-                                    continue;
+                                //echo $numberOfDayBefore;
+                                $calendarDayBefore1 = Calendar::CreateWorkingCalendar($this->Department, $roleID, $numberOfMonthBefore, $yearOfMonthBefore);
+                                $dayBeforeShifts = $calendarDayBefore1->Days[$numberOfDayBefore - 1]->Shifts;
+                                //print_r(get_class($calendarDayBefore1->Days[0]));
+                                // ____2
+                                if(Calendar::checkDayBefore($dayBeforeShifts, $enroledHours, $user)){
+                                    if (!$this->Days[$day_id - 1]->IsLastDayOfMonth($this->MonthNumber, $this->Year)) {
+                                        $dayNextShifts = $this->Days[$day_id]->Shifts;
+                                        if (Calendar::checkNextDay($dayNextShifts, $enroledHours, $user))
+                                            continue;
+                                        else
+                                            return false;
+                                    }
+                                    else
+                                    {
+                                        $roleID = 1;
+                                        $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
+                                        $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
+                                        $numberOfNextDay = 1;
+                                        $checkNextMonthIsOnDb = Calendar::ChceckCalendarInDb($this->Department, $roleID, $numberNextOfMonth, $yearOfNextMonth);
+                                        if (!$checkNextMonthIsOnDb)
+                                            continue;
+                                        else
+                                        {
+                                            $calendarNextDay1 = Calendar::CreateWorkingCalendar($this->Department, $roleID, $numberNextOfMonth, $yearOfNextMonth);
+                                            $dayNextShifts = $calendarNextDay1->Days[0]->Shifts;
+                                            if (Calendar::checkNextDay($dayNextShifts, $enroledHours, $user))
+                                                continue;
+                                            else
+                                                return false;
+                                        }
+                                    }
+                                }
+                                    
                                 else
                                     return false;
+                                //End 2
+                                
                             }
                         }
                         //_____1e

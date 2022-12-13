@@ -4,7 +4,7 @@ declare(strict_types=1);
 use App\Calendar;
 use PHPUnit\Framework\TestCase;
 
-final class CalendarTest extends \PHPUnit\Framework\TestCase
+final class CalendarTest extends TestCase
 {
     private static $NumberOfYear,
     $DepartmentId,
