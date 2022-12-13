@@ -88,8 +88,16 @@ class Shift
         echo '<select font-size: 1vw" name="shiftID">';
         while($row = $result_Of_Selection->fetch_assoc())
         {   
+            if($_SESSION["Shift_Id"] == $row["id"])
+            {
+                echo '<option onclick="this.form.submit();" selected="selected" value='.$row['id'].'>'.$row['startHour'].'-'.$row['endHour'].'<i> ('.$row['name'].')</i></option>';
+            }
+            else
+            {
+                echo '<option onclick="this.form.submit();" value='.$row['id'].'>'.$row['startHour'].'-'.$row['endHour'].'<i> ('.$row['name'].')</i></option>';
+            }
             //Stworzenie opcji które po wybraniu wysyłają cały formularz            
-            echo '<option onclick="this.form.submit();" value='.$row['id'].'>'.$row['startHour'].'-'.$row['endHour'].'<i> ('.$row['name'].')</i></option>';
+            
         }
         echo '</select>';
         echo '</form>';        

@@ -17,13 +17,15 @@ class PHPScripts
     }
     public static function CHECK_AND_SET_Session_Var_Shift_and_Role()
     {
-        isset($_POST['shiftID']) ? $_SESSION['shift_id'] = $_POST['shiftID'] : $_SESSION['shift_id'] = 1;
-        isset($_POST['roleID']) ? $_SESSION['role_id'] = $_POST['roleID'] : $_SESSION['role_id'] = 1;
+        if (isset($_POST['shiftID'])) {
+            $_SESSION['Shift_Id'] = $_POST['shiftID'];
+        }
+        if (isset($_POST['roleID'])) {
+
+            $_SESSION['Role_Id'] = $_POST['roleID'];
+        }
     }
-    public static function CheckIfUserCanBeSign($dayId,$users,$shiftId,$month_Number,$year,$department_ID,$calend2)
-    {
-        
-    }
+
     public static function ADD_USER_TO_Day_of_Calendar()
     {
         
@@ -31,7 +33,7 @@ class PHPScripts
     {
         $dayId = $_GET['dayId'];
         $users = $_GET['usersToAdd'];
-        $shiftId = $_SESSION['shift_id'];
+        $shiftId = $_SESSION['Shift_Id'];
         $month_Number = $_SESSION['Month_Number'];
         $year = $_SESSION['Year_Number'];
         $department_ID = 1;
@@ -83,7 +85,7 @@ class PHPScripts
     {
         $dayId = $_GET['dayId'];
         $users = $_GET['usersToVacation'];
-        $shiftId = $_SESSION['shift_id'];
+        $shiftId = $_SESSION['Shift_Id'];
         $month_Number = $_SESSION['Month_Number'];
         $year = $_SESSION['Year_Number'];
         $department_ID = 1;
@@ -112,7 +114,7 @@ class PHPScripts
         {
             $dayId = $_GET['dayId'];
             $users = $_GET['userToRemove'];
-            $shiftId = $_SESSION['shift_id'];
+            $shiftId = $_SESSION['Shift_Id'];
             $month_Number = $_SESSION['Month_Number'];
             $year = $_SESSION['Year_Number'];
             $department_ID = 1;
@@ -138,7 +140,7 @@ class PHPScripts
         {
             $dayId = $_GET['dayId'];
             $users = $_GET['userToRevokeVacation'];
-            $shiftId = $_SESSION['shift_id'];
+            $shiftId = $_SESSION['Shift_Id'];
             $month_Number = $_SESSION['Month_Number'];
             $year = $_SESSION['Year_Number'];
             $department_ID = 1;

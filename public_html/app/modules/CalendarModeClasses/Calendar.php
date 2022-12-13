@@ -47,6 +47,8 @@ class Calendar
     // }
     public function DrawCalendar()
     {
+        $shiftId = $_SESSION["Shift_Id"] - 1;
+        $roleId = $_SESSION["Role_Id"];
         //Sprawdzamy ile dni jest w miesiącu
         $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $this->MonthNumber, $this->Year);
         //Będziemy domyślnie rysować 42 krotki, Tabela 7X6
@@ -84,8 +86,8 @@ class Calendar
         //Rysujemy wszsytkie pola miesiąca
         for ($j = 1;$j <= $numberDaysInMonth;$j++)
         {
-            $workingPeople = $this->Days[$j - 1]->Shifts[0]->EmployeesWorking;
-            $vacationPeople = $this->Days[$j - 1]->Shifts[0]->EmployeesVacation;
+            $workingPeople = $this->Days[$j - 1]->Shifts[$shiftId]->EmployeesWorking;
+            $vacationPeople = $this->Days[$j - 1]->Shifts[$shiftId]->EmployeesVacation;
 
             echo '<div class="dayOfTheWeek"  id="day' . $j . '" onmouseover="showAddAndRemoveControls(' . $j . ')" onmouseout="hideAddAndRemoveControls(' . $j . ')">' . '<div class="numberOfDay"><p><b>' . $j . '</b></p>
                         <div id="addP" class="windowButton" onclick="createFormToAddPersonToDay(this);">+</div>
@@ -96,12 +98,18 @@ class Calendar
             echo "Working:<div id=\"working\">";
             foreach ($workingPeople as $workingPerson)
             {
-                echo "<div class=\"userW\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
+                if($roleId == $workingPerson->role_id)
+                {
+                    echo "<div class=\"userW\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
+                }
+                
             }
             echo "</div>Vacation:<div id=\"vacation\">";
             foreach ($vacationPeople as $vacationingPerson)
             {
-                echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
+                if ($roleId == $workingPerson->role_id) {
+                    echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
+                }
             }
 
             echo "</div></div>

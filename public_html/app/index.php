@@ -55,7 +55,7 @@ require "modules/CalendarModeClasses/Day.php";
             <!-- //Sprawdzenie czy zostały ustawione zmienne sesyjne dla Shift i Role -->
             <?php PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();?>
             <?php
-            $user_id = $_SESSION['user_id'];
+            $user_id = $_SESSION['User_Id'];
             $user = new User($user_id);
             //echo $user->dep_id;
             $_SESSION['dep_id'] = $user->dep_id;
@@ -120,5 +120,6 @@ require "modules/CalendarModeClasses/Day.php";
         <!-- Dodatkowe style zawierające wygląd formularzy i niektóre elementy CalendarMode -->
         <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
         <script src="scripts/showCalendarDayControls.js"></script>
+
 </body>
 </html>

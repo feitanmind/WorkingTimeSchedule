@@ -33,13 +33,26 @@ class Login
                 if($row['password'] == $userPassword)
                 {
                     $_SESSION['log'] = true;
-                    $_SESSION['user_id'] = $row['id'];
+                    //$_SESSION['user_id'] = $row['id'];
+                    $_SESSION['User_Id']= $row['id'];
+                    $id = $row['id'];
                     $_SESSION['username'] = $row['login'];
                     $_SESSION['password'] = $userPassword;
                     unset($_SESSION['warning1']);
                     $_SESSION['header'] = "Location: ../../app/";
-                    $_SESSION['workers_role'] = 1;
-                    $_SESSION['shift_id'] = 1;
+                    //$_SESSION['workers_role'] = 1;
+                    $_SESSION['Role_Of_Employees'] = 1;
+                    //$_SESSION['shift_id'] = 1;
+                    $_SESSION['Shift_Id'] = 1;
+                    $_SESSION['Role_Id'] = 1;
+                    $searchDempartment = "SELECT dep_id FROM user_data WHERE usr_id = $id;";
+                    $resDep = $access_Connection->query($searchDempartment);
+                    if($resDep->num_rows > 0)
+                    {
+                        $rowDep = $resDep->fetch_assoc();
+                        $_SESSION['Current_User_Department_Id'] = $rowDep['dep_id'];
+                    }
+                    
 
                     // $_SESSION['Month_Number'] = date('m');
                     // $_SESSION['Year_Number'] = date('Y');

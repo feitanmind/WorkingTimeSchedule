@@ -17,8 +17,16 @@ class Role
 
         while($row = $result_Of_Selection->fetch_assoc())
         {
+            if($_SESSION["Role_Id"] == $row['id'])
+            {
+                echo '<option onclick="this.form.submit();" selected="selected" value='.$row['id'].">".$row['name'].'</option>';
+            }
+            else
+            {
+                echo '<option onclick="this.form.submit();" value='.$row['id'].">".$row['name'].'</option>';
+            }
             //Stworzenie opcji w formularzu które po kliknięciu będą wysyłały wybraną opcję
-            echo '<option onclick="this.form.submit();" value='.$row['id'].">".$row['name'].'</option>';
+            
         }
         echo '</select>';
         echo '</form>';              
