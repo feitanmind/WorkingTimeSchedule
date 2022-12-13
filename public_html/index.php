@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <script>
         
         let lang = document.cookie;

@@ -39,10 +39,10 @@ class PHPScripts
         $calend = json_decode($_SESSION['calendar']);
 
             $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
-            $_de = $calend2;
-            $debug = $_de->MonthNumber;
-            $debug2 = $_de->Year;
-            echo "<script>console.log('AddU : month:$debug, year: $debug2')</script>";
+            // $_de = $calend2;
+            // $debug = $_de->MonthNumber;
+            // $debug2 = $_de->Year;
+            // echo "<script>console.log('AddU : month:$debug, year: $debug2')</script>";
  
             foreach($users as $user)
             {
@@ -50,19 +50,7 @@ class PHPScripts
                     $canAdd = $calend2->CanUserBeSignOnDay($user2, $dayId, $shiftId);
                     if(!$canAdd)
                     {
-                        echo "<script>
-                        
-                        
-                       let toast = document.getElementById('toast');
-
-                        
-                        
-                        toast.style.width = '200px';
-                        toast.style.height = '200px';
-                        toast.style.position = 'absolute';
-                        toast.style.display = 'flex';
-                        
-                        </script>";
+                        echo '<script src="/../app/scripts/warningForUser.js"></script>';
                         
                         $_SESSION['calendar'] = json_encode($calend2);
                     

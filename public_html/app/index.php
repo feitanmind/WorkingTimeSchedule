@@ -72,14 +72,10 @@ require "modules/CalendarModeClasses/Day.php";
                 <?php echo $user->createOptionsListOfAllUsers(); ?>
                 </select>
             </div>
-            <style>
-                #toast{
-                    width: 300px;
-                    height: 200px;
-                    background-color: pink;
-                }
-            </style>
-            <div id="toast" style="display: none;">Warning</div>
+<!-- TOAST -->
+            <div id="toast" style="display: none;">
+
+            </div>
             <!-- //Sprawdzenie czy formularz z dodaniem użytkownika został wysłany i dodanie użytkownika do obiektu calendar -->
             <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
             <?php PHPScripts::REMOVE_USER_FROM_Day_Of_Calendar();?>
@@ -121,6 +117,8 @@ require "modules/CalendarModeClasses/Day.php";
         <script src="scripts/closeNewWindow.js"></script>
 
         </script>
+        <!-- Dodatkowe style zawierające wygląd formularzy i niektóre elementy CalendarMode -->
+        <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
         <script src="scripts/showCalendarDayControls.js"></script>
 </body>
 </html>

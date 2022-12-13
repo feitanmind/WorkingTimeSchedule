@@ -7,7 +7,7 @@
     <meta name="keywords" content="working, work, schedule, time">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Working Time Schedule</title>
-    <script src="/../wokingTimeSchedule/app/scripts/jquery-3.6.0.min.js"></script>
+    <script src="/../app/scripts/jquery-3.6.0.min.js"></script>
     <script>
         var ready = 0;
         var u = 0;
@@ -19,7 +19,6 @@
                     if (u < 360){
                         da.css("transform","rotate( "+u+"deg)");
                         u++;
-                        console.log(w);
                     }else{
                         if(w > 50){
                             clearInterval(b);

@@ -1,6 +1,5 @@
 var open=0;
 $(document).click(function(event) { 
-    console.log('open b:'+open);
     var $target = $(event.target);  
     if(!$target.closest('#newWindow').length && $('#newWindow') && open == 1)
     {
@@ -16,5 +15,4 @@ $(document).click(function(event) {
     {
         open-=2;
     }
-    console.log(open);
 });

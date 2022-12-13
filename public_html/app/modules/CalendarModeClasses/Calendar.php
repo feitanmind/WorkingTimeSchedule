@@ -254,7 +254,7 @@ class Calendar
 
     public static function DecodeJsonCalendar($month_Number, $year, $department_ID,$calendarAsObjectAStdClass)
     {
-        echo "<script>console.log('month:$month_Number, year: $year')</script>";
+       
         $calenadarObjectAsCalendar = new Calendar($month_Number, $year, $department_ID);
 
         
@@ -303,9 +303,6 @@ class Calendar
     {
         $dateString = $this->Year . '-' . $this->MonthNumber . '-1';
         $dateOfMonth = date("Y-m", strtotime($dateString));
-        //echo $dateOfMonth;
-        echo "<script>console.log('dom' +".$this->Year.")</script>";
-        //echo "<script>console.log('dom' +".date("Y", strtotime($dateString)).")</script>";
         $enrolledShift = $this->Days[$day_id - 1]->Shifts[$shift_id - 1];
         $enroledHours = $enrolledShift->GetIntArray_HoursOfShift();
 
@@ -365,8 +362,6 @@ class Calendar
                             $numberOfMonthBefore = intval(date('m', strtotime("-1 months", strtotime($dateOfMonth))));
                             $numberOfDayBefore = cal_days_in_month(CAL_GREGORIAN, $numberOfMonthBefore, $yearOfMonthBefore);
                             $checkMonthBeforeIsOnDb = Calendar::ChceckCalendarInDb($this->Department, $roleID, $numberOfMonthBefore, $yearOfMonthBefore);
-                            echo "<script>console.log('yearb' +$dateOfMonth)</script>";
-                            echo "<script>console.log('yearb' +$yearOfMonthBefore)</script>";
                             if (!$checkMonthBeforeIsOnDb)
                             {
                                 //Będzie trzeba napisać gdy zmiana koliduje z dniem następnym

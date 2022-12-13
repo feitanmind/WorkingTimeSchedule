@@ -17,9 +17,6 @@ function createFormToAddPersonToDay(obj)
     var listOfUserOnDay = "";
     obj.parentElement.parentElement.childNodes[1].childNodes[1].childNodes.forEach(elem => listOfUserOnDay += '<p>'+elem.innerHTML+'</p>')
 
-    console.log(listOfUserOnDay)
-    //Podmienienie go na przygotowany template prompta
-    //console.log(obj.parentElement.parentElement.childNodes[0].childNodes[0].innerText);
     newWindow.innerHTML =" \
     <div id=\"newWindow\" class=\"addingUserWindow\"> \
         <div class=\"newWindowHeader\">Add user to shift<p onclick=\"closeAddUser(); hideAllAddAndRemoveControls();\" id=\"closeAddPrompt\">❌</p></div> \
@@ -81,9 +78,7 @@ function createFormToAddVacationToPerson(obj)
     var userVacationing = "";
     obj.parentElement.parentElement.childNodes[1].childNodes[2].childNodes.forEach(elem => listOfUserOnDay += '<p>'+elem.innerHTML+'</p>')
 
-    console.log(listOfUserOnDay)
     //Podmienienie go na przygotowany template prompta
-    //console.log(obj.parentElement.parentElement.childNodes[0].childNodes[0].innerText);
     newWindow.innerHTML =" \
     <div id=\"newWindow\" class=\"addingVacationWindow\"> \
         <div class=\"newWindowHeader\">Grant vacation<p onclick=\"closeAddUser(); hideAllAddAndRemoveControls();\" id=\"closeAddPrompt\">❌</p></div> \
