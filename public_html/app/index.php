@@ -42,7 +42,7 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
 <body>
     <!-- SECTION __________________________LEFT USER PANEL -->
     
-    <div class="userLeftPanel">
+    <div class="userLeftPanel no-print">
         <div class="userLogout">
         <img src="style/img/logo.png"/>
             <a href="modules/LoginClasses/Logout.php">Logout</a><br>
@@ -82,6 +82,7 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
             <?php PHPScripts::REMOVE_USER_FROM_Day_Of_Calendar();?>
             <?php PHPScripts::GRANT_USER_Vacation_In_Day_of_Calendar();?>
             <?php PHPScripts::REVOKE_VACATION_For_A_User();?>
+            <?php PHPScripts::SAVE_IN_DATABASE();?>
             <script>
                 var listOfUsersToAdd = document.getElementById("usersToAdd").outerHTML;
                 var listOfUsersToGrantVacation = document.getElementById("usersToVacation").outerHTML;
@@ -94,7 +95,7 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
     </div>
     
     <!-- SECTION __________________________CENTER PANEL -->
-    <div class="centerPanel">
+    <div class="centerPanel landScape">
         <!-- // Moduł: Dodawanie użytkownika / pracownika -->
         <div class="addUser" id="addUser">
             <?php include("modules/AddUserModule.php");?>
@@ -107,7 +108,7 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
        
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
-    <div class="rightPanel">   
+    <div class="rightPanel no-print">   
             <?php
             Role::displaySelectRolesForUser();   
             ?>
@@ -117,7 +118,7 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
         </div>
         <script src="scripts/closeNewWindow.js"></script>
 
-        </script>
+        <script src="scripts/Calendar.js"></script>
         <!-- Dodatkowe style zawierające wygląd formularzy i niektóre elementy CalendarMode -->
         <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
         <script src="scripts/showCalendarDayControls.js"></script>

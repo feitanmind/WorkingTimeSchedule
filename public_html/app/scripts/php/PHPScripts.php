@@ -55,7 +55,7 @@ class PHPScripts
                     if(!$canAdd)
                     {
                         echo '<script src="/../app/scripts/warningForUser.js"></script>';
-                        
+                    echo '<script>Notification.createAndDisplayWarningAboutCantSignUserOnDay();</script>';
                         $_SESSION['calendar'] = json_encode($calend2);
                     
                     }
@@ -213,7 +213,7 @@ class PHPScripts
             {
                 //echo "<script>console.log(\"".$user->user_id."'\")</script>";
                 $user2 = new User($user);
-                echo "<script>console.log(\"".$user2->user_id."\")</script>";
+               // echo "<script>console.log(\"".$user2->user_id."\")</script>";
                 
                 $calend2->UnsignWorkingUserFormDay($user2, $dayId, $shiftId);
 
@@ -263,7 +263,7 @@ class PHPScripts
             {
                 //echo "<script>console.log(\"".$user->user_id."'\")</script>";
                 $user2 = new User($user);
-                echo "<script>console.log(\"".$user2->user_id."\")</script>";
+                //echo "<script>console.log(\"".$user2->user_id."\")</script>";
                 
                 $calend2->UnsignVacationUserFormDay($user2, $dayId, $shiftId);
 
@@ -273,6 +273,34 @@ class PHPScripts
             header("Location: $actual_link");
         }
     }
+
+    public static function SAVE_IN_DATABASE()
+    {
+        if(isset($_POST["CALENDAR_SAVE"]))
+        {
+            if($_POST["CALENDAR_SAVE"] == "YES")
+            {
+                $departmentIdentifier = $_SESSION['Current_User_Department_Id'];
+                $roleIdentifier = $_SESSION['Role_Id'];
+                $monthNumber = $_SESSION['Month_Number'];
+                $yearNumber = $_SESSION['Year_Number'];
+                $encodedCalendar = json_decode($_SESSION['calendar']);
+                $decodedCalendar = Calendar::DecodeJsonCalendar($monthNumber,$yearNumber,$departmentIdentifier,$encodedCalendar);
+                $decodedCalendar->PushCalendarToDataBase($roleIdentifier);
+                $_POST["CALENDAR_SAVE"] = "none";
+            }
+            
+
+        }
+        
+    }
+
+
+
+
+
+
+
 }
 
        

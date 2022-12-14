@@ -1,3 +1,4 @@
+
 .windowButton
 {
     width: 1vw;
@@ -215,3 +216,31 @@
     cursor: pointer;
 
 }
+@media print
+{    @page {
+        size: landscape
+    }
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+    .landScape
+    {
+        width: 100%;
+        height: 100%;
+        margin: 0% 0% 0% 0%;
+        filter: progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);
+    }
+    .dayOfTheWeek
+    {
+        width: 13.5vw;
+        outline: solid black 0.2vw;
+    }
+    .nameDayOfTheWeek
+    {
+        font-size: 1vw;
+        outline: none;
+    }
+}
+
+  

@@ -3,6 +3,8 @@ namespace App;
 
 use PhpParser\Node\Stmt\Foreach_;
 use PHPUnit\Util\Exception;
+
+use function PHPUnit\Framework\returnSelf;
 use function PHPUnit\Framework\throwException;
 
 ini_set('display_errors', 1);
@@ -69,7 +71,7 @@ class Calendar
             'Saturday',
             'Sunday'
         );
-        echo '<div class="headerMainCalendar"><div class="monthArrow mArrowLeft">⤝</div><div id="nameOfMonth">' . $this::Get_Name_Of_Month($this->MonthNumber, $this->Year) . " " . $this->Year . '</div><div class="monthArrow mArrowRight";>⤞</div></div>';
+        echo '<div class="headerMainCalendar"><div class="monthArrow mArrowLeft no-print">⤝</div><div id="nameOfMonth">' . $this::Get_Name_Of_Month($this->MonthNumber, $this->Year) . " " . $this->Year . '</div><div class="monthArrow mArrowRight no-print";>⤞</div></div>';
         //Rysujemy początek
         echo '<div id="calM" class="mainCalendar">';
 
@@ -180,24 +182,35 @@ class Calendar
         array_splice($this->Days[$dayId - 1]->Shifts[$shiftId - 1]->EmployeesVacation, $in, 1);
     }
     //Dodawanie nowego kalendarza do bazy danych
-    public function PushCalendarToDataBase($role_Id, $calendar)
+    public function PushCalendarToDataBase($role_Id)
     {
-        //Połączenie się do bazy danych
+        $roleId = $_SESSION['Role_Id'];
+        $calendarIsInDatabase = Calendar::ChceckCalendarInDb($this->Department,$roleId,$this->MonthNumber,$this->Year);                    
         $access_Connection = ConnectToDatabase::connAdminPass();
-        //Serializacja obiektu Calendar do formatu JSON
-        $encoded_Calendar = json_encode($calendar);
-        //Liczba lat ma być przetrzymywany kalendarz
-        $expire_Years = 2;
-        //Miesiąc w formacie daty
-        $month = date("Y-m-d", mktime(0, 0, 0, $this->MonthNumber, 1, $this->Year));
-        //Data wygaśnięcia
-        $expire = date("Y-m-d", mktime(0, 0, 0, $this->MonthNumber, 1, $this->Year + $expire_Years));
-        //Identyfikator działu/oddziału
-        $department_Id = $this->Department;
-        //Dodawanie do bazy danych rekordu - do tabeli calendar dodawany jest nowy kalendarz
-        $sql_Insertion_Query = "INSERT INTO calendar(monthDate,depId,roleId,days,expireDate) VALUES('$month',$department_Id,$role_Id,'$encoded_Calendar','$expire');";
-        //Egzekwowanie powyższego polecenia sql
-        $access_Connection->query($sql_Insertion_Query);
+        $encoded_Calendar = json_encode($this);
+        $monthDateInDatabase = date("Y-m-d", mktime(0, 0, 0, $this->MonthNumber, 1, $this->Year));
+
+        if(!$calendarIsInDatabase)
+        {
+            $expire_Years = 2;
+            //Miesiąc w formacie daty
+            $month = date("Y-m-d", mktime(0, 0, 0, $this->MonthNumber, 1, $this->Year));
+            //Data wygaśnięcia
+            $expire = date("Y-m-d", mktime(0, 0, 0, $this->MonthNumber, 1, $this->Year + $expire_Years));
+            //Identyfikator działu/oddziału
+            $department_Id = $this->Department;
+            //Dodawanie do bazy danych rekordu - do tabeli calendar dodawany jest nowy kalendarz
+            $sql_Insertion_Query = "INSERT INTO calendar(monthDate,depId,roleId,days,expireDate) VALUES('$month',$department_Id,$role_Id,'$encoded_Calendar','$expire');";
+            //Egzekwowanie powyższego polecenia sql
+            $access_Connection->query($sql_Insertion_Query);
+        }
+        else
+        {
+            $sqlUpdateQueryd = "UPDATE calendar SET days='$encoded_Calendar' WHERE monthDate = '$monthDateInDatabase';";
+            $access_Connection->query($sqlUpdateQueryd);
+           
+        }
+        
     }
     public function UpdateCalendarInDatabase()
     {
@@ -237,14 +250,14 @@ class Calendar
         //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
         $access_Connection = ConnectToDatabase::connAdminPass();
         $sql_SelectHours = "SELECT usr_id, hours_of_work FROM user_data";
-        $result_SelectHours = $access_Connection->query($sql_SelectHours);
-        if($result_SelectHours->num_rows > 0)
-        {
-            while($row_of_SelectHours = $result_SelectHours->fetch_assoc())
-            {
-    
-            }
-        }
+        // $result_SelectHours = $access_Connection->query($sql_SelectHours);
+        // if($result_SelectHours->num_rows > 0)
+        // {
+        //     while($row_of_SelectHours = $result_SelectHours->fetch_assoc())
+        //     {
+                
+        //     }
+        // }
       
 
         //Znalezienie zserialiowanego kalendarza

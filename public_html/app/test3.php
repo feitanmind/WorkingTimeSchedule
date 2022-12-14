@@ -63,7 +63,7 @@
 
     // $md = new Calendar(1,2022,1);
     // $md2 = new Calendar(12, 2021, 1);
-    // $md3 = new Calendar(2, 2022, 1);
+     $md3 = new Calendar(2, 2022, 1);
 
     // //echo "jsonenc1: ".json_encode($md)."<br>";
     // //echo "Done";
@@ -153,7 +153,7 @@
     //echo $mdd;
     //alendar::JsonDecodeCalendar($mdd,1);
     ////PushCalendar 
-    //$md3->PushCalendarToDataBase(1,$md3);
+    //$md3->PushCalendarToDataBase(1);
     //$cal2 = Calendar::CreateWorkingCalendar($dep_id, $role_id, 1, 2022);
     //$md->RemoveMonth();
     //$cal2->DrawCalendar();
