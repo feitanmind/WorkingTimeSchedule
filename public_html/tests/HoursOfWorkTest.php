@@ -12,7 +12,7 @@
             $_SESSION['Shift_Id'] = 1;
             $substractingHoursOnShift1 = "08:00:00";
             $user = new App\User(1);
-            $hoursOfWorkForUserOnMay2022 = new App\HoursOfWork($user,5,2022,'00:00:00');
+            $hoursOfWorkForUserOnMay2022 = new App\HoursOfWork($user,5,2022,'08:00:00');
             $hoursBefore = $hoursOfWorkForUserOnMay2022->Hours;
 
             //Spradzamy czy wyniki się róznią
@@ -22,7 +22,7 @@
             //Sprawdzamy czy odjęto dokładną wartość
             $hoursBeforeAsInt = intval(substr($hoursBefore,0,3));
             $hoursAfterAsInt = intval(substr($hoursAfter,0,3));
-  
+
             $this->assertEquals($hoursBeforeAsInt-8, $hoursAfterAsInt);
         }
         public function test_ShouldAddHoursOfWorkOnObject()
@@ -32,7 +32,7 @@
             $hoursBefore = $hoursOfWorkForUserOnMay2022->Hours;
             $addingHours = 8;
             //Spradzamy czy wyniki się róznią
-            $hoursOfWorkForUserOnMay2022->AddTimeOfWork($addingHours);
+            $hoursOfWorkForUserOnMay2022->AddTimeOfWork();
             $hoursAfter = $hoursOfWorkForUserOnMay2022->Hours;
             $this->assertNotEquals($hoursBefore,$hoursAfter);
             //Sprawdzamy czy dodano dokładną wartość

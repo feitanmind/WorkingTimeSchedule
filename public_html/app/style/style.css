@@ -240,12 +240,12 @@ input{
     display: flex;
     gap: 1vw;
 }
-.printCalendar{
+/* .printCalendar{
     
 }
 .saveCalendar{
 
-}
+} */
 #working
 {
     display: flex;
