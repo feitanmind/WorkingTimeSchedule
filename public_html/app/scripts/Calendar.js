@@ -11,4 +11,8 @@ class Calendar
         document.body.appendChild(form);
         form.submit();
     }
+    static changeMonth()
+    {
+        
+    }
 }
