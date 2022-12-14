@@ -230,11 +230,23 @@ class Calendar
     //Funkcja zwraca obiekt Calendar - gdy istnieje w bazie danych to z bazy -gdy nie istnieje w bazie danych to tworzy nowy obiekt
     public static function CreateWorkingCalendar($department_ID, $role_ID, $month_Number, $year)
     {
+
         
         //Data miesiąca
         $month_Date = date("Y-m-d", mktime(0, 0, 0, $month_Number, 1, $year));
         //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
         $access_Connection = ConnectToDatabase::connAdminPass();
+        $sql_SelectHours = "SELECT usr_id, hours_of_work FROM user_data";
+        $result_SelectHours = $access_Connection->query($sql_SelectHours);
+        if($result_SelectHours->num_rows > 0)
+        {
+            while($row_of_SelectHours = $result_SelectHours->fetch_assoc())
+            {
+    
+            }
+        }
+      
+
         //Znalezienie zserialiowanego kalendarza
         $sql = "SELECT days FROM calendar WHERE monthDate = '$month_Date' AND roleId = $role_ID AND depId = $department_ID";
         //Przypisanie wyniku zapytania do zmiennej

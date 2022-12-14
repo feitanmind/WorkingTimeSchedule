@@ -87,10 +87,18 @@ class HoursOfWork
         //Zliczamy dni
         foreach ($monthPeriod as $day)
         {
+
+            if (in_array($day->format('Y-m-d'), $exceptDays) && $day->format('N') == 6 || in_array($day->format('*-m-d'),$exceptDays) && $day->format('N') == 6) {
+                $count--;
+                continue;       
+            }    
+            if(!in_array($day->format('N'),$buisnessDays))  continue;
+
+            if (in_array($day->format('Y-m-d'), $exceptDays) || in_array($day->format('*-m-d'), $exceptDays)) continue;
+                
             
-            if(in_array($day->format('Y-m-d'),$exceptDays) && !in_array($day->format('N'),$saturdays)) continue;           
-            if(in_array($day->format('*-m-d'),$exceptDays) && !in_array($day->format('N'),$saturdays)) continue;
-            if(!in_array($day->format('N'),$buisnessDays) && !in_array($day->format('Y-m-d'),$exceptDays) && !in_array($day->format('*-m-d'),$exceptDays))  continue;
+            
+            echo date_format($day, 'Y-m-d N')."<br>";
             $count++;
         }
         return $count;

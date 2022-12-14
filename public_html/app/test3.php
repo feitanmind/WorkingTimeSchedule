@@ -61,16 +61,16 @@
     require "modules/CalendarModeClasses/HoursOfWork.php";
     // Warning: Undefined property: App\User::$Name in /var/www/html/wokingTimeSchedule/app/b_Month.php on line 70
 
-    $md = new Calendar(1,2022,1);
-    $md2 = new Calendar(12, 2021, 1);
-    $md3 = new Calendar(2, 2022, 1);
+    // $md = new Calendar(1,2022,1);
+    // $md2 = new Calendar(12, 2021, 1);
+    // $md3 = new Calendar(2, 2022, 1);
 
-    //echo "jsonenc1: ".json_encode($md)."<br>";
-    //echo "Done";
-    $md->DrawCalendar();
+    // //echo "jsonenc1: ".json_encode($md)."<br>";
+    // //echo "Done";
+    // $md->DrawCalendar();
     //adding user
     $user2 = new User(1);
-    $user = new User(2);
+    //$user = new User(2);
     // $arr = (array) $md;
     // $t = (array)$arr['Days'][0];
     // $t2 = (array)$t['Shifts'][0];
@@ -80,35 +80,36 @@
     //array_push($md->Days[30]->Shifts[0]->EmployeesWorking, $user);
 //print_r(json_encode($md));
     //echo "jsonenc1: ".json_encode($md)."<br>";
-$md3->SignUserToWorkInDay($user2, 1, 1);
+//$md3->SignUserToWorkInDay($user2, 1, 1);
     //$md->SignUserVacation($user, 0, 0);
     //array_push($md->Days[0]->Shifts[0]->EmployeesVacation, $user2);
     //echo "hh";
-    $md->RemoveMonth();
-    $md->DrawCalendar();
+   // $md->RemoveMonth();
+   // $md->DrawCalendar();
 
-    $tyyy = true;
+   // $tyyy = true;
     
     //removing user 
     //$keyToDelete = array_search($user2,$md->Days[0]->Shifts[0]->EmployeesVacation);
     //array_splice($md->Days[0]->Shifts[0]->EmployeesWorking,$keyToDelete);
 
 
-    $how = new HoursOfWork($user,5,2022,'08:00:00');
+    $how = new HoursOfWork($user2,1,2022,'07:35:00');
 
 
     //substractiong hours
-    $how->SubstractTimeOfWork(8);
-    //echo "Hours - $how->Hours";
-    $md->Department = 1;
+    //$how->SubstractTimeOfWork(8);
+echo "working days" . $how->GetWorkingDaysInMonth(2022, 1) . "<br>";
+    echo "Hours - $how->Hours";
+    // $md->Department = 1;
 
-    $dep_id = 1;
-    $role_id = 1;
+    // $dep_id = 1;
+    // $role_id = 1;
     //$mdd =  $md->JsonEncodeCalendar();
     //echo $mdd;
     //alendar::JsonDecodeCalendar($mdd,1);
     ////PushCalendar 
-    $md3->PushCalendarToDataBase(1,$md3);
+    //$md3->PushCalendarToDataBase(1,$md3);
     //$cal2 = Calendar::CreateWorkingCalendar($dep_id, $role_id, 1, 2022);
     //$md->RemoveMonth();
     //$cal2->DrawCalendar();

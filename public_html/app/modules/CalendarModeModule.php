@@ -10,34 +10,22 @@ use PhpParser\JsonDecoder;
 ?>
 <script src="scripts/calendarModeForm.js"></script>
 <?php
-
-                
+    $arrOfHours = array();        
     if(!isset($_SESSION['calendar']))
-    {
-        
+    {      
         $cal = Calendar::CreateWorkingCalendar($user->dep_id, $user->role_id, 1, 2022);
-        //echo $cal->Days[0]->Shifts[0]->EmployeesVacation[0]->name;
         $_SESSION['calendar'] = json_encode($cal);
-        //$cal->SignUserToWorkInDay($user, 0, 0);
         $cal->DrawCalendar();
     }
     else
     {
-    //echo $_SESSION['calendar'];
-    //$cal23 = json_decode($_SESSION['calendar']);
-    
-
     $calend = json_decode($_SESSION['calendar']);
     $cal = Calendar::DecodeJsonCalendar(1, 2022, 1, $calend);
-    
-    //foreach ($cal23 as $key => $value) $class->{$key} = $value;
-    // $cal = $jsonDecoder->decode($cal23);
     $cal->DrawCalendar();
     }
             
 
 ?>
-            <!-- Dodatkowe style zawierające wygląd formularzy i niektóre elementy CalendarMode -->
-            <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
+            
             <!-- Przycisk który generuje wydruk -->
             <div class="button1 printCalendar">Print</div>
