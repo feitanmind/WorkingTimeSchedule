@@ -41,9 +41,31 @@ class HoursOfWork
         $zero    = new DateTime("@0");
         $offset  = $time;
         $diff    = $zero->diff($offset);
-        $resTime = $diff->days * 24 + $diff->h . ":". $diff->i;
+        $diffHours = $diff->days * 24 + $diff->h;
+        $diffMinutes = $diff->i;
+        if ($diffHours < 10) $diffHours = "0" . $diffHours;
+        if ($diffMinutes < 10) $diffMinutes = "0" . $diffMinutes;
+        $resTime = $diffHours . ":". $diffMinutes;
         return $resTime;
     }
+    public function ActualizeTimeAndHours($hoursOfWork)
+    {
+       // echo $hoursOfWork . "<br>";
+        $newHours = substr($hoursOfWork,0, strpos($hoursOfWork, ":"));
+        $newMinutes = substr($hoursOfWork, strpos($hoursOfWork, ":")+1);
+        //echo $newMinutes . '<br>';
+        if (str_starts_with($newHours, "0"))$newHours = substr($newHours, 1);
+        if (str_starts_with($newMinutes, "0"))$newMinutes = substr($newMinutes, 1);
+        //echo $newMinutes . '<br>';
+        $allOfSeconds = intval($newHours) * 3600 + intval($newMinutes) * 60;
+       // echo intval($newHours) . "* 3600 +" . intval($newMinutes) . "*60";
+        $time = new DateTime("@$allOfSeconds");
+        $hoursOfWork = HoursOfWork::ChangeTimeToHours($time);
+        $this->Hours = $hoursOfWork;
+        $this->Time = $time;
+
+    }
+    
     public function SetNewTimeOfWork($month,$year,$jobHours)
     {
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN,$month,$year);
@@ -52,7 +74,11 @@ class HoursOfWork
         $zero    = new DateTime("@0");
         $offset  = new DateTime("@$timeOfWork");
         $diff    = $zero->diff($offset);
-        $resTime = $diff->days * 24 + $diff->h . ":". $diff->i;
+        $diffHours = $diff->days * 24 + $diff->h;
+        $diffMinutes = $diff->i;
+        if ($diffHours < 10) $diffHours = "0" . $diffHours;
+        if ($diffMinutes < 10) $diffMinutes = "0" . $diffMinutes;
+        $resTime = $diffHours . ":". $diffMinutes;
         return [$resTime, $offset];
     }
     public static function GetWorkingDaysInMonth($year,$month)
@@ -97,8 +123,6 @@ class HoursOfWork
             if (in_array($day->format('Y-m-d'), $exceptDays) || in_array($day->format('*-m-d'), $exceptDays)) continue;
                 
             
-            
-            echo date_format($day, 'Y-m-d N')."<br>";
             $count++;
         }
         return $count;

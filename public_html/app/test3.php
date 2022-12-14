@@ -99,8 +99,52 @@
 
     //substractiong hours
     //$how->SubstractTimeOfWork(8);
-echo "working days" . $how->GetWorkingDaysInMonth(2022, 1) . "<br>";
-    echo "Hours - $how->Hours";
+    //$how->ActualizeTimeAndHours("133:05");
+
+    $how2 = new HoursOfWork($user2, 2, 2022, '07:35:00');
+    $a = array();
+
+    $arf = array("month" => $how->Month, "year"=>$how->Year, "time"=>$how->Time, "hours"=>$how->Hours);
+    $arf2 = array("month" => $how2->Month, "year"=>$how2->Year, "time"=>$how2->Time, "hours"=>$how2->Hours);
+    array_push($a, $arf);
+    array_push($a, $arf2);
+    $encodedUserHoursOfWork = json_encode($a);
+    //echo $encodedUserHoursOfWork .'<br><br>';
+
+
+    $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork);
+    //print_r($encodedUserHoursOfWork);
+    if(!empty($decodedUserHoursOfWorkAsArrayOfStdClass))
+    {
+        foreach($decodedUserHoursOfWorkAsArrayOfStdClass as $uh)
+        {
+            if($uh->month == 1 && $uh->year == 2022){
+                $how = new HoursOfWork($user2, $uh->month, $uh->year, $user2->hours_per_shift);
+                $how->ActualizeTimeAndHours($uh->hours);
+                
+            }
+            
+            echo '<br><br>';
+        }
+    }
+    else
+    {
+        $how = new HoursOfWork($user2, 1, 2022, $user2->hours_per_shift);
+    }
+
+    // foreach($decodedUserHoursOfWorkAsArrayOfStdClass as $uh)
+    // {
+    //     if($uh->month == 1 && $uh->year == 2022){
+    //         $how = new HoursOfWork($user2, $uh->month, $uh->year, $user2->hours_per_shift);
+    //         $how->ActualizeTimeAndHours($uh->hours);
+            
+    //     }
+        
+    //     echo '<br><br>';
+    // }
+    //echo "working days" . $how->GetWorkingDaysInMonth(2022, 1) . "<br>";
+    //echo "Hours - $how->Hours";
+    //echo $f;
     // $md->Department = 1;
 
     // $dep_id = 1;

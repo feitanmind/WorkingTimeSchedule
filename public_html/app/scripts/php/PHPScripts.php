@@ -1,8 +1,10 @@
 <?php
 
+use App\ConnectToDatabase;
 use App\Shift;
 use App\User;
 use App\Calendar;
+use App\HoursOfWork;
 use Exception as Ex;
 use PHPUnit\TextUI\CliArguments\Exception;
 
@@ -74,9 +76,58 @@ class PHPScripts
         // $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         // header("Location: $actual_link");
         
-    }
-
-
+        }
+    
+    
+    }   
+    public static function CreateArrayOfHoursOfWorkForUsers()
+    {
+        
+        if(!isset($_SESSION['arrOfHours']))
+        {
+            $arrOfHours = array();
+            $dep_id = $_SESSION['Current_User_Department_Id'];
+        $accessConnection = ConnectToDatabase::connAdminPass();
+        $sql = "SELECT usr_id, hours_of_work FROM user_data WHERE dep_id = $dep_id";
+        $result = $accessConnection->query($sql);
+        if($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $user = new User($row['usr_id']);
+                if(!empty($row['hours_of_work']))
+                {
+                    
+                    $encodedUserHoursOfWork = $row['hours_of_work'];
+                    $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork);
+                    //print_r($decodedUserHoursOfWorkAsArrayOfStdClass);
+                    foreach($decodedUserHoursOfWorkAsArrayOfStdClass as $uh)
+                    {
+                        if($uh->month == 1 && $uh->year == 2022){
+                            $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
+                            $how->ActualizeTimeAndHours($uh->hours);
+                            break;
+                        }  
+                    }
+                }
+                else
+                {
+                    $how = new HoursOfWork($user, 1, 2022, $user->hours_per_shift);
+                }
+                    
+                array_push($arrOfHours, $user);            
+            }
+        }
+        $_SESSION['arrOfHours'] = $arrOfHours;
+        return $arrOfHours;   
+        }
+        else
+        {
+            return $_SESSION['arrOfHours'];
+        }
+         
+        
+           
     }
     public static function GRANT_USER_Vacation_In_Day_of_Calendar()
     {

@@ -10,7 +10,8 @@ use PhpParser\JsonDecoder;
 ?>
 <script src="scripts/calendarModeForm.js"></script>
 <?php
-    $arrOfHours = array();        
+    $arrOfHours = PHPSCripts::CreateArrayOfHoursOfWorkForUsers();
+    print_r($arrOfHours);    
     if(!isset($_SESSION['calendar']))
     {      
         $cal = Calendar::CreateWorkingCalendar($user->dep_id, $user->role_id, 1, 2022);

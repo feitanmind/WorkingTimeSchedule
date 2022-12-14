@@ -15,6 +15,7 @@ require "modules/CalendarModeClasses/Shift.php";
 require "modules/CalendarModeClasses/Role.php";
 require "modules/CalendarModeClasses/Calendar.php";
 require "modules/CalendarModeClasses/Day.php";
+require "modules/CalendarModeClasses/HoursOfWork.php";
 
 ?>
 <!DOCTYPE html>

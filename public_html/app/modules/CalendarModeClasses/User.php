@@ -15,6 +15,7 @@ namespace App;
         public $full_time;
         public $dep_id;
         public $role_id;
+    public $hours_per_shift;
 
 
         // Wyciąganie nazwy z tabeli po id
@@ -59,6 +60,7 @@ namespace App;
                 $this->custom_id =              $row['custom_id'];
                 $this->full_time =              $row['full_time'];
                 $this->dep_id =                 $row['dep_id'];
+                $this->hours_per_shift =        $row['hours_per_shift'];
                 $dep_id =                       $row['dep_id'];
                 $role_id =                      $row['role_id'];
                 $this->role_id = $row['role_id'];
