@@ -23,16 +23,54 @@ class HoursOfWork
 
     }
     //Funkcja odejmująca konkretną ilość godzin od czasu pracy
-    public function SubstractTimeOfWork($hours)
+    // public function SubstractTimeOfWork($hours)
+    // {
+    //     $this->Time->modify("-$hours hours");
+    //     $this->Hours = $this->ChangeTimeToHours($this->Time);
+
+    // }
+    public function SubstractTimeOfWork()
     {
-        $this->Time->modify("-$hours hours");
+        $currentShift = $_SESSION['Shift_Id'];
+        $accessConnection = ConnectToDatabase::connAdminPass();
+        $sql = "SELECT hours_per_shift FROM shifts WHERE id = $currentShift";
+        $result = $accessConnection->query($sql);
+        $row = $result->fetch_assoc();
+        $hoursPerShift = $row['hours_per_shift'];
+        $hoursToSubstract = substr($hoursPerShift, 0, strpos($hoursPerShift, ":"));
+        if (str_starts_with($hoursToSubstract, 0))
+            $hoursToSubstract = substr($hoursToSubstract, 1);
+        $minutesToSubstract = substr($hoursPerShift, strpos($hoursPerShift, ":") + 1);
+        if (str_starts_with($minutesToSubstract,0))
+            $minutesToSubstract = substr($minutesToSubstract,1);
+        $minutesToSubstract = substr($minutesToSubstract, 0, strpos($minutesToSubstract, ":"));
+
+
+        $this->Time->modify("-$minutesToSubstract minutes");
+        $this->Time->modify("-$hoursToSubstract hours");
         $this->Hours = $this->ChangeTimeToHours($this->Time);
 
     }
     //Funkcja dodająca konkretną ilośc do czasu pracy
-    public function AddTimeOfWork($hours)
+    public function AddTimeOfWork()
     {
-        $this->Time->modify("+$hours hours");
+        $currentShift = $_SESSION['Shift_Id'];
+        $accessConnection = ConnectToDatabase::connAdminPass();
+        $sql = "SELECT hours_per_shift FROM shifts WHERE id = $currentShift";
+        $result = $accessConnection->query($sql);
+        $row = $result->fetch_assoc();
+        $hoursPerShift = $row['hours_per_shift'];
+        $hoursToAdd = substr($hoursPerShift, 0, strpos($hoursPerShift, ":"));
+        if (str_starts_with($hoursToAdd, 0))
+            $hoursToAdd = substr($hoursToAdd, 1);
+        $minutesToAdd = substr($hoursPerShift, strpos($hoursPerShift, ":") + 1);
+        if (str_starts_with($minutesToAdd,0))
+            $minutesToAdd = substr($minutesToAdd,1);
+        $minutesToAdd = substr($minutesToAdd, 0, strpos($minutesToAdd, ":"));
+
+
+        $this->Time->modify("+$minutesToAdd minutes");
+        $this->Time->modify("+$hoursToAdd hours");
         $this->Hours = $this->ChangeTimeToHours($this->Time);
 
     }

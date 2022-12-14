@@ -11,7 +11,7 @@ use PhpParser\JsonDecoder;
 <script src="scripts/calendarModeForm.js"></script>
 <?php
     $arrOfHours = PHPSCripts::CreateArrayOfHoursOfWorkForUsers();
-    print_r($arrOfHours);    
+    //print_r($arrOfHours);    
     if(!isset($_SESSION['calendar']))
     {      
         $cal = Calendar::CreateWorkingCalendar($user->dep_id, $user->role_id, 1, 2022);
@@ -29,4 +29,7 @@ use PhpParser\JsonDecoder;
 ?>
             
             <!-- Przycisk który generuje wydruk -->
-            <div class="button1 printCalendar">Print</div>
+            <div class="calendarButtons">
+                <div class="button1 printCalendar">Print</div>
+                <div class="button1 saveCalendar">Save</div>
+            </div>

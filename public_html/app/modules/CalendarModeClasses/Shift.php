@@ -5,7 +5,7 @@ class Shift
     public int $Id;
     public string $Name;
     public string $Department;
-    public float $HoursPerShift;
+    public string $HoursPerShift;
     public string $StartHour;
     public string $EndHour;
     public $EmployeesWorking = array();

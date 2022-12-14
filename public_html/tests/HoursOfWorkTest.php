@@ -9,18 +9,21 @@
         }
         public function test_ShouldSubstractHoursOfWorkOnObject()
         {
+            $_SESSION['Shift_Id'] = 1;
+            $substractingHoursOnShift1 = "08:00:00";
             $user = new App\User(1);
-            $hoursOfWorkForUserOnMay2022 = new App\HoursOfWork($user,5,2022,'08:00:00');
+            $hoursOfWorkForUserOnMay2022 = new App\HoursOfWork($user,5,2022,'00:00:00');
             $hoursBefore = $hoursOfWorkForUserOnMay2022->Hours;
-            $substractingHours = 8;
+
             //Spradzamy czy wyniki się róznią
-            $hoursOfWorkForUserOnMay2022->SubstractTimeOfWork($substractingHours);
+            $hoursOfWorkForUserOnMay2022->SubstractTimeOfWork();
             $hoursAfter = $hoursOfWorkForUserOnMay2022->Hours;
             $this->assertNotEquals($hoursBefore,$hoursAfter);
             //Sprawdzamy czy odjęto dokładną wartość
             $hoursBeforeAsInt = intval(substr($hoursBefore,0,3));
             $hoursAfterAsInt = intval(substr($hoursAfter,0,3));
-            $this->assertEquals($hoursBeforeAsInt-$substractingHours, $hoursAfterAsInt);
+  
+            $this->assertEquals($hoursBeforeAsInt-8, $hoursAfterAsInt);
         }
         public function test_ShouldAddHoursOfWorkOnObject()
         {
