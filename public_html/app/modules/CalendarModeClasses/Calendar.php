@@ -116,7 +116,7 @@ class Calendar
             echo "</div>Vacation:<div id=\"vacation\">";
             foreach ($vacationPeople as $vacationingPerson)
             {
-                if ($roleId == $workingPerson->role_id) {
+                if ($roleId == $vacationingPerson->role_id) {
                     echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
                 }
             }
@@ -634,6 +634,34 @@ class Calendar
         
 
         
+    }
+
+
+    function canVacationBeGrantToUserOnDay($user, $day_id)
+    {
+        //nie może gdy pracuje na danym dniu
+        $currentShifts = $this->Days[$day_id - 1]->Shifts;
+        foreach ($currentShifts as $shift) {
+            $shift->CompleteHours();
+            $employeesWorking = $shift->EmployeesWorking;
+            $employeesVacationing = $shift->EmployeesVacation;
+            foreach($employeesWorking as $em)
+            {
+                if($user->user_id == $em->user_id)
+                {
+                    return false;
+                }
+            }
+            foreach($employeesVacationing as $em)
+            {
+                if($user->user_id == $em->user_id)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
     function checkDayBefore($dayBeforeShifts,$enroledHours,$user,)
     {

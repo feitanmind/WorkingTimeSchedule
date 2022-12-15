@@ -37,9 +37,11 @@ class Notification
 {
     static createAndDisplayWarningAboutCantSignUserOnDay()
     {
+        window.history.pushState({}, document.title, "/" + "app/");
         const toast = document.createElement("div");
         toast.setAttribute("id","toast");
         // form.style.display = "none";
+        
         document.body.appendChild(toast);
         toast.style.position = 'absolute';
         toast.style.display = 'flex';
