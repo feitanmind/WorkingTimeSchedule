@@ -12,17 +12,19 @@ use PhpParser\JsonDecoder;
 <?php
     $arrOfHours = PHPSCripts::CreateArrayOfHoursOfWorkForUsers();
     //print_r($arrOfHours);    
-    if(!isset($_SESSION['calendar']))
-    {      
-        $cal = Calendar::CreateWorkingCalendar($user->dep_id, $user->role_id, 1, 2022);
+    if(!isset($_SESSION['calendar'])) {
+        $monthNumber = $_SESSION['Month_Number'];
+        $yearNumber = $_SESSION['Year_Number']; 
+        $cal = Calendar::CreateWorkingCalendar($user->dep_id, $user->role_id, $monthNumber, $yearNumber);
         $_SESSION['calendar'] = json_encode($cal);
         $cal->DrawCalendar();
     }
     else
     {
+    //echo "Chuj" . $_SESSION['calendar'];
     $calend = json_decode($_SESSION['calendar']);
-    $cal = Calendar::DecodeJsonCalendar(1, 2022, 1, $calend);
-    $cal->DrawCalendar();
+    $cal4 = Calendar::DecodeJsonCalendar($_SESSION["Month_Number"], $_SESSION["Year_Number"], $_SESSION['Current_User_Department_Id'], $calend);
+    $cal4->DrawCalendar();
     }
             
 

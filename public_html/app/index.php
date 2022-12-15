@@ -78,11 +78,13 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
 
             </div>
             <!-- //Sprawdzenie czy formularz z dodaniem użytkownika został wysłany i dodanie użytkownika do obiektu calendar -->
+            <?php PHPScripts::CHANGE_MONTH();?>
             <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
             <?php PHPScripts::REMOVE_USER_FROM_Day_Of_Calendar();?>
             <?php PHPScripts::GRANT_USER_Vacation_In_Day_of_Calendar();?>
             <?php PHPScripts::REVOKE_VACATION_For_A_User();?>
             <?php PHPScripts::SAVE_IN_DATABASE();?>
+           
             <script>
                 var listOfUsersToAdd = document.getElementById("usersToAdd").outerHTML;
                 var listOfUsersToGrantVacation = document.getElementById("usersToVacation").outerHTML;

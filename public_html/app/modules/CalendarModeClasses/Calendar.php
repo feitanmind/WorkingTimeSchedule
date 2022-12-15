@@ -27,7 +27,8 @@ class Calendar
     }
     public static function Get_Name_Of_Month($monthNumber, $year)
     {
-        return date('F', mktime(0, 0, 0, 1, $monthNumber, $year));
+        return date('F', mktime(0, 0, 0, $monthNumber, 1, $year));
+        
     }
     private function CreateDaysInMonth($monthNumber, $year, $department)
     {
@@ -71,7 +72,13 @@ class Calendar
             'Saturday',
             'Sunday'
         );
-        echo '<div class="headerMainCalendar"><div class="monthArrow mArrowLeft no-print">⤝</div><div id="nameOfMonth">' . $this::Get_Name_Of_Month($this->MonthNumber, $this->Year) . " " . $this->Year . '</div><div class="monthArrow mArrowRight no-print";>⤞</div></div>';
+        echo '<div class="headerMainCalendar">'.
+                '<div class="monthArrow mArrowLeft no-print" onclick="Calendar.changeMonth(\'BACK\');">⤝</div>'.
+                '<div id="nameOfMonth">' 
+                    . $this::Get_Name_Of_Month($this->MonthNumber, $this->Year) . " " . $this->Year . 
+                '</div>'.
+                '<div class="monthArrow mArrowRight no-print" onclick="Calendar.changeMonth(\'NEXT\');">⤞</div>'.
+            '</div>';
         //Rysujemy początek
         echo '<div id="calM" class="mainCalendar">';
 

@@ -11,8 +11,15 @@ class Calendar
         document.body.appendChild(form);
         form.submit();
     }
-    static changeMonth()
+    static changeMonth($flag)
     {
-        
+        const form = document.createElement("form");
+        form.setAttribute("method","get");
+        form.style.display = "none";
+        const inputForm = form.appendChild(document.createElement("input"));
+        inputForm.setAttribute("name","CHANGE_MONTH");
+        inputForm.setAttribute("value",$flag);
+        document.body.appendChild(form);
+        form.submit();
     }
 }
