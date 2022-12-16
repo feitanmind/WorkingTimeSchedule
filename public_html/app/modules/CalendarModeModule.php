@@ -10,6 +10,7 @@ use PhpParser\JsonDecoder;
 ?>
 <script src="scripts/calendarModeForm.js"></script>
 <?php
+
     $arrOfHours = PHPSCripts::CreateArrayOfHoursOfWorkForUsers();
     //print_r($arrOfHours);    
     if(!isset($_SESSION['calendar'])) {

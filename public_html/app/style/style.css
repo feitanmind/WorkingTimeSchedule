@@ -281,7 +281,7 @@ select{
     display: flex;
     flex-direction: column;
     width: 22vw;
-    height: 8vh;
+    height: 10vh;
     padding: 0;
     position:absolute;
     top: 80vh;

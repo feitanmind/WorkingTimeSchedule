@@ -27,7 +27,11 @@ class Calendar
     }
     public static function Get_Name_Of_Month($monthNumber, $year)
     {
+        // $fmt = new \IntlDateFormatter('pl_PL',\IntlDateFormatter::FULL,\IntlDateFormatter::FULL,'Europe/Warsaw',\IntlDateFormatter::GREGORIAN);
+        // $fmt->setPattern("MMMM");
+        // return $fmt->format(mktime(0, 0, 0, $monthNumber, 1, $year));
         return date('F', mktime(0, 0, 0, $monthNumber, 1, $year));
+        //return strftime('%B', mktime(0, 0, 0, $monthNumber, 1, $year));
         
     }
     private function CreateDaysInMonth($monthNumber, $year, $department)
@@ -50,6 +54,7 @@ class Calendar
     // }
     public function DrawCalendar()
     {
+        
         $shiftId = $_SESSION["Shift_Id"] - 1;
         $roleId = $_SESSION["Role_Id"];
         //Sprawdzamy ile dni jest w miesiącu

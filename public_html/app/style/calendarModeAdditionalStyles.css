@@ -216,6 +216,16 @@
     cursor: pointer;
 
 }
+
+
+
+#toastLostVacation
+{
+    height: 0.8vw;
+    margin-left: 1vw;
+    background-color: yellow;
+    width:0;
+}
 @media print
 {    @page {
         size: landscape
