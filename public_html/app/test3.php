@@ -70,7 +70,7 @@
     // $md->DrawCalendar();
     //adding user
     $user2 = new User(1);
-    //$user = new User(2);
+    $user = new User(2);
     // $arr = (array) $md;
     // $t = (array)$arr['Days'][0];
     // $t2 = (array)$t['Shifts'][0];
@@ -93,45 +93,52 @@
     //$keyToDelete = array_search($user2,$md->Days[0]->Shifts[0]->EmployeesVacation);
     //array_splice($md->Days[0]->Shifts[0]->EmployeesWorking,$keyToDelete);
 
+    $b = array();
+     $how = new HoursOfWork($user2,1,2022,'07:35:00');
+     $how2 = new HoursOfWork($user2,2,2022,'07:35:00');
+    array_push($b, $how);
+    array_push($b, $how2);
+    $_SESSION['arrOfHours'] = json_encode($b);
+    // //substractiong hours
+    // //$how->SubstractTimeOfWork(8);
+    // //$how->ActualizeTimeAndHours("133:05");
 
-    $how = new HoursOfWork($user2,1,2022,'07:35:00');
-
-
-    //substractiong hours
-    //$how->SubstractTimeOfWork(8);
-    //$how->ActualizeTimeAndHours("133:05");
-
-    $how2 = new HoursOfWork($user2, 2, 2022, '07:35:00');
+    // $how2 = new HoursOfWork($user2, 2, 2022, '07:35:00');
     $a = array();
+foreach($b as $k)
+{
+    array_push($a,array("month" => $k->Month, "year"=>$k->Year, "time"=>$k->Time, "hours"=>$k->Hours));
+}
+    $fi = json_encode($a);
+   // $arf2 = array("month" => $how2->Month, "year"=>$how2->Year, "time"=>$how2->Time, "hours"=>$how2->Hours);
+    // array_push($a, $arf);
+    // array_push($a, $arf2);
+    // $encodedUserHoursOfWork = json_encode($a);
+    // //echo $encodedUserHoursOfWork .'<br><br>';
 
-    $arf = array("month" => $how->Month, "year"=>$how->Year, "time"=>$how->Time, "hours"=>$how->Hours);
-    $arf2 = array("month" => $how2->Month, "year"=>$how2->Year, "time"=>$how2->Time, "hours"=>$how2->Hours);
-    array_push($a, $arf);
-    array_push($a, $arf2);
-    $encodedUserHoursOfWork = json_encode($a);
-    //echo $encodedUserHoursOfWork .'<br><br>';
 
-
-    $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork);
-    //print_r($encodedUserHoursOfWork);
-    if(!empty($decodedUserHoursOfWorkAsArrayOfStdClass))
-    {
-        foreach($decodedUserHoursOfWorkAsArrayOfStdClass as $uh)
-        {
-            if($uh->month == 1 && $uh->year == 2022){
-                $how = new HoursOfWork($user2, $uh->month, $uh->year, $user2->hours_per_shift);
-                $how->ActualizeTimeAndHours($uh->hours);
+    // $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork);
+    // //print_r($encodedUserHoursOfWork);
+    // if(!empty($decodedUserHoursOfWorkAsArrayOfStdClass))
+    // {
+    //     foreach($decodedUserHoursOfWorkAsArrayOfStdClass as $uh)
+    //     {
+    //         if($uh->month == 1 && $uh->year == 2022){
+    //             $how = new HoursOfWork($user2, $uh->month, $uh->year, $user2->hours_per_shift);
+    //             $how->ActualizeTimeAndHours($uh->hours);
                 
-            }
+    //         }
             
-            echo '<br><br>';
-        }
-    }
-    else
-    {
-        $how = new HoursOfWork($user2, 1, 2022, $user2->hours_per_shift);
-    }
+    //         echo '<br><br>';
+    //     }
+    // }
+    // else
+    // {
+    //     $how = new HoursOfWork($user2, 1, 2022, $user2->hours_per_shift);
+    // }
 
+    print_r($fi);
+   // HoursOfWork::PushHoursOfWorkArrayIntoDatabase();
     // foreach($decodedUserHoursOfWorkAsArrayOfStdClass as $uh)
     // {
     //     if($uh->month == 1 && $uh->year == 2022){

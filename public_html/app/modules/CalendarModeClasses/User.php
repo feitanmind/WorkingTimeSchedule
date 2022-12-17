@@ -9,7 +9,7 @@ namespace App;
         public $email;
         public $department;
         public $role;
-        //public $avatar;
+        public $avatar;
         public $user_id;
         public $custom_id;
         public $full_time;
@@ -55,7 +55,7 @@ namespace App;
                 $this->surname =                $row['surname'];
                 $this->encrypted_password =     $row['password'];
                 $this->email =                  $row['email'];
-                //$this->avatar =                 $row['avatar'];
+                $this->avatar =                 $row['avatar'];
                 $this->user_id =                $row['id'];
                 $this->custom_id =              $row['custom_id'];
                 $this->full_time =              $row['full_time'];
@@ -77,7 +77,8 @@ namespace App;
         public function getUserData()
         {
             //data:image/png;base64,'.base64_encode($this->avatar).'
-            $userCredentials = '<img src="https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916__340.png"/>'
+            $userAvatar = $this->avatar;
+            $userCredentials = '<img src="/app/style/img/avatars/'.$userAvatar.'"/>'
             .'<h2>'.$this->name. ' '. $this->surname. '</h2>'
             .'<p>UserID: '.$this->user_id.'</p>'
             .'<p>Department: '.$this->department.'</p>'
@@ -135,6 +136,14 @@ namespace App;
             {
                 return $e;
             }
+        }
+
+
+        public function createListOfUsersToCheckStatistics()
+        {
+            $accessConnection = ConnectToDatabase::connAdminPass();
+            $sql = "SELECT name, surname, usr_id, ";
+            
         }
 
 

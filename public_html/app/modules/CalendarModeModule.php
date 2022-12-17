@@ -11,7 +11,7 @@ use PhpParser\JsonDecoder;
 <script src="scripts/calendarModeForm.js"></script>
 <?php
 
-    $arrOfHours = PHPSCripts::CreateArrayOfHoursOfWorkForUsers();
+
     //print_r($arrOfHours);    
     if(!isset($_SESSION['calendar'])) {
         $monthNumber = $_SESSION['Month_Number'];
@@ -22,7 +22,6 @@ use PhpParser\JsonDecoder;
     }
     else
     {
-    //echo "Chuj" . $_SESSION['calendar'];
     $calend = json_decode($_SESSION['calendar']);
     $cal4 = Calendar::DecodeJsonCalendar($_SESSION["Month_Number"], $_SESSION["Year_Number"], $_SESSION['Current_User_Department_Id'], $calend);
     $cal4->DrawCalendar();

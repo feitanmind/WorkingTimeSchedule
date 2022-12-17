@@ -45,12 +45,13 @@ class Login
                     //$_SESSION['shift_id'] = 1;
                     $_SESSION['Shift_Id'] = 1;
                     $_SESSION['Role_Id'] = 1;
-                    $searchDempartment = "SELECT dep_id FROM user_data WHERE usr_id = $id;";
-                    $resDep = $access_Connection->query($searchDempartment);
-                    if($resDep->num_rows > 0)
+                    $searchAdditionalInformation = "SELECT avatar, dep_id FROM user_data WHERE usr_id = $id;";
+                    $res = $access_Connection->query($searchAdditionalInformation);
+                    if($res->num_rows > 0)
                     {
-                        $rowDep = $resDep->fetch_assoc();
-                        $_SESSION['Current_User_Department_Id'] = $rowDep['dep_id'];
+                        $row = $res->fetch_assoc();
+                        $_SESSION['Current_User_Department_Id'] = $row['dep_id'];
+                        $_SESSION['User_Avatar'] = $row['avatar'];
                     }
                     
 

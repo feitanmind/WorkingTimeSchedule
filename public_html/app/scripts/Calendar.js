@@ -13,6 +13,7 @@ class Calendar
     }
     static changeMonth($flag)
     {
+
         const form = document.createElement("form");
         form.setAttribute("method","get");
         form.style.display = "none";
