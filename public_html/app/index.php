@@ -28,7 +28,7 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
-
+    <link rel="icon" type="image/x-icon" href="style/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
 
     <script language="JavaScript">
@@ -113,6 +113,8 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
     <div class="rightPanel no-print">   
+        <div class="filtersForCalendar">
+            <div class="Filters_Header header-cal-right">Select Filters</div>
             <?php
             Role::displaySelectRolesForUser();   
             ?>
@@ -120,6 +122,59 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
             Shift::GenerateFormSelectForShifts($_SESSION['dep_id']);
             ?>
         </div>
+        <div class="SelectUserForStatistics">
+            <div class="UserToSelect_Header header-cal-right">Show statistics</div>
+            <div class="UserToSelect" id="statisticUser1">
+                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
+                <div class="UserToSelect_Description">
+                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
+                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
+                </div>
+                <div class="UserToSelect_button">Show</div>
+            </div>
+            <div class="UserToSelect" id="statisticUser1">
+                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
+                <div class="UserToSelect_Description">
+                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
+                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
+                </div>
+                <div class="UserToSelect_button">Show</div>
+            </div>
+            <div class="UserToSelect" id="statisticUser1">
+                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
+                <div class="UserToSelect_Description">
+                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
+                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
+                </div>
+                <div class="UserToSelect_button">Show</div>
+            </div>
+            <div class="UserToSelect" id="statisticUser1">
+                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
+                <div class="UserToSelect_Description">
+                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
+                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
+                </div>
+                <div class="UserToSelect_button">Show</div>
+            </div>
+            <div class="UserToSelect" id="statisticUser1">
+                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
+                <div class="UserToSelect_Description">
+                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
+                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
+                </div>
+                <div class="UserToSelect_button">Show</div>
+            </div>
+            <div class="UserToSelect" id="statisticUser1">
+                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
+                <div class="UserToSelect_Description">
+                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
+                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
+                </div>
+                <div class="UserToSelect_button">Show</div>
+            </div>
+       
+        </div>
+    </div>
         <script src="scripts/closeNewWindow.js"></script>
 
         <script src="scripts/Calendar.js"></script>

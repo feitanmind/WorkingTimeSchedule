@@ -84,8 +84,8 @@ class Shift
         //Przypisanie rezultatu wykonania zapytania do bazy danych
         $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
         //Generowanie formularza w HTMLu
-        echo '<form method="post">';
-        echo '<select font-size: 1vw" name="shiftID">';
+        echo '<form class="selectShift" method="post">';
+        echo '<select class="calendarFilterSelect" name="shiftID">';
         while($row = $result_Of_Selection->fetch_assoc())
         {   
             if($_SESSION["Shift_Id"] == $row["id"])

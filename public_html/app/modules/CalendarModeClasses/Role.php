@@ -13,7 +13,7 @@ class Role
         $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
         //Stworzenie formularza w HTMLu 
         echo '<form method="post">';
-        echo '<select style="font-size: 1vw" name="roleID">';
+        echo '<select id="selectRoleToShow" class="calendarFilterSelect" name="roleID">';
 
         while($row = $result_Of_Selection->fetch_assoc())
         {
