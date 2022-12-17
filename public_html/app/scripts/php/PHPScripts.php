@@ -62,25 +62,25 @@ class PHPScripts
                     else
                     {
                         $calend2->SignUserToWorkInDay($user2, $dayId, $shiftId);
-                        // $c = array();
-                        // $a = json_decode($_SESSION['arrOfHours'],0);
-                        // foreach ($a as $b) {
-                        //     $user3 = new User($b->User->user_id);
-                        //     if ($b->Month == $month_Number && $b->Year == $year)
-                        //     {
-                        //         $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
+                        $c = array();
+                        $a = json_decode($_SESSION['arrayOfHoursOfWorkForCurrentMonth'],0);
+                        foreach ($a as $b) {
+                            $user3 = new User($b->User->user_id);
+                            if ($b->Month == $month_Number && $b->Year == $year)
+                            {
+                                $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
                             
-                        //         $how->ActualizeTimeAndHours($b->Hours);
-                        //         if($user3->user_id == $user2->user_id)
-                        //         {
-                        //             $how->SubstractTimeOfWork();
-                        //         }
-                        //     }
-                        //     array_push($c, $how);
-                        // }
+                                $how->ActualizeTimeAndHours($b->Hours);
+                                if($user3->user_id == $user2->user_id)
+                                {
+                                    $how->SubstractTimeOfWork();
+                                }
+                            }
+                            array_push($c, $how);
+                        }
 
                         
-                        // $_SESSION['arrOfHours'] = json_encode($c);
+                        $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
                         $_SESSION['calendar'] = json_encode($calend2);
                         //czyszczenie Get
                         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
@@ -166,105 +166,6 @@ class PHPScripts
             //print_r(json_encode($finalHoursOfWork,0));
         }
 
-
-        
-
-
-
-
-
-        // if(!isset($_SESSION['arrOfHours']))
-        // {
-        //     $arrOfHours = array();
-           
-           
-        //     $accessConnection = ConnectToDatabase::connAdminPass();
-        //     $sql = "SELECT usr_id, hours_of_work FROM user_data WHERE dep_id = $dep_id";
-        //     $result = $accessConnection->query($sql);
-        //     if($result->num_rows > 0)
-        //     {
-        //         while($row = $result->fetch_assoc())
-        //         {
-        //             $user = new User($row['usr_id']);
-        //             if(!empty($row['hours_of_work']))
-        //             {
-                    
-        //                 $encodedUserHoursOfWork = $row['hours_of_work'];
-        //                 $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork,0);
-        //                 //print_r($decodedUserHoursOfWorkAsArrayOfStdClass);
-        //                 foreach($decodedUserHoursOfWorkAsArrayOfStdClass as $uh)
-        //                 {
-        //                     if($uh->month == $monthNumber && $uh->year == $yearNumber){
-        //                         $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
-        //                         $how->ActualizeTimeAndHours($uh->hours);
-        //                         break;
-        //                     }  
-        //                 }
-        //                 if(!isset($how))
-        //                 {
-        //                     $how = new HoursOfWork($user, $monthNumber, $yearNumber, $user->hours_per_shift);
-
-        //                 }
-        //             } else {
-        //                 $how = new HoursOfWork($user, $monthNumber, $yearNumber, $user->hours_per_shift);
-        //             }
-                    
-        //             array_push($arrOfHours, $how);      
-        //         }
-        //     }
-        //     $_SESSION['arrOfHours'] = json_encode($arrOfHours);
-        //     echo json_encode($arrOfHours);
-        //     return $arrOfHours;   
-        // } else {
-        //     $c = array();
-        //     $a = json_decode($_SESSION['arrOfHours'], 0);
-        //     if (!empty($a)) {
-        //         foreach ($a as $b) {
-        //             $user = new User($b->User->user_id);
-        //             if ($b->Month == $monthNumber && $b->Year == $yearNumber) {
-        //                 $how = new HoursOfWork($user, $b->Month, $b->Year, $user->hours_per_shift);
-        //                 $how->ActualizeTimeAndHours($b->Hours);
-
-        //             }
-        //             array_push($c, $how);
-        //             // print_r($b);
-        //             // print_r('<br>');
-        //         }
-        //         $_SESSION['arrOfHours'] = json_encode($c);
-        //         //print_r(json_encode($c));
-        //         return $c;
-        //     } else {
-        //         $currentShift = $_SESSION['Shift_Id'];
-        //         $accessConnection = ConnectToDatabase::connAdminPass();
-        //         $sql = "SELECT usr_id FROM users WHERE dep_id = $dep_id;";
-        //         $result = $accessConnection->query($sql);
-        //         if ($result->num_rows > 0) {
-        //             while ($row = $result->fetch_assoc()) {
-        //                 $user = new User($row['usr_id']);
-        //                 if (!empty($row['hours_of_work'])) {
-
-        //                     $encodedUserHoursOfWork = $row['hours_of_work'];
-        //                     $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork, 0);
-        //                     //print_r($decodedUserHoursOfWorkAsArrayOfStdClass);
-        //                     foreach ($decodedUserHoursOfWorkAsArrayOfStdClass as $uh) {
-        //                         if ($uh->month == $monthNumber && $uh->year == $yearNumber) {
-        //                             $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
-        //                             $how->ActualizeTimeAndHours($uh->hours);
-        //                             break;
-        //                         }
-        //                     }
-        //                 } else {
-        //                     $how = new HoursOfWork($user, $monthNumber, $yearNumber, $user->hours_per_shift);
-        //                 }
-
-        //                 array_push($arrOfHours, $how);
-        //             }
-        //         }
-        //         $_SESSION['arrOfHours'] = json_encode($arrOfHours);
-
-        //     }
-
-        // }
            
     }
     public static function GRANT_USER_Vacation_In_Day_of_Calendar()
@@ -288,25 +189,25 @@ class PHPScripts
                 if($calend2->canVacationBeGrantToUserOnDay($user2,$dayId))
                 {
                     $calend2->SignUserVacation($user2, $dayId, $shiftId);
-                    // $c = array();
-                    //     $a = json_decode($_SESSION['arrOfHours'],0);
-                    //     foreach ($a as $b) {
-                    //         $user3 = new User($b->User->user_id);
-                    //         if ($b->Month == $month_Number && $b->Year == $year)
-                    //         {
-                    //             $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
+                    $c = array();
+                        $a = json_decode($_SESSION['arrayOfHoursOfWorkForCurrentMonth'],0);
+                        foreach ($a as $b) {
+                            $user3 = new User($b->User->user_id);
+                            if ($b->Month == $month_Number && $b->Year == $year)
+                            {
+                                $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
                             
-                    //             $how->ActualizeTimeAndHours($b->Hours);
-                    //             if($user3->user_id == $user2->user_id)
-                    //             {
-                    //                 $how->SubstractTimeOfWork();
-                    //             }
-                    //         }
-                    //         array_push($c, $how);
-                    //     }
+                                $how->ActualizeTimeAndHours($b->Hours);
+                                if($user3->user_id == $user2->user_id)
+                                {
+                                    $how->SubstractTimeOfWork();
+                                }
+                            }
+                            array_push($c, $how);
+                        }
 
                         
-                    //     $_SESSION['arrOfHours'] = json_encode($c);
+                        $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
                 }
                 else
                 {
@@ -347,25 +248,25 @@ class PHPScripts
                 //echo "<script>console.log(\"".$user->user_id."'\")</script>";
                 $user2 = new User($user);
                // echo "<script>console.log(\"".$user2->user_id."\")</script>";
-            //    $c = array();
-            //    $a = json_decode($_SESSION['arrOfHours'],0);
-            //    foreach ($a as $b) {
-            //        $user3 = new User($b->User->user_id);
-            //        if ($b->Month == $month_Number && $b->Year == $year)
-            //        {
-            //            $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
+               $c = array();
+               $a = json_decode($_SESSION['arrayOfHoursOfWorkForCurrentMonth'],0);
+               foreach ($a as $b) {
+                   $user3 = new User($b->User->user_id);
+                   if ($b->Month == $month_Number && $b->Year == $year)
+                   {
+                       $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
                    
-            //            $how->ActualizeTimeAndHours($b->Hours);
-            //            if($user3->user_id == $user2->user_id)
-            //            {
-            //                $how->AddTimeOfWork();
-            //            }
-            //        }
-            //        array_push($c, $how);
-            //    }
+                       $how->ActualizeTimeAndHours($b->Hours);
+                       if($user3->user_id == $user2->user_id)
+                       {
+                           $how->AddTimeOfWork();
+                       }
+                   }
+                   array_push($c, $how);
+               }
    
                
-            //    $_SESSION['arrOfHours'] = json_encode($c);
+               $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
    
                 $calend2->UnsignWorkingUserFormDay($user2, $dayId, $shiftId);
 
@@ -397,25 +298,25 @@ class PHPScripts
                 //echo "<script>console.log(\"".$user->user_id."'\")</script>";
                 $user2 = new User($user);
                 //echo "<script>console.log(\"".$user2->user_id."\")</script>";
-            //     $c = array();
-            // $a = json_decode($_SESSION['arrOfHours'],0);
-            // foreach ($a as $b) {
-            //     $user3 = new User($b->User->user_id);
-            //     if ($b->Month == $month_Number && $b->Year == $year)
-            //     {
-            //         $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
+                $c = array();
+            $a = json_decode($_SESSION['arrayOfHoursOfWorkForCurrentMonth'],0);
+            foreach ($a as $b) {
+                $user3 = new User($b->User->user_id);
+                if ($b->Month == $month_Number && $b->Year == $year)
+                {
+                    $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
                 
-            //         $how->ActualizeTimeAndHours($b->Hours);
-            //         if($user3->user_id == $user2->user_id)
-            //         {
-            //             $how->AddTimeOfWork();
-            //         }
-            //     }
-            //     array_push($c, $how);
-            // }
+                    $how->ActualizeTimeAndHours($b->Hours);
+                    if($user3->user_id == $user2->user_id)
+                    {
+                        $how->AddTimeOfWork();
+                    }
+                }
+                array_push($c, $how);
+            }
 
             
-            // $_SESSION['arrOfHours'] = json_encode($c);
+            $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
 
 
 
@@ -545,7 +446,7 @@ class PHPScripts
                                     $arrOfHours = array();
                                 }
                 
-                                $_SESSION['arrOfHours'] = json_encode($arrOfHours);
+                                $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($arrOfHours);
                                 //echo json_encode($arrOfHours);
                                 //1 - arr of hours
                                 $cal = Calendar::CreateWorkingCalendar($dep_id, $role_id, $previousMonthNumber, $previousYearNumber);

@@ -85,6 +85,7 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
             <?php PHPScripts::GRANT_USER_Vacation_In_Day_of_Calendar();?>
             <?php PHPScripts::REVOKE_VACATION_For_A_User();?>
             <?php PHPScripts::SAVE_IN_DATABASE();?>
+            <?php PHPScripts::CreateArrayOfHoursOfWorkForUsers();?>
            
             <script>
                 var listOfUsersToAdd = document.getElementById("usersToAdd").outerHTML;
