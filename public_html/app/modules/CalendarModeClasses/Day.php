@@ -38,6 +38,21 @@ class Day
         }
 
     }
+    public static function IfUserWorkingOnThisDay($day,$userId)
+    {
+        foreach($day->Shifts as $shift)
+            {
+                foreach($shift->EmployeesWorking as $emp)
+                {
+                    if($emp->user_id == $userId)
+                    {
+                        return [true, $shift->Id];
+                    }
+                    
+                }
+            }
+        return false;
+    }
     public function ActualizeShifts($sh)
     {
         foreach ($this->Shifts as $shift)

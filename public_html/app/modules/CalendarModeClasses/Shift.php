@@ -85,6 +85,7 @@ class Shift
         $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
         //Generowanie formularza w HTMLu
         echo '<form class="selectShift" method="post">';
+        echo "<p style=\"font-size: 0.7vw;\">Select shift:</p>";
         echo '<select class="calendarFilterSelect" name="shiftID">';
         while($row = $result_Of_Selection->fetch_assoc())
         {   

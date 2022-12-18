@@ -174,6 +174,54 @@ require "modules/CalendarModeClasses/HoursOfWork.php";
             </div>
        
         </div>
+
+        <dic class="StatisticForUser">
+            <div class="StatisticAvatar"style="background-image: url('style/img/avatars/default1.png');"></div>
+            <div class="StatisticUserDescription">
+                <div class="StatisticUserNameAndSurname">Adam Burski</div>
+                <div class="UserIdentyficators">User ID: 1, User Custom ID: 2</div>
+            </div>
+            <div class="StatisticShiftsForUser">
+                <div class="StatisticFlagForShift" style="background-color: blue;"></div>
+                <div class="StatisticNameOfShift">AdminShift</div>
+            </div>
+            <div class="StatisticGraphCircleRepresentation">
+                <div class="StatisticGraph">
+                <div class="StatisticGraph_mask">
+                    <p class="StatisticLeftHours_name">Left:</p>
+                     <p class="StatisticLeftHours">123:05</p>
+                </div>
+                </div>
+                <div class="x-box-cont"></div>
+                
+            </div>
+            <div class="StatisticCalendar">
+                <table>
+                <tr>
+                        <td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td><td>Su</td>
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td><td>1</td><td>2</td>
+                    </tr>
+                    <tr>
+                        <td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td>
+                    </tr>
+                    <tr>
+                        <td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td>
+                    </tr>
+                    <tr>
+                        <td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td>
+                    </tr>
+                    <tr>
+                        <td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td>
+                    </tr>
+                    <tr>
+                        <td>31</td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
     </div>
         <script src="scripts/closeNewWindow.js"></script>
 
