@@ -392,12 +392,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: repeating-conic-gradient(
+    /* background: repeating-conic-gradient(
         from 0deg,
         #0865b1 0deg 50deg,
         #63cb55 50deg 70deg,
         #c0c0c0 70deg 360deg
-    );
+    ); */
 }
 .StatisticGraph_mask{
     width: 5vw;
@@ -439,6 +439,11 @@
     padding: 0.1vw;
 
 }
+/* #StatisticChart{ 
+    background: repeating-conic-gradient(
+    from 0deg,
+    #E65F8E 0deg 5deg,
+    #A86BD1 5deg 10deg !important } */
 
 /* additional */
 @media print

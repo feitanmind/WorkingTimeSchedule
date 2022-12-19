@@ -38,9 +38,9 @@ class Day
         }
 
     }
-    public static function IfUserWorkingOnThisDay($day,$userId)
+    public  function IfUserWorkingOnThisDay($userId)
     {
-        foreach($day->Shifts as $shift)
+        foreach($this->Shifts as $shift)
             {
                 foreach($shift->EmployeesWorking as $emp)
                 {
