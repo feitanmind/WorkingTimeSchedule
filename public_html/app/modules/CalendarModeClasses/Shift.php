@@ -8,6 +8,7 @@ class Shift
     public string $HoursPerShift;
     public string $StartHour;
     public string $EndHour;
+    public string $Color;
     public $EmployeesWorking = array();
     public $EmployeesVacation = array();
 
@@ -32,21 +33,22 @@ class Shift
         $sql_Query_Selection = "SELECT * FROM shifts WHERE dep_id = $department_ID AND id = $shiftId;";
         //Przypisanie rezultatu wykonania zapytania do bazy danych
         $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
-
+        
         while($row = $result_Of_Selection->fetch_assoc())
         {
             $this->StartHour = $row['startHour'];
             $this->EndHour = $row['endHour'];
+            $this->HoursPerShift = $row["hours_per_shift"];
+            $this->Color = $row["color"];
         }
     }
-    public function AddUserToWork(User $user)
-    {
-        array_push($this->EmployeesWorking, $user); 
-    }
-    public function AddUserVacation(User $user)
-    {
-        array_push($this->EmployeesVacation, $user);
-    }
+    // public function AddUserToWork(User $user)
+    // {
+    //     array_push($this->EmployeesWorking, $user);  Shift
+    // {
+    //     array_push($this->EmployeesVacation, $user);
+    // }
+
 
     public function GetIntArray_HoursOfShift()
     {

@@ -271,6 +271,34 @@ class HoursOfWork
 
 
     }
+    public function GetPartOfWorkingDaysOnShift($shiftId, $depId)
+    {
+        $shift = new Shift($shiftId, $depId);
+        $shift->CompleteHours();
+        $hoursPerShift = $shift->HoursPerShift; // "12:00:00"
+        $hoursSum = $this->Hours; //"152:05:00"
+        //$workingDays = $hoursSum / $hoursPerShift;
+        //$allSecondsPerShift = strtotime("1970-01-01 $hoursPerShift UTC");
+
+        $ho1 = intval(substr($hoursPerShift,0,strpos($hoursPerShift,":")));            
+        $step1 = substr($hoursPerShift, strpos($hoursPerShift, ":") + 1);
+        $mnts1 = intval(substr($step1, strpos($step1, ":")+1));             
+        
+        //if($ho1)
+
+        $secondsPerShift = $ho1 * 60 * 60 + $mnts1 * 60;
+
+
+
+        $ho = intval(substr($hoursSum,0,strpos($hoursSum,":")));            
+        $step = substr($hoursSum, strpos($hoursSum, ":") + 1);
+        $mnts = intval(substr($step, strpos($step, ":")+1));             
+
+
+        $secondsPerMonth = $ho * 60 * 60 + $mnts * 60;
+        return $secondsPerMonth / $secondsPerShift;
+
+    }
 
     public static function GetEasterDate($year)
     {

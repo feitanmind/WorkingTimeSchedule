@@ -59,13 +59,16 @@ class Statistics
         $i = 0;
         echo "<div class=\"StatisticShiftsForUser\">";
         $accessConnection = ConnectToDatabase::connAdminPass();
+        ksort($countSignOnShift);
         foreach(array_keys($countSignOnShift) as $shift)
         {
             $sql = "SELECT name FROM shifts WHERE dep_id = $department_ID AND id = $shift;";
             $result = $accessConnection->query($sql);
             $row = $result->fetch_assoc();
             $nameOfShift = $row['name'];
-            $color = $colorsChart[$i];
+            $s = new Shift($shift, $department_ID);
+            $s->CompleteHours();
+            $color = $s->Color;
             echo      "<div class=\"StatisticFlagForShift\" style=\"background-color:$color;\"></div>";
             echo      "<div class=\"StatisticNameOfShift\">$nameOfShift</div>";
             
@@ -90,15 +93,27 @@ class Statistics
                 $b = 0;
                 $c = 0;
                 
-                foreach ($countSignOnShift as $shift)
+                foreach ($countSignOnShift as $shift => $val)
                 {
-                    $a = $shift * $timeForDay * 100 / 360 * 3.6 ;
-                     echo $colorsChart[$c] . " ".$b . "deg " . ($b + $a) . "deg, ";
+                    
+                    $sh = new Shift($shift, $department_ID);
+                    $sh->CompleteHours();
+                    $how = new HoursOfWork($user, $month_Number, $year,$user->hours_per_shift);
+                    $hoursPerShift = $sh->HoursPerShift;
+
+
+            $oneDyayDegree = 360 / $how->GetPartOfWorkingDaysOnShift($shift, $department_ID);
+
+            $a = $oneDyayDegree * $val;
+                   $a = floatval(substr($a, 0, 10));
+                   $a = round($a, 2);
+   
+                    echo $sh->Color . " ".$b . "deg " . ($b + $a) . "deg, ";
                     $c++;
-                    $b = $a;
+                    $b = $b+$a;
                 }
                 echo '#c0c0c0' ." ". $b . "deg " . 360 . "deg";
-        echo " )!important }</style>";
+       echo " )!important }</style>";
 
         echo '<div class="StatisticGraphCircleRepresentation">';
         echo ' <div id="StatisticChart"class="StatisticGraph">';
@@ -108,6 +123,7 @@ class Statistics
         echo '   </div>';
         echo '</div>';
         echo '</div>';
+
       
     }
     public static function DrawMiniCalendarForUserStatistics($user)

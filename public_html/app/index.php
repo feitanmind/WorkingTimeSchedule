@@ -176,7 +176,7 @@ require "modules/CalendarModeClasses/Statistics.php";
        
         </div>
 
-        <dic class="StatisticForUser">
+        <div class="StatisticForUser">
             <div class="StatisticAvatar"style="background-image: url('style/img/avatars/default1.png');"></div>
             <div class="StatisticUserDescription">
                 <div class="StatisticUserNameAndSurname">Adam Burski</div>
