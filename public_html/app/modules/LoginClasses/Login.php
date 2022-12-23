@@ -45,6 +45,7 @@ class Login
                     //$_SESSION['shift_id'] = 1;
                     $_SESSION['Shift_Id'] = 1;
                     $_SESSION['Role_Id'] = 1;
+                    $_SESSION['id_stat'] = 1;
                     $searchAdditionalInformation = "SELECT avatar, dep_id FROM user_data WHERE usr_id = $id;";
                     $res = $access_Connection->query($searchAdditionalInformation);
                     if($res->num_rows > 0)

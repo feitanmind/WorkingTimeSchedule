@@ -1,9 +1,15 @@
 class Statistics
 {
-    static ActualizeChart(shifts)
+    static displayUserStats(user_id)
     {
-        const colors = ["#E65F8E","#A86BD1","#3AA5D1","#3BB58F","#3A63AD","#F7EA4A", "#FBC543", "#FFC9ED", "#E6696E"];
-        const chart = document.getElementsByClassName['StatisticChart'];
 
+        const form = document.createElement("form");
+        form.setAttribute("method","post");
+        form.style.display = "none";
+        const inputForm = form.appendChild(document.createElement("input"));
+        inputForm.setAttribute("name","usr_stats");
+        inputForm.setAttribute("value",user_id);
+        document.body.appendChild(form);
+        form.submit();
     }
 }

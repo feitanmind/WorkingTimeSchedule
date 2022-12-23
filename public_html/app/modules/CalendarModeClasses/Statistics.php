@@ -1,5 +1,8 @@
 <?php
 namespace App;
+
+use LDAP\Connection;
+
 class Statistics
 {
     public User $user;
@@ -27,7 +30,27 @@ class Statistics
         $calendar = $encodedCalendar->DecodeJsonCalendar($monthNumber, $yearNumber, $departmentId, $decodedCalendarAsStd);
     }
 
-    public static function DrawStatisticsChartForUser($user)
+    public static function DrawListOfUsersForStatistic()
+    {
+        $depId = $_SESSION['Current_User_Department_Id'];
+        $accessConnection = ConnectToDatabase::connAdminPass();
+        $sql = "SELECT name, surname, usr_id, custom_id, avatar FROM user_data WHERE dep_id = $depId;";
+        $result = $accessConnection->query($sql);
+        while($row = $result->fetch_assoc())
+        {
+            echo '<div class="UserToSelect" id="statisticUser'.$row['usr_id'].'" >';
+                echo '<div class="UserToSelectAvatar" style="background-image: url(\'style/img/avatars/'.$row['avatar'].'\');"></div>'; 
+                echo '<div class="UserToSelect_Description">';
+                    echo '<div class="UserToSelect_SurnameAndName">'.$row['surname'] . ' '.$row['name'].'</div>';
+                    echo '<div class="UserToSelect_OtherInfo">User_id: '.$row['usr_id'].', Custom_id:'.$row['custom_id'].'</div>';
+                echo '</div>';
+                echo '<div class="UserToSelect_button" onclick="Statistics.displayUserStats('.$row['usr_id'].');">Show</div>';
+            echo '</div>';
+        }
+       
+    }
+
+    public static function DrawStatisticsChartForUser()
     {
         // <div class="StatisticGraph">
         //     <div class="StatisticGraph_mask">
@@ -35,6 +58,23 @@ class Statistics
         //     <p class="StatisticLeftHours">123:05</p>
         //     </div>
         // </div>
+
+        $user_id = $_SESSION['id_stat'];
+
+
+        $accessConnection = ConnectToDatabase::connAdminPass();
+        $user = new User($user_id);
+
+        echo '<div class="StatisticForUser">';
+            echo '<div class="StatisticAvatar"style="background-image: url(\'style/img/avatars/'.$user->avatar.'\');"></div>';
+            echo '<div class="StatisticUserDescription">';
+                echo '<div class="StatisticUserNameAndSurname">'.$user->name . ' '. $user->surname.'</div>';
+                echo '<div class="UserIdentyficators">User ID: '.$user->user_id.', User Custom ID: '.$user->custom_id.'</div>';
+            echo '</div>';
+
+
+
+
         $month_Number = $_SESSION['Month_Number'];
         $year = $_SESSION['Year_Number'];
         $department_ID = $user->dep_id;
@@ -58,7 +98,7 @@ class Statistics
         }
         $i = 0;
         echo "<div class=\"StatisticShiftsForUser\">";
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        
         ksort($countSignOnShift);
         foreach(array_keys($countSignOnShift) as $shift)
         {
@@ -85,7 +125,7 @@ class Statistics
         if (str_starts_with($minutes, "0"))$minutes = substr($minutes, 1);
         $minutesFraction = intval($minutes) / 60;
         $timeForDay = intval($hours) + $minutesFraction;
-        echo print_r($countSignOnShift);
+        //echo print_r($countSignOnShift);
         echo "<style>";
         echo '#StatisticChart{';
         echo "background: repeating-conic-gradient(
@@ -119,15 +159,30 @@ class Statistics
         echo ' <div id="StatisticChart"class="StatisticGraph">';
         echo '    <div class="StatisticGraph_mask">';
         echo '    <p class="StatisticLeftHours_name">Left:</p>';
-        echo '     <p class="StatisticLeftHours">123:05</p>';
+
+        $encodedArrayOfHoursOfWork = $_SESSION['arrayOfHoursOfWorkForCurrentMonth'];
+        $decodedArrayOfHoursOfWork = HoursOfWork::decodeArrayOfHoursOfWork($encodedArrayOfHoursOfWork);
+        foreach($decodedArrayOfHoursOfWork as $how)
+        {
+            if($how->User->user_id == $user->user_id)
+            {
+                echo '     <p class="StatisticLeftHours">'.$how->Hours.'</p>';
+                break;
+            }
+        }
+
+
+        
         echo '   </div>';
         echo '</div>';
         echo '</div>';
 
       
     }
-    public static function DrawMiniCalendarForUserStatistics($user)
+    public static function DrawMiniCalendarForUserStatistics()
     {
+        $user_id = $_SESSION['id_stat'];
+        $user = new User($user_id);
         $month_Number = $_SESSION['Month_Number'];
         $year = $_SESSION['Year_Number'];
         $department_ID = $user->dep_id;

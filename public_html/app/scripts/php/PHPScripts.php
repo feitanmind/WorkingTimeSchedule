@@ -141,6 +141,7 @@ class PHPScripts
                 }
                 array_push($finalHoursOfWork, $how);
             }
+            
             $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($finalHoursOfWork,0);
             //print_r($finalHoursOfWork);
         }
@@ -165,7 +166,7 @@ class PHPScripts
             $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($finalHoursOfWork,0);
             //print_r(json_encode($finalHoursOfWork,0));
         }
-
+        echo json_encode($finalHoursOfWork, 0);
            
     }
     public static function GRANT_USER_Vacation_In_Day_of_Calendar()
@@ -465,9 +466,17 @@ class PHPScripts
             }
             header("Location: \app");
         }
+
+      
     }
 
-
+    public static function CHANGE_USER_STATS()
+    {
+        if(isset($_POST["usr_stats"]))
+        {
+            $_SESSION['id_stat'] = $_POST["usr_stats"];
+        }
+    }
 
 
 

@@ -87,6 +87,7 @@ require "modules/CalendarModeClasses/Statistics.php";
             <?php PHPScripts::REVOKE_VACATION_For_A_User();?>
             <?php PHPScripts::SAVE_IN_DATABASE();?>
             <?php PHPScripts::CreateArrayOfHoursOfWorkForUsers();?>
+            <?php PHPScripts::CHANGE_USER_STATS(); ?>
            
             <script>
                 var listOfUsersToAdd = document.getElementById("usersToAdd").outerHTML;
@@ -113,6 +114,7 @@ require "modules/CalendarModeClasses/Statistics.php";
        
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
+    
     <div class="rightPanel no-print">   
         <div class="filtersForCalendar">
             <div class="Filters_Header header-cal-right">Select Filters</div>
@@ -125,91 +127,19 @@ require "modules/CalendarModeClasses/Statistics.php";
         </div>
         <div class="SelectUserForStatistics">
             <div class="UserToSelect_Header header-cal-right">Show statistics</div>
-            <div class="UserToSelect" id="statisticUser1">
-                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
-                <div class="UserToSelect_Description">
-                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
-                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
-                </div>
-                <div class="UserToSelect_button">Show</div>
-            </div>
-            <div class="UserToSelect" id="statisticUser1">
-                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
-                <div class="UserToSelect_Description">
-                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
-                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
-                </div>
-                <div class="UserToSelect_button">Show</div>
-            </div>
-            <div class="UserToSelect" id="statisticUser1">
-                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
-                <div class="UserToSelect_Description">
-                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
-                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
-                </div>
-                <div class="UserToSelect_button">Show</div>
-            </div>
-            <div class="UserToSelect" id="statisticUser1">
-                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
-                <div class="UserToSelect_Description">
-                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
-                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
-                </div>
-                <div class="UserToSelect_button">Show</div>
-            </div>
-            <div class="UserToSelect" id="statisticUser1">
-                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
-                <div class="UserToSelect_Description">
-                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
-                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
-                </div>
-                <div class="UserToSelect_button">Show</div>
-            </div>
-            <div class="UserToSelect" id="statisticUser1">
-                <div class="UserToSelectAvatar" style="background-image: url('style/img/avatars/default1.png');"></div> 
-                <div class="UserToSelect_Description">
-                    <div class="UserToSelect_SurnameAndName">Burski Adam</div>
-                    <div class="UserToSelect_OtherInfo">User_id: 1, Custom_id: 1</div>
-                </div>
-                <div class="UserToSelect_button">Show</div>
-            </div>
+            <?php Statistics::DrawListOfUsersForStatistic() ?>
        
         </div>
 
-        <div class="StatisticForUser">
-            <div class="StatisticAvatar"style="background-image: url('style/img/avatars/default1.png');"></div>
-            <div class="StatisticUserDescription">
-                <div class="StatisticUserNameAndSurname">Adam Burski</div>
-                <div class="UserIdentyficators">User ID: 1, User Custom ID: 2</div>
-            </div>
-            <!-- <div class="StatisticShiftsForUser">
-                <div class="StatisticFlagForShift" style="background-color: blue;"></div>
-                <div class="StatisticNameOfShift">AdminShift</div>
-            </div> -->
-            <!-- <div class="StatisticGraphCircleRepresentation">
-                <div id="StatisticChart"class="StatisticGraph">
-                    <div class="StatisticGraph_mask">
-                    <p class="StatisticLeftHours_name">Left:</p>
-                     <p class="StatisticLeftHours">123:05</p>
-                    </div>
-                </div>
-                
-            </div> -->
-                <?php
-                    $user = new User(1);
-                    Statistics::DrawStatisticsChartForUser($user);
-                ?>
+                <?php Statistics::DrawStatisticsChartForUser(); ?>
             <div class="StatisticCalendar">
-                <?php
-                    $user = new User(1);
-                    Statistics::DrawMiniCalendarForUserStatistics($user);
-                ?>
+                <?php Statistics::DrawMiniCalendarForUserStatistics();?>
             </div>
         </div>
 
     </div>
         <script src="scripts/closeNewWindow.js"></script>
-
+        <script src="scripts/Statistics.js"></script>
         <script src="scripts/Calendar.js"></script>
         <!-- Dodatkowe style zawierające wygląd formularzy i niektóre elementy CalendarMode -->
         <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
