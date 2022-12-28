@@ -22,6 +22,7 @@ require "modules/CalendarModeClasses/Statistics.php";
 ?>
 <!DOCTYPE html>
 <html>
+<?php PHPScripts::CHANGE_MONTH();?>
     <?php PHPScripts::CHECK_User_Is_Logged()?>
 <head>
     <meta charset="UTF-8">
@@ -80,7 +81,7 @@ require "modules/CalendarModeClasses/Statistics.php";
 
             </div>
             <!-- //Sprawdzenie czy formularz z dodaniem użytkownika został wysłany i dodanie użytkownika do obiektu calendar -->
-            <?php PHPScripts::CHANGE_MONTH();?>
+
             <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
             <?php PHPScripts::REMOVE_USER_FROM_Day_Of_Calendar();?>
             <?php PHPScripts::GRANT_USER_Vacation_In_Day_of_Calendar();?>

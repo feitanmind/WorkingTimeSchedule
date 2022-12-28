@@ -167,10 +167,10 @@ class HoursOfWork
                 }
                 else
                 {
-                echo '<font size="0.2px">';
+                //echo '<font size="0.2px">';
                     $simplifyArray = array();
                     $currentMonthHoursIsInDatabase = false;
-                echo "Cu" . $currentMonthHoursIsInDatabase . "= false";
+                //echo "Cu" . $currentMonthHoursIsInDatabase . "= false";
                     foreach($simplyArrayOfHours as $hours)
                     {
                         $user = new User($userIdentifier);
@@ -216,7 +216,7 @@ class HoursOfWork
                     
                     $simplifyArrayEncoded = json_encode($simplifyArray, 0);
                 // echo $simplifyArrayEncoded . "<br><br>";
-                    echo "</font>";
+                    //echo "</font>";
                 }
                 $update = "UPDATE user_data SET hours_of_work='$simplifyArrayEncoded' WHERE usr_id = $userIdentifier;";
             $accessConnection->query($update);
