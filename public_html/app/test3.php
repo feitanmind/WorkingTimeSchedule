@@ -176,20 +176,23 @@ use PHPScripts;
     
 //     //$cal3 = Calendar::CreateWorkingCalendar($dep_id, $role_id, 2, 2022);
 //     //$cal3->DrawCalendar();
-$_SESSION['Month_Number'] = 3;
-$_SESSION['Year_Number'] = 2022;
-$_SESSION['Current_User_Department_Id'] = 1;
-    PHPScripts::CreateArrayOfHoursOfWorkForUsers();
+// $_SESSION['Month_Number'] = 3;
+// $_SESSION['Year_Number'] = 2022;
+// $_SESSION['Current_User_Department_Id'] = 1;
+//     PHPScripts::CreateArrayOfHoursOfWorkForUsers();
 
-    $_SESSION['calendar'] = json_encode(new Calendar(1,2022,1));
-    print_r($_SESSION['arrayOfHoursOfWorkForCurrentMonth']);
-    $a = HoursOfWork::decodeArrayOfHoursOfWork($_SESSION['arrayOfHoursOfWorkForCurrentMonth']);
-    echo "<br><br>";
-    print_r($a);
-    echo "<br><br>";
-    $_SESSION['id_stat'] = 1;
-    Statistics::DrawStatisticsChartForUser();
-
+//     $_SESSION['calendar'] = json_encode(new Calendar(1,2022,1));
+//     print_r($_SESSION['arrayOfHoursOfWorkForCurrentMonth']);
+//     $a = HoursOfWork::decodeArrayOfHoursOfWork($_SESSION['arrayOfHoursOfWorkForCurrentMonth']);
+//     echo "<br><br>";
+//     print_r($a);
+//     echo "<br><br>";
+//     $_SESSION['id_stat'] = 1;
+//     Statistics::DrawStatisticsChartForUser();
+session_start();
+    $us = new User(1);
+    
+    HoursOfWork::IfUserHaveHoursToSign(1,1);
      ?>
 </body>
 </html>

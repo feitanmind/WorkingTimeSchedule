@@ -299,6 +299,74 @@ class HoursOfWork
         return $secondsPerMonth / $secondsPerShift;
 
     }
+    public static function IfUserHaveHoursToSign($user,$shift_id,$depId)
+    {
+        //trzeba później zmienić na zmienną sesyjną
+        $shift = new Shift($shift_id,$depId);
+        $shift->CompleteHours();
+       
+        $f = $_SESSION['arrayOfHoursOfWorkForCurrentMonth'];
+        
+        $decodedArrayOfHoursOfWork = HoursOfWork::decodeArrayOfHoursOfWork($f);
+        //print_r($decodedArrayOfHoursOfWork);
+        foreach($decodedArrayOfHoursOfWork as $how)
+        {
+            if($user->user_id == $how->User->user_id)
+            {
+                $hoursLeft = $how->Hours;
+                $shiftHours = $shift->HoursPerShift;
+
+                $hLeft = substr($hoursLeft, 0, strpos($hoursLeft, ":"));
+                if(str_starts_with($hLeft,'0') && strlen($hLeft) > 1)
+                {
+                    $hLeft = substr($hLeft, 1);
+                }
+                $mLeft = substr($hoursLeft, strpos($hoursLeft, ":")+1);
+                if(str_starts_with($mLeft,'0') && strlen($mLeft) > 1)
+                {
+                    $mLeft = substr($mLeft, 1);
+                }
+
+
+                $sHours = substr($shiftHours, 0, strpos($shiftHours, ":"));
+                if(str_starts_with($sHours,"0") && strlen($sHours) > 1)
+                {
+                    $sHours = substr($sHours, 1);
+                }
+                $sstep = substr($shiftHours, strpos($shiftHours,":")+1);
+                $sMinutes = substr($sstep, 0, strpos($sstep, ":"));
+                if(str_starts_with($sMinutes,"0") && strlen($sMinutes) > 1)
+                {
+                    $sMinutes = substr($sMinutes, 1);
+                }
+
+                echo "hLeft" . $hLeft . "<br>";
+                echo "mLeft" . $mLeft . "<br>";
+                echo "sHours" . $sHours . "<br>";
+                echo "sMinutes" . $sMinutes . "<br>";
+                if($sHours > $hLeft)
+                {
+                    return false;
+                }
+                else if($sHours == $hLeft)
+                {
+                    if($sMinutes > $mLeft)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+
+            }
+        }
+    }
 
     public static function GetEasterDate($year)
     {

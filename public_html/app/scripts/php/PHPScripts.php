@@ -43,22 +43,27 @@ class PHPScripts
         $calend = json_decode($_SESSION['calendar']);
 
             $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
-            // $_de = $calend2;
-            // $debug = $_de->MonthNumber;
-            // $debug2 = $_de->Year;
-            // echo "<script>console.log('AddU : month:$debug, year: $debug2')</script>";
- 
             foreach($users as $user)
             {
                 $user2 = new User($user);
                     $canAdd = $calend2->CanUserBeSignOnDay($user2, $dayId, $shiftId);
-                    if(!$canAdd)
+                    $ifHoursOfWorkLeft = HoursOfWork::IfUserHaveHoursToSign($user2, $shiftId, $department_ID);
+                //throw new Exception("dfas");
+                    if(!$ifHoursOfWorkLeft)
                     {
                         echo '<script src="/../app/scripts/warningForUser.js"></script>';
-                    echo '<script>Notification.createAndDisplayWarningAboutCantSignUserOnDay();</script>';
-                        $_SESSION['calendar'] = json_encode($calend2);
-                    
+                        echo '<script>Notification.createAndDisplayWarningAboutNoHoursLeft();</script>';
+                            $_SESSION['calendar'] = json_encode($calend2);
                     }
+                    else
+                    {
+                        if(!$canAdd)
+                        {
+                            echo '<script src="/../app/scripts/warningForUser.js"></script>';
+                            echo '<script>Notification.createAndDisplayWarningAboutCantSignUserOnDay();</script>';
+                            $_SESSION['calendar'] = json_encode($calend2);
+                    
+                        }
                     else
                     {
                         $calend2->SignUserToWorkInDay($user2, $dayId, $shiftId);
@@ -87,13 +92,8 @@ class PHPScripts
                         header("Location: $actual_link");
                     }
                
-                
-
+                    }
             }
-        // $_SESSION['calendar'] = json_encode($calend2);
-        // //czyszczenie Get
-        // $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-        // header("Location: $actual_link");
         
         }
     
@@ -187,7 +187,16 @@ class PHPScripts
             foreach($users as $user)
             {
                 $user2 = new User($user);
-                if($calend2->canVacationBeGrantToUserOnDay($user2,$dayId))
+                $ifHoursOfWorkLeft = HoursOfWork::IfUserHaveHoursToSign($user2, $shiftId, $department_ID);
+                if(!$ifHoursOfWorkLeft)
+                {
+                    echo '<script src="/../app/scripts/warningForUser.js"></script>';
+                    echo "<script>Notification.createAndDisplayWarningAboutNoHoursLeft();</script>";
+                    $userCanHaveVacation = false;
+                }
+                else
+                {
+                    if($calend2->canVacationBeGrantToUserOnDay($user2,$dayId))
                 {
                     $calend2->SignUserVacation($user2, $dayId, $shiftId);
                     $c = array();
@@ -216,6 +225,8 @@ class PHPScripts
                     echo "<script>Notification.createAndDisplayWarningAboutCantGrantVacationToUserOnThisDay();</script>";
                     $userCanHaveVacation = false;
                 }
+                }
+                
                 
 
             }
