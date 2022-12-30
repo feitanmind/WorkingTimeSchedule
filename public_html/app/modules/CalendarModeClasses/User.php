@@ -1,5 +1,6 @@
 <?php
 namespace App;
+use PHPUnit\Util\Exception;
 
     class User
     {
@@ -93,7 +94,8 @@ namespace App;
         {
             // Tworzymy nowe połączenie do bazy danych 
             $access_Connection = ConnectToDatabase::connAdminPass();
-            $selectListOfUserSQL = "SELECT name, surname, usr_id FROM user_data WHERE dep_id = $this->dep_id";
+            $role_id = $_SESSION['Role_Id'];
+            $selectListOfUserSQL = "SELECT name, surname, usr_id FROM user_data WHERE dep_id = $this->dep_id AND role_id = $role_id";
             $resultWorkersData = $access_Connection -> query($selectListOfUserSQL);
             // echo '<select id="usersToAdd" style="width: 100%;height:80%; font-size: 1vw;" name="usersToAdd[]" multiple="multiple">';
             while($row = $resultWorkersData->fetch_assoc())
@@ -104,11 +106,11 @@ namespace App;
         }
 
 
-        public function addUser($login, $password, $email, $name, $surname, $dep_id, $role_id, $avatar, $custom_id, $full_time)
+        public function addUser($login, $password, $email, $name, $surname, $dep_id, $role_id, $avatar, $custom_id, $full_time, $hoursPerShift)
         {
             // Tworzymy nowe połączenie do bazy danych 
             $access_Connection = ConnectToDatabase::connAdminPass();
-            require_once "Encrypt.php";
+            
             $cipher = new Encrypt;
 
             $encrypted_password = $cipher->encryptString($password);
@@ -117,25 +119,26 @@ namespace App;
             $selectUserId = "SELECT id FROM users WHERE login = '$login'";
 
 
-            try
-            {
+
                 $access_Connection->query($sqlCreateUserInDataBase);
                 $access_Connection->query($sqlInsertIntoUsers);
 
                 $resultIdOfUser = $access_Connection ->query($selectUserId);
                 $row = $resultIdOfUser->fetch_assoc();
                 $idOfUser = $row['id'];
-                $sqlInsertIntoUserData = "INSERT INTO user_data(name,surname,dep_id,role_id,avatar,usr_id,custom_id, full_time, hours_of_work, days_of_holiday) VALUES('$name','$surname',$dep_id,$role_id,'$avatar',$idOfUser,$custom_id,$full_time,'[]','[]');";
+                //$sqlInsertIntoUserData = "INSERT INTO user_data(name,surname,dep_id,role_id,avatar,usr_id,custom_id, full_time, hours_of_work, days_of_holiday) VALUES('$name','$surname',$dep_id,$role_id,'$avatar',$idOfUser,$custom_id,$full_time,'[]','[]');";
+
+                $sqlInsertIntoUserData = "INSERT INTO app_commercial.user_data".
+                "(name, surname, dep_id, role_id, avatar, usr_id, custom_id, full_time, hours_of_work, days_of_vacation, hours_per_shift)".
+                "VALUES('$name', '$surname', $dep_id, $role_id, '$avatar', $idOfUser, $custom_id, $full_time, '[]', '[]', '$hoursPerShift');";
+   
+
 
                 $access_Connection->query($sqlInsertIntoUserData);
 
-                return true;
+             
                 
-            }
-            catch (\Exception $e)
-            {
-                return $e;
-            }
+
         }
 
 

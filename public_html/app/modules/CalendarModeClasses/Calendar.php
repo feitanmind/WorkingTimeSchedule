@@ -54,89 +54,139 @@ class Calendar
     // }
     public function DrawCalendar()
     {
-        
-        $shiftId = $_SESSION["Shift_Id"] - 1;
-        $roleId = $_SESSION["Role_Id"];
-        //Sprawdzamy ile dni jest w miesiącu
-        $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $this->MonthNumber, $this->Year);
-        //Będziemy domyślnie rysować 42 krotki, Tabela 7X6
-        $drawingFields = 42;
-        //Sprawdzamy jakim dniem tygodnia jest pierwszy dzień miesiąca
-        $dayOfTheWeek = date("w", mktime(0, 0, 0, $this->MonthNumber, 1, $this->Year));
-        //Będziemy wyświeltać dni od poniedziałku więc liczymy odstęp pomiędzy poniedziałkiem a pierwszym dniem miesiąca
-        $spaceFromMonday = $dayOfTheWeek != 0 ? $dayOfTheWeek - 1 : 6;
-        //Sprawdzamy jaka odległość w dniach dzieli ostatni dzień miesiąca od końca naszej tabeli
-        $daysOut = $drawingFields - ($spaceFromMonday + $numberDaysInMonth);
-        //Ustawiamy dni tygodnia
-        $namesDaysOfWeek = array(
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
-        );
-        echo '<div class="headerMainCalendar">'.
-                '<div class="monthArrow mArrowLeft no-print" onclick="Calendar.changeMonth(\'BACK\');">⤝</div>'.
-                '<div id="nameOfMonth">' 
-                    . $this::Get_Name_Of_Month($this->MonthNumber, $this->Year) . " " . $this->Year . 
-                '</div>'.
-                '<div class="monthArrow mArrowRight no-print" onclick="Calendar.changeMonth(\'NEXT\');">⤞</div>'.
-            '</div>';
-        //Rysujemy początek
-        echo '<div id="calM" class="mainCalendar">';
-
-        foreach ($namesDaysOfWeek as $nameOfDay)
-        {
-            echo "<div class=\"dayOfTheWeek nameDayOfTheWeek\">$nameOfDay</div>";
-        }
-        //Rysujemy odstęp który wcześniej wyliczylismy
-        for ($i = $spaceFromMonday;$i > 0;$i--)
-        {
-            echo '<div class="dayOfTheWeek outDay"></div>';
-        }
-
-        //Rysujemy wszsytkie pola miesiąca
-        for ($j = 1;$j <= $numberDaysInMonth;$j++)
-        {
-            $workingPeople = $this->Days[$j - 1]->Shifts[$shiftId]->EmployeesWorking;
-            $vacationPeople = $this->Days[$j - 1]->Shifts[$shiftId]->EmployeesVacation;
-
-            echo '<div class="dayOfTheWeek"  id="day' . $j . '" onmouseover="showAddAndRemoveControls(' . $j . ')" onmouseout="hideAddAndRemoveControls(' . $j . ')">' . '<div class="numberOfDay"><p><b>' . $j . '</b></p>
-                        <div id="addP" class="windowButton" onclick="createFormToAddPersonToDay(this);">+</div>
-                        <div id="remP" class="windowButton" onclick="createFormToRemovePersonFormShift(this);">-</div>
-                        <div id="addV" class="windowButton" onclick="createFormToAddVacationToPerson(this);">v</div>
-                        <div id="remV" class="windowButton" onclick="createFormToRevokePersonVacation(this);">ꝟ</div>
-                     </div>' . "<div class=\"dayBody\">";
-            echo "Working:<div id=\"working\">";
-            foreach ($workingPeople as $workingPerson)
+            if($_SESSION["Shift_Id"] != "all")
             {
-                if($roleId == $workingPerson->role_id)
+            $shiftId = $_SESSION["Shift_Id"] - 1;
+            }
+            $roleId = $_SESSION["Role_Id"];
+            //Sprawdzamy ile dni jest w miesiącu
+            $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $this->MonthNumber, $this->Year);
+            //Będziemy domyślnie rysować 42 krotki, Tabela 7X6
+            $drawingFields = 42;
+            //Sprawdzamy jakim dniem tygodnia jest pierwszy dzień miesiąca
+            $dayOfTheWeek = date("w", mktime(0, 0, 0, $this->MonthNumber, 1, $this->Year));
+            //Będziemy wyświeltać dni od poniedziałku więc liczymy odstęp pomiędzy poniedziałkiem a pierwszym dniem miesiąca
+            $spaceFromMonday = $dayOfTheWeek != 0 ? $dayOfTheWeek - 1 : 6;
+            //Sprawdzamy jaka odległość w dniach dzieli ostatni dzień miesiąca od końca naszej tabeli
+            $daysOut = $drawingFields - ($spaceFromMonday + $numberDaysInMonth);
+            //Ustawiamy dni tygodnia
+            $namesDaysOfWeek = array(
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+                'Sunday'
+            );
+            echo '<div class="headerMainCalendar">'.
+                    '<div class="monthArrow mArrowLeft no-print" onclick="Calendar.changeMonth(\'BACK\');">⤝</div>'.
+                    '<div id="nameOfMonth">' 
+                        . $this::Get_Name_Of_Month($this->MonthNumber, $this->Year) . " " . $this->Year . 
+                    '</div>'.
+                    '<div class="monthArrow mArrowRight no-print" onclick="Calendar.changeMonth(\'NEXT\');">⤞</div>'.
+                '</div>';
+            //Rysujemy początek
+            echo '<div id="calM" class="mainCalendar">';
+    
+            foreach ($namesDaysOfWeek as $nameOfDay)
+            {
+                echo "<div class=\"dayOfTheWeek nameDayOfTheWeek\">$nameOfDay</div>";
+            }
+            //Rysujemy odstęp który wcześniej wyliczylismy
+            for ($i = $spaceFromMonday;$i > 0;$i--)
+            {
+                echo '<div class="dayOfTheWeek outDay"></div>';
+            }
+    
+            //Rysujemy wszsytkie pola miesiąca
+            for ($j = 1;$j <= $numberDaysInMonth;$j++)
+            {
+                if($_SESSION["Shift_Id"] != "all")
                 {
-                    echo "<div class=\"userW\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
+                $workingPeople = $this->Days[$j - 1]->Shifts[$shiftId]->EmployeesWorking;
+                $vacationPeople = $this->Days[$j - 1]->Shifts[$shiftId]->EmployeesVacation;
+    
+                echo '<div class="dayOfTheWeek"  id="day' . $j . '" onmouseover="showAddAndRemoveControls(' . $j . ')" onmouseout="hideAddAndRemoveControls(' . $j . ')">' . '<div class="numberOfDay"><p><b>' . $j . '</b></p>
+                            <div id="addP" class="windowButton" onclick="createFormToAddPersonToDay(this);">+</div>
+                            <div id="remP" class="windowButton" onclick="createFormToRemovePersonFormShift(this);">-</div>
+                            <div id="addV" class="windowButton" onclick="createFormToAddVacationToPerson(this);">v</div>
+                            <div id="remV" class="windowButton" onclick="createFormToRevokePersonVacation(this);">ꝟ</div>
+                         </div>' . "<div class=\"dayBody\">";
+                echo "Working:<div id=\"working\">";
+                foreach ($workingPeople as $workingPerson)
+                {
+                    if($roleId == $workingPerson->role_id)
+                    {
+                        echo "<div class=\"userW\" style=\"background-color: ". $this->Days[$j - 1]->Shifts[$shiftId]->Color."80; border-color: ".$this->Days[$j - 1]->Shifts[$shiftId]->Color.";\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
+                    }
+                    
                 }
+                echo "</div>Vacation:<div id=\"vacation\">";
+                foreach ($vacationPeople as $vacationingPerson)
+                {
+                    if ($roleId == $vacationingPerson->role_id) {
+                        echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
+                    }
+                }
+    
+                echo "</div></div>
+                                 
+                      </div>";
+            }
+            else
+            {
+                $_shifts = $this->Days[$j - 1]->Shifts;
+                
+                    echo '<div class="dayOfTheWeek"  id="day' . $j . '" onmouseover="showAddAndRemoveControls(' . $j . ')" onmouseout="hideAddAndRemoveControls(' . $j . ')">' . '<div class="numberOfDay"><p><b>' . $j . '</b></p>
+                    <div id="addP" class="windowButton" onclick="createFormToAddPersonToDay(this);">+</div>
+                    <div id="remP" class="windowButton" onclick="createFormToRemovePersonFormShift(this);">-</div>
+                    <div id="addV" class="windowButton" onclick="createFormToAddVacationToPerson(this);">v</div>
+                    <div id="remV" class="windowButton" onclick="createFormToRevokePersonVacation(this);">ꝟ</div>
+                    </div>' . "<div class=\"dayBody\">";
+                    echo "Working:<div id=\"working\">";
+                foreach( $_shifts as $_shift )
+                {
+                    $workingPeople = $_shift->EmployeesWorking;
+                    
+                    foreach ($workingPeople as $workingPerson)
+                    {
+                        
+                        if($roleId == $workingPerson->role_id)
+                        {
+                            echo "<div class=\"userW\" style=\"background-color: $_shift->Color"."80; border-color: $_shift->Color;\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
+                        }
+                        
+                    }
+                }
+                echo "</div>Vacation:<div id=\"vacation\">";
+                foreach( $_shifts as $_shift )
+                {
+                    $vacationPeople = $_shift->EmployeesVacation;
+                    foreach ($vacationPeople as $vacationingPerson)
+                    {
+                        if ($roleId == $vacationingPerson->role_id) {
+                            
+                            echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
+                        }
+                    }
+                }
+                echo "</div></div>
+                                     
+                          </div>";
                 
             }
-            echo "</div>Vacation:<div id=\"vacation\">";
-            foreach ($vacationPeople as $vacationingPerson)
-            {
-                if ($roleId == $vacationingPerson->role_id) {
-                    echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
-                }
             }
+            //Rysujemy dni po końcu miesiąca
+            for ($l = $daysOut;$l > 0;$l--)
+            {
+                echo '<div class="dayOfTheWeek outDay"></div>';
+            }
+            //Koniec rysowania kalendarza
+            echo '</div>';
+        
+        
 
-            echo "</div></div>
-                             
-                  </div>";
-        }
-        //Rysujemy dni po końcu miesiąca
-        for ($l = $daysOut;$l > 0;$l--)
-        {
-            echo '<div class="dayOfTheWeek outDay"></div>';
-        }
-        //Koniec rysowania kalendarza
-        echo '</div>';
     }
 
     public function SignUserToWorkInDay($user, $dayId, $shiftId)

@@ -22,11 +22,11 @@ class Shift
         // $this->HoursPerShift = $hoursPerShift;
         // $this->StartHour = $startHour;
         // $this->EndHour = $endHour;
-
+        $this->CompleteHours();
     }
     public function CompleteHours()
     {
-        $department_ID = 1;
+        $department_ID = $_SESSION['Current_User_Department_Id'];
         $shiftId = $this->Id;
         $access_Connection = ConnectToDatabase::connAdminPass();
         //Polecenie SQL do wybrania wszytskich zmian z tabeli shifts dla konkretnego działu
@@ -42,12 +42,6 @@ class Shift
             $this->Color = $row["color"];
         }
     }
-    // public function AddUserToWork(User $user)
-    // {
-    //     array_push($this->EmployeesWorking, $user);  Shift
-    // {
-    //     array_push($this->EmployeesVacation, $user);
-    // }
 
 
     public function GetIntArray_HoursOfShift()
@@ -89,6 +83,7 @@ class Shift
         echo '<form class="selectShift" method="post">';
         echo "<p style=\"font-size: 0.7vw;\">Select shift:</p>";
         echo '<select class="calendarFilterSelect" name="shiftID">';
+        echo '<option onclick="this.form.submit();" selected="selected" value="all">All</option>';
         while($row = $result_Of_Selection->fetch_assoc())
         {   
             if($_SESSION["Shift_Id"] == $row["id"])

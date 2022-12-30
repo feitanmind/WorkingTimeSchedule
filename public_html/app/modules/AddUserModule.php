@@ -37,22 +37,27 @@
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
-                                <input type="file" style="display:none;" name="maleDefault" value="/var/www/test/public_html/app/style/img/user.png"/>
-                                <input type="file" style="display:none;" name="femaleDefault" value="/var/www/test/public_html/app/style/img/user2.png"/>
+                            Hours per Shift:
+                            <select id="hps" name="addu_hps">
+                                <option value="08:00:00">8</option>
+                                <option value="07:35:00">7:35</option>
+                            </select>
+                                <input type="file" style="display:none;" name="maleDefault" value="default.png"/>
+                                <input type="file" style="display:none;" name="femaleDefault" value="default2.png"/>
                             <script>
                                  $('#gender').change(function() {
                                     if($(this).val() === 'female' && changedAv == 0){
-                                        userAvatarShow.src = 'style/img/user2.png';
+                                        userAvatarShow.src = 'style/img/avatars/default2.png';
                                     }
                                     if($(this).val() === 'male' && changedAv == 0){
-                                        userAvatarShow.src = 'style/img/user.png';
+                                        userAvatarShow.src = 'style/img/avatars/default1.png';
                                     }
                                 });
 
                             </script>
                             Temporary password:
                             <input type="password" name="addu_password"/>
-                            
+                            <!-- Trzeba dodać skrypt js do weryfikacji danych -->
                             <input type="submit" value="Add user" class="button1"/>
             </form>
             <?php
@@ -66,25 +71,72 @@
                     isset($_POST['addu_custom_id']) && 
                     isset($_POST['addu_password']) && 
                     isset($_POST['addu_role']) && 
-                    isset($_POST['addu_fulltime']) 
+                    isset($_POST['addu_fulltime']) &&
+                    isset($_POST['addu_hps'])
                 )
                 {
-                    if(isset($_POST['addu_userAvatar']))
+                    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/style/img/avatars/";
+                    $target_file = $target_dir . $_POST['addu_login'] . '-avatar';
+                    if(isset($_FILES['addu_userAvatar']['tmp_avatar']))
                     {
-                        $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['addu_userAvatar'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                        $check = getimagesize($_FILES['addu_userAvatar']['tmp_avatar']);
+                        $uploadOk = 1;
+                        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                        if($check !== false) {
+    
+                        $uploadOk = 1;
+                        } else {
+                        $uploadOk = 0;
+                        }
+    
+                        if ($_FILES["fileToUpload"]["size"] > 500000) {
+                            $uploadOk = 0;
+                        }
                     }
-                    else if(isset($_POST['gender']))
+                    else
+                    {
+                        $uploadOk = 0;
+                    }
+                    
+                   
+                    if($uploadOk == 1)
+                    {
+                        move_uploaded_file($_FILES["fileToUpload"]["addu_userAvatar"], $target_file);
+                        $avstr = $_POST['addu_login'] . '-avatar';
+                    }
+                    else
                     {
                         if($_POST['gender'] == "male")
                         {
-                            //trzeba pomyśleć czemu nie działa dodawanie s
-                            $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['maleDefault'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                            $avstr = "default1.png";
                         }
                         else
                         {
-                            $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['femaleDefault'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                        $avstr = "default2.png";
                         }
+                        
+                    }
 
-                    }   
+
+                    $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $avstr, $_POST['addu_custom_id'], $_POST['addu_fulltime'], $_POST['addu_hps']);
+
+
+                    // if(isset())
+                    // {
+                    //     $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['addu_userAvatar'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                    // }
+                    // else if(isset($_POST['gender']))
+                    // {
+                    //     if($_POST['gender'] == "male")
+                    //     {
+                    //         //trzeba pomyśleć czemu nie działa dodawanie s
+                    //         $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], "default1.png", $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                    //     }
+                    //     else
+                    //     {
+                    //         $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], "default2.png", $_POST['addu_custom_id'], $_POST['addu_fulltime']);
+                    //     }
+
+                    // }   
                 }
             ?>

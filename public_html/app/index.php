@@ -10,6 +10,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 //Załączanie innych plików
 require "scripts/php/PHPScripts.php";
+require "modules/GeneralClasses/Encrypt.php";
 require "modules/GeneralClasses/ConnectToDatabase.php";
 require "modules/CalendarModeClasses/User.php";
 require "modules/CalendarModeClasses/Shift.php";
