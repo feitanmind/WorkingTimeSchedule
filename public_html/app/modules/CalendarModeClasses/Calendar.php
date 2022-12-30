@@ -426,7 +426,7 @@ class Calendar
                                 } 
                                 else
                                 {
-                                    $roleID = 1;
+                                    $roleID = $_SESSION['Role_Id'];
                             $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
                             $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
                             $numberOfNextDay = 1;
@@ -452,7 +452,7 @@ class Calendar
                         }
                         else
                         {
-                            $roleID = 1;
+                            $roleID = $_SESSION['Role_Id'];
                             $yearOfMonthBefore = intval(date('Y', strtotime("-1 months", strtotime($dateOfMonth))));
                             $numberOfMonthBefore = intval(date('m', strtotime("-1 months", strtotime($dateOfMonth))));
                             $numberOfDayBefore = cal_days_in_month(CAL_GREGORIAN, $numberOfMonthBefore, $yearOfMonthBefore);
@@ -470,7 +470,7 @@ class Calendar
                                 }
                                 else
                                 {
-                                    $roleID = 1;
+                                    $roleID = $_SESSION['Role_Id'];
                                     $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
                                     $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
                                     $numberOfNextDay = 1;
@@ -505,7 +505,7 @@ class Calendar
                                     }
                                     else
                                     {
-                                        $roleID = 1;
+                                        $roleID = $_SESSION['Role_Id'];
                                         $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
                                         $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
                                         $numberOfNextDay = 1;
@@ -568,7 +568,7 @@ class Calendar
                         }
                         else
                         {
-                            $roleID = 1;
+                            $roleID = $_SESSION['Role_Id'];
                             $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
                             $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
                             $numberOfNextDay = 1;
@@ -593,7 +593,7 @@ class Calendar
                 }
                 else
                 {
-                    $roleID = 1;
+                    $roleID = $_SESSION['Role_Id'];
                     $yearOfMonthBefore = intval(date('Y', strtotime("-1 months", strtotime($dateOfMonth))));
                     $numberOfMonthBefore = intval(date('m', strtotime("-1 months", strtotime($dateOfMonth))));
                     $numberOfDayBefore = cal_days_in_month(CAL_GREGORIAN, $numberOfMonthBefore, $yearOfMonthBefore);
@@ -612,7 +612,7 @@ class Calendar
                         }
                         else
                         {
-                            $roleID = 1;
+                            $roleID = $_SESSION['Role_Id'];
                             $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
                             $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
                             $numberOfNextDay = 1;
@@ -647,7 +647,7 @@ class Calendar
                             }
                             else
                             {
-                                $roleID = 1;
+                                $roleID = $_SESSION['Role_Id'];
                                 $yearOfNextMonth= intval(date('Y', strtotime("+1 months", strtotime($dateOfMonth))));
                                 $numberNextOfMonth = intval(date('m', strtotime("+1 months", strtotime($dateOfMonth))));
                                 $numberOfNextDay = 1;
@@ -718,7 +718,7 @@ class Calendar
         }
 
     }
-    function checkDayBefore($dayBeforeShifts,$enroledHours,$user,)
+    static function checkDayBefore($dayBeforeShifts,$enroledHours,$user,)
     {
         foreach ($dayBeforeShifts as $bshift)
                         {
@@ -784,7 +784,7 @@ class Calendar
         return true;
                         //End 2
     }
-    function checkNextDay($dayNextShifts,$enroledHours,$user)
+    static function checkNextDay($dayNextShifts,$enroledHours,$user)
     {
         foreach ($dayNextShifts as $nshift)
                         {

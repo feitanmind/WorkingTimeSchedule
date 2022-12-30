@@ -21,6 +21,7 @@ final class CalendarTest extends TestCase
         self::$DayIdInCalendar = 2;
         self::$ShiftId = 1;
         self::$TestUser = new App\User(1);
+        $_SESSION['Current_User_Department_Id'] = 1;
     }
 
     public static function tearDownAfterClass(): void
@@ -31,7 +32,7 @@ final class CalendarTest extends TestCase
         self::$DayIdInCalendar = null;
         self::$ShiftId = null;
         self::$TestUser = null;
-
+        $_SESSION['Current_User_Department_Id'] = null;
     }
     public function test_ShouldReturnNameOfUserWhenSignUserBeforeToWorking()
     {

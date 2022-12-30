@@ -149,6 +149,9 @@ class PHPScripts
         {
             //print_r($_SESSION['arrayOfHoursOfWorkForCurrentMonth']);
             $arrayOfHoursOfWorkForCurrentMonth = json_decode($_SESSION['arrayOfHoursOfWorkForCurrentMonth'],0);
+            // echo "<br><font color=\"red\">";
+            // print_r($arrayOfHoursOfWorkForCurrentMonth);
+            // echo "</font><br>";
             //print_r($arrayOfHoursOfWorkForCurrentMonth);
             $finalHoursOfWork = array();
             foreach($arrayOfHoursOfWorkForCurrentMonth as $currentHoursOfWorkAsStdClass)
@@ -390,8 +393,10 @@ class PHPScripts
                 $result = $accessConnection->query($sql);
                 if($result->num_rows > 0)
                 {
+                    $utrue = 0;
                     while($row = $result->fetch_assoc())
                     {
+                        $sethow = false;
                         $user = new User($row['usr_id']);
                         if(!empty($row['hours_of_work']))
                         {
@@ -404,23 +409,32 @@ class PHPScripts
                                 if($uh->month == $nextMonthNumber && $uh->year == $nextYearNumber){
                                     $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
                                     $how->ActualizeTimeAndHours($uh->hours);
+                                    $sethow = true;
                                     break;
                                 }  
                             }
+
+                           
                             
                         } else {
                             $how = new HoursOfWork($user, $nextMonthNumber, $nextYearNumber, $user->hours_per_shift);
                         }
-                        if(isset($how))
+
+
+                        if($sethow == false)
                         {
-                            array_push($arrOfHours, $how); 
+                            $how = new HoursOfWork($user, $nextMonthNumber, $nextYearNumber, $user->hours_per_shift);
+                            
                         }
                         else
                         {
-                            $how = new HoursOfWork($user, $nextMonthNumber, $nextYearNumber, $user->hours_per_shift);
-                            array_push($arrOfHours, $how);
-                            unset($how);
+                            $sethow = false;
                         }
+
+
+                        array_push($arrOfHours, $how); 
+                     
+
                           
                     }
                 
@@ -460,10 +474,13 @@ class PHPScripts
                                 {
                                     while($row = $result->fetch_assoc())
                                     {
+                                        $sethow = false;
                                         $user = new User($row['usr_id']);
+                        $f = $row['usr_id'];
+                    
                                         if(!empty($row['hours_of_work']))
                                         {
-                                        
+                                            
                                             $encodedUserHoursOfWork = $row['hours_of_work'];
                                             $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork,0);
                                             //print_r($decodedUserHoursOfWorkAsArrayOfStdClass);
@@ -471,34 +488,46 @@ class PHPScripts
                                             {
                                                 if($uh->month == $previousMonthNumber && $uh->year == $previousYearNumber){
                                                     $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
+                                                    $sethow = true;
                                                     $how->ActualizeTimeAndHours($uh->hours);
                                                     break;
                                                 }  
+
                                             }
+                                            $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
                                             
                                         } else {
                                             $how = new HoursOfWork($user, $previousMonthNumber, $previousYearNumber, $user->hours_per_shift);
+                                            
                                         }
-                                        if(isset($how))
+                                       
+                                        if($sethow == false)
                                         {
-                                            array_push($arrOfHours, $how); 
+                                            $how = new HoursOfWork($user, $previousMonthNumber, $previousYearNumber, $user->hours_per_shift);
+                                            
                                         }
                                         else
                                         {
-                                            $how = new HoursOfWork($user, $previousMonthNumber, $previousYearNumber, $user->hours_per_shift);
-                                            array_push($arrOfHours, $how);
-                                            unset($how);
+                                            $sethow = false;
                                         }
+                
+                
+                                        array_push($arrOfHours, $how); 
                                           
                                     }
-                                
+                   
                                 }
                                 else
                                 {
                                     $arrOfHours = array();
                                 }
-                
+
                                 $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($arrOfHours);
+                //                 echo "<br><font color=\"red\">";
+                //                             print_r(json_encode($arrOfHours));
+                //                                             echo "</font><br>";
+
+                // throw new Exception("dasd");
                                 //echo json_encode($arrOfHours);
                                 //1 - arr of hours
                                 $cal = Calendar::CreateWorkingCalendar($dep_id, $role_id, $previousMonthNumber, $previousYearNumber);

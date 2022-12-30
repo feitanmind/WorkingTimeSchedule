@@ -84,7 +84,7 @@ class HoursOfWork
         $this->Hours = $this->ChangeTimeToHours($this->Time);
 
     }
-    public function ChangeTimeToHours($time)
+    public static function ChangeTimeToHours($time)
     {
         $zero    = new DateTime("@0");
         $offset  = $time;
