@@ -340,10 +340,10 @@ class HoursOfWork
                     $sMinutes = substr($sMinutes, 1);
                 }
 
-                echo "hLeft" . $hLeft . "<br>";
-                echo "mLeft" . $mLeft . "<br>";
-                echo "sHours" . $sHours . "<br>";
-                echo "sMinutes" . $sMinutes . "<br>";
+                //echo "hLeft" . $hLeft . "<br>";
+                // echo "mLeft" . $mLeft . "<br>";
+                // echo "sHours" . $sHours . "<br>";
+                // echo "sMinutes" . $sMinutes . "<br>";
                 if($sHours > $hLeft)
                 {
                     return false;

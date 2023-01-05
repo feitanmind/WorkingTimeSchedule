@@ -25,6 +25,8 @@ require "modules/CalendarModeClasses/Statistics.php";
 <html>
 <?php PHPScripts::CHANGE_MONTH();?>
     <?php PHPScripts::CHECK_User_Is_Logged()?>
+    <?php PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();?>
+    <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +60,7 @@ require "modules/CalendarModeClasses/Statistics.php";
         <div class="userData">           
             
             <!-- //Sprawdzenie czy zostały ustawione zmienne sesyjne dla Shift i Role -->
-            <?php PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();?>
+
             <?php
             $user_id = $_SESSION['User_Id'];
             $user = new User($user_id);
@@ -83,7 +85,7 @@ require "modules/CalendarModeClasses/Statistics.php";
             </div>
             <!-- //Sprawdzenie czy formularz z dodaniem użytkownika został wysłany i dodanie użytkownika do obiektu calendar -->
 
-            <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
+           
             <?php PHPScripts::REMOVE_USER_FROM_Day_Of_Calendar();?>
             <?php PHPScripts::GRANT_USER_Vacation_In_Day_of_Calendar();?>
             <?php PHPScripts::REVOKE_VACATION_For_A_User();?>

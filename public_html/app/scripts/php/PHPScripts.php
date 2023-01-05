@@ -9,7 +9,7 @@ use Exception as Ex;
 use PHPUnit\TextUI\CliArguments\Exception;
 
 use function PHPUnit\Framework\throwException;
- 
+
 class PHPScripts
 {
     public static function CHECK_User_Is_Logged()
@@ -30,17 +30,46 @@ class PHPScripts
 
     public static function ADD_USER_TO_Day_of_Calendar()
     {
-        
+
     if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
     {
         $dayId = $_GET['dayId'];
         $users = $_GET['usersToAdd'];
-        $shiftId = $_SESSION['Shift_Id'];
         $month_Number = $_SESSION['Month_Number'];
         $year = $_SESSION['Year_Number'];
         $department_ID = 1;
+        $shiftId = $_SESSION['Shift_Id'];
+            if ($shiftId == 'all'){
+                $_SESSION['shiftIsAll'] = true;
+                echo '<div id="selectShiftForAddingUser">';
+                Shift::GenerateFormSelectForShifts($department_ID);
+                echo '</div>';
+                echo "
+                <script>
+                b = document.getElementById('selectShiftForAddingUser');
+                b.style.position = 'absolute';
 
-        $calend = json_decode($_SESSION['calendar']);
+
+                b.style.backgroundColor = '#00000053';
+                b.style.width = '100vw';
+                b.style.height = '100vh'; 
+                s = document.getElementsByClassName('calendarFilterSelect')[0];
+                s.setAttribute('class','selectShift_AddU');
+                s.style.color = 'black';
+                s.style.position = 'absolute';
+                s.style.top = '20vh';
+                s.style.left = '30vw';
+                s.style.width = '10vw';
+
+                s.childNodes.forEach(opt => { if (opt.value == 'all') {opt.innerText= 'Wybierz zmianę';opt.disabled = true;}});
+                </script>
+                ";
+
+            }
+        else
+        {
+            
+            $calend = json_decode($_SESSION['calendar']);
 
             $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
             foreach($users as $user)
@@ -62,43 +91,53 @@ class PHPScripts
                             echo '<script src="/../app/scripts/warningForUser.js"></script>';
                             echo '<script>Notification.createAndDisplayWarningAboutCantSignUserOnDay();</script>';
                             $_SESSION['calendar'] = json_encode($calend2);
-                    
+
                         }
-                    else
-                    {
-                        $calend2->SignUserToWorkInDay($user2, $dayId, $shiftId);
-                        $c = array();
-                        $a = json_decode($_SESSION['arrayOfHoursOfWorkForCurrentMonth'],0);
-                        foreach ($a as $b) {
-                            $user3 = new User($b->User->user_id);
-                            if ($b->Month == $month_Number && $b->Year == $year)
+                        else
+                        {
+                            $calend2->SignUserToWorkInDay($user2, $dayId, $shiftId);
+                            $c = array();
+                            $a = json_decode($_SESSION['arrayOfHoursOfWorkForCurrentMonth'],0);
+                            foreach ($a as $b)
                             {
-                                $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
-                            
-                                $how->ActualizeTimeAndHours($b->Hours);
-                                if($user3->user_id == $user2->user_id)
+                                $user3 = new User($b->User->user_id);
+                                if ($b->Month == $month_Number && $b->Year == $year)
                                 {
-                                    $how->SubstractTimeOfWork();
+                                    $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
+
+                                    $how->ActualizeTimeAndHours($b->Hours);
+                                    if($user3->user_id == $user2->user_id)
+                                    {
+                                        $how->SubstractTimeOfWork();
+                                    }
                                 }
+                                array_push($c, $how);
                             }
-                            array_push($c, $how);
+
+
+                            $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
+                            $_SESSION['calendar'] = json_encode($calend2);
+                            if(isset($_SESSION['shiftIsAll']))
+                            {
+                                unset($_SESSION['shiftIsAll']);
+                                $_SESSION['Shift_Id'] = 'all';
+                            }
+                            //czyszczenie Get
+                            $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+                            header("Location: $actual_link");
                         }
 
-                        
-                        $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
-                        $_SESSION['calendar'] = json_encode($calend2);
-                        //czyszczenie Get
-                        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-                        header("Location: $actual_link");
-                    }
-               
                     }
             }
-        
         }
-    
-    
-    }   
+
+
+
+
+        }
+
+
+    }
     public static function CreateArrayOfHoursOfWorkForUsers()
     {
         $monthNumber = $_SESSION['Month_Number'];
@@ -107,7 +146,7 @@ class PHPScripts
 
         if(!isset($_SESSION['arrayOfHoursOfWorkForCurrentMonth']))
         {
-        
+
             $accessConnection = ConnectToDatabase::connAdminPass();
             $sql = "SELECT usr_id, hours_of_work, hours_per_shift FROM user_data WHERE dep_id = $dep_id;";
             $result = $accessConnection->query($sql);
@@ -141,7 +180,7 @@ class PHPScripts
                 }
                 array_push($finalHoursOfWork, $how);
             }
-            
+
             $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($finalHoursOfWork,0);
             //print_r($finalHoursOfWork);
         }
@@ -157,24 +196,24 @@ class PHPScripts
             foreach($arrayOfHoursOfWorkForCurrentMonth as $currentHoursOfWorkAsStdClass)
             {
                 //print_r($currentHoursOfWorkAsStdClass);
-        
+
                     $user = new User($currentHoursOfWorkAsStdClass->User->user_id);
                     $how = new HoursOfWork($user, $monthNumber, $yearNumber, $user->hours_per_shift);
                     $how->ActualizeTimeAndHours($currentHoursOfWorkAsStdClass->Hours);
                     array_push($finalHoursOfWork, $how);
 
-               
+
             }
            // print_r(json_encode($finalHoursOfWork, 0));
             $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($finalHoursOfWork,0);
             //print_r(json_encode($finalHoursOfWork,0));
         }
         //echo json_encode($finalHoursOfWork, 0);
-           
+
     }
     public static function GRANT_USER_Vacation_In_Day_of_Calendar()
     {
-        
+
     if(isset($_GET['usersToVacation']) && isset($_GET['dayId']))
     {
         $dayId = $_GET['dayId'];
@@ -183,7 +222,7 @@ class PHPScripts
         $month_Number = $_SESSION['Month_Number'];
         $year = $_SESSION['Year_Number'];
         $department_ID = 1;
- 
+
         $calend = json_decode($_SESSION['calendar']);
         $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
             $userCanHaveVacation = true;
@@ -209,7 +248,7 @@ class PHPScripts
                             if ($b->Month == $month_Number && $b->Year == $year)
                             {
                                 $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
-                            
+
                                 $how->ActualizeTimeAndHours($b->Hours);
                                 if($user3->user_id == $user2->user_id)
                                 {
@@ -219,7 +258,7 @@ class PHPScripts
                             array_push($c, $how);
                         }
 
-                        
+
                         $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
                 }
                 else
@@ -229,8 +268,8 @@ class PHPScripts
                     $userCanHaveVacation = false;
                 }
                 }
-                
-                
+
+
 
             }
             if($userCanHaveVacation == true)
@@ -241,7 +280,7 @@ class PHPScripts
                 header("Location: $actual_link");
             }
 
-        
+
     }
 
 
@@ -270,7 +309,7 @@ class PHPScripts
                    if ($b->Month == $month_Number && $b->Year == $year)
                    {
                        $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
-                   
+
                        $how->ActualizeTimeAndHours($b->Hours);
                        if($user3->user_id == $user2->user_id)
                        {
@@ -279,14 +318,14 @@ class PHPScripts
                    }
                    array_push($c, $how);
                }
-   
-               
+
+
                $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
-   
+
                 $calend2->UnsignWorkingUserFormDay($user2, $dayId, $shiftId);
 
             }
-            
+
 
 
 
@@ -320,7 +359,7 @@ class PHPScripts
                 if ($b->Month == $month_Number && $b->Year == $year)
                 {
                     $how = new HoursOfWork($user3, $b->Month, $b->Year, $user3->hours_per_shift);
-                
+
                     $how->ActualizeTimeAndHours($b->Hours);
                     if($user3->user_id == $user2->user_id)
                     {
@@ -330,7 +369,7 @@ class PHPScripts
                 array_push($c, $how);
             }
 
-            
+
             $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($c);
 
 
@@ -362,10 +401,10 @@ class PHPScripts
                 HoursOfWork::PushHoursOfWorkArrayIntoDatabase();
                 $_POST["CALENDAR_SAVE"] = "none";
             }
-            
+
 
         }
-        
+
     }
 
     public static function CHANGE_MONTH()
@@ -385,7 +424,7 @@ class PHPScripts
                 //echo $nextYearNumber;
 
                 $arrOfHours = array();
-           
+
                 $dep_id = $_SESSION['Current_User_Department_Id'];
                 $role_id = $_SESSION['Role_Id'];
                 $accessConnection = ConnectToDatabase::connAdminPass();
@@ -400,7 +439,7 @@ class PHPScripts
                         $user = new User($row['usr_id']);
                         if(!empty($row['hours_of_work']))
                         {
-                        
+
                             $encodedUserHoursOfWork = $row['hours_of_work'];
                             $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork,0);
                             //print_r($decodedUserHoursOfWorkAsArrayOfStdClass);
@@ -411,11 +450,11 @@ class PHPScripts
                                     $how->ActualizeTimeAndHours($uh->hours);
                                     $sethow = true;
                                     break;
-                                }  
+                                }
                             }
 
-                           
-                            
+
+
                         } else {
                             $how = new HoursOfWork($user, $nextMonthNumber, $nextYearNumber, $user->hours_per_shift);
                         }
@@ -424,7 +463,7 @@ class PHPScripts
                         if($sethow == false)
                         {
                             $how = new HoursOfWork($user, $nextMonthNumber, $nextYearNumber, $user->hours_per_shift);
-                            
+
                         }
                         else
                         {
@@ -432,12 +471,12 @@ class PHPScripts
                         }
 
 
-                        array_push($arrOfHours, $how); 
-                     
+                        array_push($arrOfHours, $how);
 
-                          
+
+
                     }
-                
+
                 }
                 else
                 {
@@ -464,7 +503,7 @@ class PHPScripts
 
                                 //1 - arr of hours
                                 $arrOfHours = array();
-           
+
                                 $dep_id = $_SESSION['Current_User_Department_Id'];
                                 $role_id = $_SESSION['Role_Id'];
                                 $accessConnection = ConnectToDatabase::connAdminPass();
@@ -477,10 +516,10 @@ class PHPScripts
                                         $sethow = false;
                                         $user = new User($row['usr_id']);
                         $f = $row['usr_id'];
-                    
+
                                         if(!empty($row['hours_of_work']))
                                         {
-                                            
+
                                             $encodedUserHoursOfWork = $row['hours_of_work'];
                                             $decodedUserHoursOfWorkAsArrayOfStdClass = json_decode($encodedUserHoursOfWork,0);
                                             //print_r($decodedUserHoursOfWorkAsArrayOfStdClass);
@@ -491,31 +530,31 @@ class PHPScripts
                                                     $sethow = true;
                                                     $how->ActualizeTimeAndHours($uh->hours);
                                                     break;
-                                                }  
+                                                }
 
                                             }
                                             $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
-                                            
+
                                         } else {
                                             $how = new HoursOfWork($user, $previousMonthNumber, $previousYearNumber, $user->hours_per_shift);
-                                            
+
                                         }
-                                       
+
                                         if($sethow == false)
                                         {
                                             $how = new HoursOfWork($user, $previousMonthNumber, $previousYearNumber, $user->hours_per_shift);
-                                            
+
                                         }
                                         else
                                         {
                                             $sethow = false;
                                         }
-                
-                
-                                        array_push($arrOfHours, $how); 
-                                          
+
+
+                                        array_push($arrOfHours, $how);
+
                                     }
-                   
+
                                 }
                                 else
                                 {
@@ -531,7 +570,7 @@ class PHPScripts
                                 //echo json_encode($arrOfHours);
                                 //1 - arr of hours
                                 $cal = Calendar::CreateWorkingCalendar($dep_id, $role_id, $previousMonthNumber, $previousYearNumber);
-                              
+
                                 $_SESSION['calendar'] = json_encode($cal);
 
 
@@ -542,12 +581,12 @@ class PHPScripts
                 $_SESSION['Month_Number'] = $previousMonthNumber;
                 $_SESSION['Year_Number'] = $previousYearNumber;
                 $_GET["CHANGE_MONTH"] = null;
-                
+
             }
             header("Location: \app");
         }
 
-      
+
     }
 
     public static function CHANGE_USER_STATS()
@@ -562,5 +601,5 @@ class PHPScripts
 
 }
 
-       
+
 ?>
