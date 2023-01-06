@@ -57,6 +57,7 @@
                             </script>
                             Temporary password:
                             <input type="password" name="addu_password"/>
+                            <input type="text" name="changeModule" value="3" style="display: none;"/>
                             <!-- Trzeba dodać skrypt js do weryfikacji danych -->
                             <input type="submit" value="Add user" class="button1"/>
             </form>

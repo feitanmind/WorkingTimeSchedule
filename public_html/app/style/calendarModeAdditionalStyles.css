@@ -1,3 +1,8 @@
+.dayOfTheWeek
+{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 .windowButton
 {
@@ -465,6 +470,7 @@
     {
         width: 13.5vw;
         outline: solid black 0.2vw;
+        
     }
     .nameDayOfTheWeek
     {

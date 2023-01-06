@@ -44,15 +44,16 @@ class Login
                     $_SESSION['Role_Of_Employees'] = 1;
                     //$_SESSION['shift_id'] = 1;
                     $_SESSION['Shift_Id'] = 1;
-                    $_SESSION['Role_Id'] = 1;
+                    
                     $_SESSION['id_stat'] = 1;
-                    $searchAdditionalInformation = "SELECT avatar, dep_id FROM user_data WHERE usr_id = $id;";
+                    $searchAdditionalInformation = "SELECT avatar, dep_id, role_id FROM user_data WHERE usr_id = $id;";
                     $res = $access_Connection->query($searchAdditionalInformation);
                     if($res->num_rows > 0)
                     {
                         $row = $res->fetch_assoc();
                         $_SESSION['Current_User_Department_Id'] = $row['dep_id'];
                         $_SESSION['User_Avatar'] = $row['avatar'];
+                        $_SESSION['Role_Id'] = $row['role_id'];
                     }
                     
 
@@ -60,6 +61,7 @@ class Login
                     // $_SESSION['Year_Number'] = date('Y');
                     $_SESSION['Month_Number'] = 1;
                     $_SESSION['Year_Number'] = 2022;
+                    $_SESSION['Module'] = 1;
                     
                 }
                 else

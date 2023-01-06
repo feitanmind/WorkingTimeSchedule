@@ -10,10 +10,7 @@
     {
         width: 100%;
     }
-    .dayOfTheWeek
-    {
-        width: 14vw;
-    }
+
 }
 @font-face {
     font-family: Roboto-Bold;
@@ -250,6 +247,9 @@ input{
 {
     display: flex;
     gap: 0.2vw;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
 }
 .userW
 {
@@ -262,6 +262,9 @@ input{
 {
     display: flex;
     gap: 0.1vw;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
 }
 .userV
 {

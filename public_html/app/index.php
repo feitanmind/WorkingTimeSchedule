@@ -100,10 +100,7 @@ require "modules/CalendarModeClasses/Statistics.php";
                 var listOfUsersToGrantVacation = document.getElementById("usersToVacation").outerHTML;
             </script>
         </div>
-        <div class="button1 addUserButtonLeft" onclick="document.getElementById('calendarMode').style.display = 'flex';document.getElementById('addUser').style.display = 'none'">Calendar Mode</div>
-        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block';">Simple Mode</div>
-        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block';document.getElementById('calendarMode').style.display = 'none'">Add user</div>
-        <div class="button1 addUserButtonLeft" onclick="document.getElementById('addUser').style.display = 'block'">Add shift</div>
+            <?php PHPScripts::PERMISSION_VIEW_MODULES() ?>
     </div>
     
     <!-- SECTION __________________________CENTER PANEL -->
@@ -116,6 +113,21 @@ require "modules/CalendarModeClasses/Statistics.php";
         <!-- // Moduł: Obsługa grafiku w metodzie kalendarzowej -->
         <div class="calendarMode" id="calendarMode">
             <?php include("modules/CalendarModeModule.php");?>
+        </div>
+
+        <!-- // Moduł: Dodawanie zmiany -->
+        <div class="addShiftModule" id="addShiftModule">
+            <?php include("modules/AddShiftModule.php");?>
+        </div>
+
+        <!-- // Moduł: Simple Calendar -->
+        <div class="simpleCalendar" id="simpleCalendar">
+            <?php include("modules/SimpleCalendarModule.php");?>
+        </div>
+
+        <!-- // Moduł: Dodawanie działu -->
+        <div class="addDepartmentModule" id="addDepartmentModule">
+            <?php include("modules/AaddDepartmentModule.php");?>
         </div>
        
     </div>
