@@ -15,12 +15,7 @@ class ComposerStaticInitceab3b4ba106c32c79d1eadf40fa6139
         'P' => 
         array (
             'PhpParser\\' => 10,
-            'PhpDocReader\\' => 13,
             'PHPMailer\\PHPMailer\\' => 20,
-        ),
-        'K' => 
-        array (
-            'Karriere\\JsonDecoder\\' => 21,
         ),
         'D' => 
         array (
@@ -38,17 +33,9 @@ class ComposerStaticInitceab3b4ba106c32c79d1eadf40fa6139
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
-        'PhpDocReader\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-di/phpdoc-reader/src/PhpDocReader',
-        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
-        ),
-        'Karriere\\JsonDecoder\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/karriere/json-decoder/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -164,6 +151,7 @@ class ComposerStaticInitceab3b4ba106c32c79d1eadf40fa6139
         'PHPUnit\\Framework\\MockObject\\CannotUseOnlyMethodsException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/CannotUseOnlyMethodsException.php',
         'PHPUnit\\Framework\\MockObject\\ClassAlreadyExistsException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ClassAlreadyExistsException.php',
         'PHPUnit\\Framework\\MockObject\\ClassIsFinalException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ClassIsFinalException.php',
+        'PHPUnit\\Framework\\MockObject\\ClassIsReadonlyException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ClassIsReadonlyException.php',
         'PHPUnit\\Framework\\MockObject\\ConfigurableMethod' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/ConfigurableMethod.php',
         'PHPUnit\\Framework\\MockObject\\ConfigurableMethodsAlreadyInitializedException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ConfigurableMethodsAlreadyInitializedException.php',
         'PHPUnit\\Framework\\MockObject\\DuplicateMethodException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/DuplicateMethodException.php',
