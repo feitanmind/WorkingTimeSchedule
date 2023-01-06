@@ -23,10 +23,7 @@ require "modules/CalendarModeClasses/Statistics.php";
 ?>
 <!DOCTYPE html>
 <html>
-<?php PHPScripts::CHANGE_MONTH();?>
-    <?php PHPScripts::CHECK_User_Is_Logged()?>
-    <?php PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();?>
-    <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,17 +32,22 @@ require "modules/CalendarModeClasses/Statistics.php";
     <meta http-equiv='pragma' content='no-cache'>
     <link rel="icon" type="image/x-icon" href="style/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
-
+    <script src="scripts/jquery-3.6.0.min.js"></script>
     <script language="JavaScript">
     // window.onbeforeunload = confirmExit;
     // function confirmExit() {
     //     return "Chcesz zamknąć stronę. Czy jesteś tego pewny? Wszystkie zmiany których nie zapisałeś zostaną utracone";
     // }
     // </script>
-    <script src="scripts/jquery-3.6.0.min.js"></script>
+    
     <title>Working time schedule</title>
 </head>
 <body>
+    <script src="/../app/scripts/Notification.js"></script>
+    <?php PHPScripts::CHANGE_MONTH();?>
+    <?php PHPScripts::CHECK_User_Is_Logged()?>
+    <?php PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();?>
+    <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
     <!-- SECTION __________________________LEFT USER PANEL -->
     
     <div class="userLeftPanel no-print">
@@ -148,6 +150,7 @@ require "modules/CalendarModeClasses/Statistics.php";
         <!-- Dodatkowe style zawierające wygląd formularzy i niektóre elementy CalendarMode -->
         <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
         <script src="scripts/showCalendarDayControls.js"></script>
+        
 
 </body>
 </html>
