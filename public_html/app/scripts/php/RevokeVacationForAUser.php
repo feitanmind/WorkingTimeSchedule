@@ -1,4 +1,5 @@
 <?php
+namespace App;
         if(isset($_GET['userToRevokeVacation']) &&isset($_GET['dayId']))
         {
             $dayId = $_GET['dayId'];

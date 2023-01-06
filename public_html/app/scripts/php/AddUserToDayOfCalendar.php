@@ -1,4 +1,5 @@
 <?php
+namespace App;
 if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
 {
     

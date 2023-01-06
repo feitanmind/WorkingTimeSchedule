@@ -1,4 +1,5 @@
 <?php
+namespace App;
         if(isset($_GET["CHANGE_MONTH"]))
         {
             unset($_SESSION['arrayOfHoursOfWorkForCurrentMonth']);

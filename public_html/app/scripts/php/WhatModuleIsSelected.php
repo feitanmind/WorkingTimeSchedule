@@ -1,4 +1,5 @@
 <?php
+namespace App;
         if (isset($_POST['changeModule']))
         {
             $_SESSION['Module'] = $_POST['changeModule'];
