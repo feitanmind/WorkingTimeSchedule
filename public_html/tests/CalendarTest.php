@@ -22,6 +22,7 @@ final class CalendarTest extends TestCase
         self::$ShiftId = 1;
         self::$TestUser = new App\User(1);
         $_SESSION['Current_User_Department_Id'] = 1;
+        $_SESSION['Role_Id'] = 1;
     }
 
     public static function tearDownAfterClass(): void

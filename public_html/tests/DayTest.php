@@ -1,6 +1,11 @@
 <?php
 class DayTest extends \PHPUnit\Framework\TestCase
 {
+    public static function setUpBeforeClass(): void
+    {
+        $_SESSION['Current_User_Department_Id'] = 1;
+        $_SESSION['Role_Id'] = 1;
+    }
     function test_ShouldReturnTrueWhenDayIsFirstDayInMonth()
     {
         $day = new App\Day(1, 1);
