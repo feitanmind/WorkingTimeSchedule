@@ -57,7 +57,7 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
             s.childNodes.forEach(opt => { if (opt.value == 'all') {opt.innerText= 'Wybierz zmianę';opt.disabled = true;}});
             </script>
             ";
-
+            
         }
     else
     {
@@ -122,8 +122,9 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
 
                 }
         }
+        
     }
-
+    $_SESSION['Module'] = 1;
 }
 
 

@@ -1,0 +1,67 @@
+#AddDepartmentModule
+{
+    background-color: white;
+    width: 100%;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.AddDepartmentForm
+{
+    width: 50vw;
+    height: 70vh;
+    box-shadow: 0vw 0vw 2vw 0.1vw #cccccc;
+    border-radius: 1vw;
+    background-image: url("img/imageAddDepartment.jpg");
+    background-size: 100% 70vh;
+    background-repeat: no-repeat;
+    background-position-y: 15vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 1vw;
+    padding-top: 5vh;
+    padding-left: 4vw;
+    gap: 2vh;
+}
+.AddDepartmentFormBody
+{
+    display: flex;
+    gap: 3vw;
+}
+.AddDepartmentForm h2
+{
+    font-size: 2vw;
+}
+.AddDepartmentForm h3
+{
+    font-size: 1.5vw;
+}
+.listOfCurrentDepartment
+{
+    width: 20vw;
+    height: 20vh;
+    color: #0A85ED;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 1vw;
+}
+
+.inputAddDepartment
+{
+    border: 0.1vw solid #0A85ED;
+    width: 14vw;
+    height: 4vh;
+    box-sizing: border-box;
+    padding-left: 0.8vw;
+    border-radius: 1vw;
+    margin-bottom: 1vh;
+}
+.submitAddDepartment
+{
+    color: white;
+    text-align: center;
+}

@@ -148,6 +148,7 @@ namespace App;
                 $_SESSION['Year_Number'] = $previousYearNumber;
                 $_GET["CHANGE_MONTH"] = null;
             }
+            $_SESSION['Module'] = 1;
             header("Location: \app");
         }
 

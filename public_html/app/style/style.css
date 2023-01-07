@@ -123,6 +123,7 @@ input{
     margin-left: 15vw;
     font-size: 0.8vw;
     border-radius: 1vw;
+    box-shadow: 0vw 0vw 2vw 0.1vw #cccccc;
     display: none;
 }
 .addUser form{
@@ -132,7 +133,8 @@ input{
     gap: 1vh;
     height: 60vh;
     width: 36vw;
-    background-color: #d6d6d6;
+    background-color: white;
+    
     padding: 1.5vw;
     border-radius: 1vw;
 }

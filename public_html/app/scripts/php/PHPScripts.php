@@ -36,6 +36,8 @@ class PHPScripts
 
     public static function CHANGE_USER_STATS() { include('ChangeUserStats.php'); }
 
+    public static function ADD_NEW_SHIFT() { include('AddANewShift.php'); }
+
 }
 
 

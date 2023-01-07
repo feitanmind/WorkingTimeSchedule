@@ -12,6 +12,7 @@ namespace App;
                 $decodedCalendar = Calendar::DecodeJsonCalendar($monthNumber,$yearNumber,$departmentIdentifier,$encodedCalendar);
                 $decodedCalendar->PushCalendarToDataBase($roleIdentifier);
                 HoursOfWork::PushHoursOfWorkArrayIntoDatabase();
+                $_SESSION['Module'] = 1;
                 $_POST["CALENDAR_SAVE"] = "none";
             }
 

@@ -122,22 +122,6 @@
                     $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $avstr, $_POST['addu_custom_id'], $_POST['addu_fulltime'], $_POST['addu_hps']);
 
 
-                    // if(isset())
-                    // {
-                    //     $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $_POST['addu_userAvatar'], $_POST['addu_custom_id'], $_POST['addu_fulltime']);
-                    // }
-                    // else if(isset($_POST['gender']))
-                    // {
-                    //     if($_POST['gender'] == "male")
-                    //     {
-                    //         //trzeba pomyśleć czemu nie działa dodawanie s
-                    //         $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], "default1.png", $_POST['addu_custom_id'], $_POST['addu_fulltime']);
-                    //     }
-                    //     else
-                    //     {
-                    //         $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], "default2.png", $_POST['addu_custom_id'], $_POST['addu_fulltime']);
-                    //     }
-
-                    // }   
+                    $_SESSION['Module'] = 3;
                 }
             ?>

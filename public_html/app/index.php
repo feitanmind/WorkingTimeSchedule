@@ -32,6 +32,10 @@ require "modules/CalendarModeClasses/Statistics.php";
     <meta http-equiv='pragma' content='no-cache'>
     <link rel="icon" type="image/x-icon" href="style/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style_AddShiftModule.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style_AddDepartmentModule.css"/>
+
+
     <script src="scripts/jquery-3.6.0.min.js"></script>
     <script language="JavaScript">
     // window.onbeforeunload = confirmExit;
@@ -44,10 +48,13 @@ require "modules/CalendarModeClasses/Statistics.php";
 </head>
 <body>
     <script src="/../app/scripts/Notification.js"></script>
+    
     <?php PHPScripts::CHANGE_MONTH();?>
     <?php PHPScripts::CHECK_User_Is_Logged()?>
     <?php PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();?>
     <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
+    <?php PHPScripts::ADD_NEW_SHIFT();?>
+    
     <!-- SECTION __________________________LEFT USER PANEL -->
     
     <div class="userLeftPanel no-print">
@@ -127,7 +134,7 @@ require "modules/CalendarModeClasses/Statistics.php";
 
         <!-- // Moduł: Dodawanie działu -->
         <div class="addDepartmentModule" id="addDepartmentModule">
-            <?php include("modules/AaddDepartmentModule.php");?>
+            <?php include("modules/AddDepartmentModule.php");?>
         </div>
        
     </div>
