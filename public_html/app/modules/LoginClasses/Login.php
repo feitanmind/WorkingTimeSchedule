@@ -54,6 +54,7 @@ class Login
                         $_SESSION['Current_User_Department_Id'] = $row['dep_id'];
                         $_SESSION['User_Avatar'] = $row['avatar'];
                         $_SESSION['Role_Id'] = $row['role_id'];
+                        $_SESSION['Current_User_Role_Id'] = $row['role_id'];
                     }
                     
 

@@ -1,6 +1,6 @@
 <?php
 namespace App;
-    if($_SESSION['Role_Id'] == 1)
+    if($_SESSION['Current_User_Role_Id'] == 1)
     {
         echo '
         <div class="button1" 
