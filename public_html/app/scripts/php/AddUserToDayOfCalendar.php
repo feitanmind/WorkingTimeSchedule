@@ -14,49 +14,7 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
             echo '<div id="selectShiftForAddingUser">';
             Shift::GenerateFormSelectForShifts($department_ID);
             echo '</div>';
-            echo "
-            <script>
-            b = document.getElementById('selectShiftForAddingUser');
-            b.style.position = 'absolute';
-
-
-            b.style.backgroundColor = '#00000070';
-            b.style.width = '100vw';
-            b.style.height = '100vh';
-            b.style.display = 'flex';
-            b.style.justifyContent = 'center';
-            b.style.alignItems = 'center';
-            const header = document.getElementsByClassName('selectShift')[0].childNodes[0];
-            console.log(header);
-            header.innerText = 'Wybierz zmianę na którą chcesz zapisać użytkownika';
-            header.style.fontSize = '3vw';
-            header.style.color = 'white';
-
-            s = document.getElementsByClassName('calendarFilterSelect')[0];
-            s.parentElement.style.display = 'flex';
-            s.parentElement.style.height = '30vh';
-            s.parentElement.style.flexDirection = 'column';
-            s.parentElement.style.alignItems = 'center';
-            s.parentElement.style.gap = '2vh';
-            s.setAttribute('class','selectShift_AddU');
-            
-            s.style.all = 'unset';
-            s.style.marginTop = '10vh';
-            s.style.backgroundColor = 'white';
-            s.style.borderRadius = '1vw';
-            s.style.padding = '0.1vw';
-            s.style.color = 'black';
-            s.style.position = 'absolute';
-            s.style.width = '15vw';
-            s.style.height = '5vh';
-            s.style.paddingLeft = '2vw';
-            s.style.fontSize = '1vw';
-
-            
-
-            s.childNodes.forEach(opt => { if (opt.value == 'all') {opt.innerText= 'Wybierz zmianę';opt.disabled = true;}});
-            </script>
-            ";
+            echo "<script>Notification.askUserAboutShiftForSingningUser();</script>";
             
         }
     else
