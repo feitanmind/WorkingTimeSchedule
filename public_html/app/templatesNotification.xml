@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notyfications>
+    <notification id="RefuseSignUser" notificationType="warning">
+        <n_header><p>😢 <strong>Warning</strong></p></n_header>
+        <n_body><p>You can\'t sign user to this day because user was signed on colliding shift</p><div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+    <notification id="RefuseVacation" notificationType="warning">
+        <n_header><p>😭 <strong>Warning</strong></p></n_header>
+        <n_body>You can\'t grant vacation to user on this day because user working on some shift in this day<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+    <notification id="NoHoursLeft" notificationType="warning">
+        <n_header><p>😮‍💨 <strong>Warning</strong></p></n_header>
+        <n_body>You can\'t sign user to this day because user have not enough time in month to use<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+    <notification id="AddDepFailed" notificationType="error">
+        <n_header><p>😡 <strong>Error</strong></p></n_header>
+        <n_body>Can't Add New Department! Try again, or contact with support<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+    <notification id="AddShiftFailed" notificationType="error">
+        <n_header><p>😡 <strong>Error</strong></p></n_header>
+        <n_body>Can't Add New Shift! Try again, or contact with support<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+        <notification id="CantSaveCalendar" notificationType="error">
+        <n_header><p>😡 <strong>Error</strong></p></n_header>
+        <n_body>Can't Save Calendar. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+    
+</notyfications>
+

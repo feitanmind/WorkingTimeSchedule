@@ -1,16 +1,14 @@
 <?php
 namespace App;
-        if (isset($_POST['changeModule']))
-        {
-            $_SESSION['Module'] = $_POST['changeModule'];
-        }
-        switch(intval($_SESSION['Module']))
+
+        switch($_SESSION['Module'])
         {
             case 1:
                 echo "<script>
                         document.getElementById('addUser').style.display = 'none';
                         document.getElementById('calendarMode').style.display = 'flex';
-                        document.getElementById('addShiftModule').style.display = 'none';
+                        document.getElementById('addShiftModule').style.display = 'none'
+                        document.getElementById('addDepartmentModule').style.display = 'none';
                     </script>";
                 break;
             case 2:
@@ -18,6 +16,7 @@ namespace App;
                         document.getElementById('addUser').style.display = 'none';
                         document.getElementById('calendarMode').style.display = 'none';
                         document.getElementById('addShiftModule').style.display = 'none';
+                        document.getElementById('addDepartmentModule').style.display = 'none';
                     </script>";
                 break;
             case 3:
@@ -25,6 +24,7 @@ namespace App;
                         document.getElementById('addUser').style.display = 'block';
                         document.getElementById('calendarMode').style.display = 'none';
                         document.getElementById('addShiftModule').style.display = 'none';
+                        document.getElementById('addDepartmentModule').style.display = 'none';
                     </script>";
                 break;
             case 4:
@@ -32,13 +32,23 @@ namespace App;
                         document.getElementById('addUser').style.display = 'none';
                         document.getElementById('calendarMode').style.display = 'none';
                         document.getElementById('addShiftModule').style.display = 'flex';
+                        document.getElementById('addDepartmentModule').style.display = 'none';
                     </script>";
+                break;
+            case 5:
+                echo "<script>
+                        document.getElementById('addUser').style.display = 'none';
+                        document.getElementById('calendarMode').style.display = 'none';
+                         document.getElementById('addShiftModule').style.display = 'none';
+                        document.getElementById('addDepartmentModule').style.display = 'flex';
+                     </script>";
                 break;
             default:
             echo "<script>
                         document.getElementById('addUser').style.display = 'none';
                         document.getElementById('calendarMode').style.display = 'flex';
                         document.getElementById('addShiftModule').style.display = 'none';
+                        document.getElementById('DepartmentModule').style.display = 'none';
                 </script>";
                 
         }

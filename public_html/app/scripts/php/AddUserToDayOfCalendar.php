@@ -74,7 +74,12 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
                 if(!$ifHoursOfWorkLeft)
                 {
                     
-                    echo '<script>Notification.createAndDisplayWarningAboutNoHoursLeft();</script>';
+                    $xmlFile = fopen("templatesNotification.xml", "r");
+                    $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
+                    echo "<script>";
+                        echo 'window.history.pushState({}, document.title, "/" + "app/");';
+                        echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Warning,SubjectNotification.NoHoursLeft);";
+                    echo "</script>";
                         $_SESSION['calendar'] = json_encode($calend2);
                 }
                 else
@@ -82,7 +87,13 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
                     if(!$canAdd)
                     {
                         
-                        echo '<script>Notification.createAndDisplayWarningAboutCantSignUserOnDay();</script>';
+                        $xmlFile = fopen("templatesNotification.xml", "r");
+                        $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
+                        echo "<script>";
+                            echo 'window.history.pushState({}, document.title, "/" + "app/");';
+                            echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Warning,SubjectNotification.RefuseSignUser);";
+                        echo "</script>";
+
                         $_SESSION['calendar'] = json_encode($calend2);
 
                     }
@@ -117,6 +128,7 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
                         }
                         //czyszczenie Get
                         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+                        $_SESSION['Module'] = 1;
                         header("Location: $actual_link");
                     }
 

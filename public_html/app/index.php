@@ -34,9 +34,11 @@ require "modules/CalendarModeClasses/Statistics.php";
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_AddShiftModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_AddDepartmentModule.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style_Notifications.css"/>
 
 
     <script src="scripts/jquery-3.6.0.min.js"></script>
+    <script src="scripts/EnumClasses.js"></script>
     <script language="JavaScript">
     // window.onbeforeunload = confirmExit;
     // function confirmExit() {
@@ -47,13 +49,16 @@ require "modules/CalendarModeClasses/Statistics.php";
     <title>Working time schedule</title>
 </head>
 <body>
-    <script src="/../app/scripts/Notification.js"></script>
+
+    <script src="scripts/Notification.js"></script>
     
     <?php PHPScripts::CHANGE_MONTH();?>
     <?php PHPScripts::CHECK_User_Is_Logged()?>
     <?php PHPScripts::CHECK_AND_SET_Session_Var_Shift_and_Role();?>
     <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
     <?php PHPScripts::ADD_NEW_SHIFT();?>
+    <?php PHPScripts::ADD_NEW_DEPARTMENT();?>
+    
     
     <!-- SECTION __________________________LEFT USER PANEL -->
     
@@ -170,6 +175,6 @@ require "modules/CalendarModeClasses/Statistics.php";
         <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
         <script src="scripts/showCalendarDayControls.js"></script>
         
-
+        <?php PHPScripts::WHAT_MODULE_IS_SELECTED();?>
 </body>
 </html>

@@ -1,7 +1,9 @@
 <?php
 namespace App;
+use \Exception as Ex;
 if(isset($_POST['addNewShift']))
 {
+    
     $name = $_POST['nameOfShift_addShift'];
     $startTime = $_POST['startHour_addShift'];
     $endTime = $_POST['endHour_addShift'];
@@ -50,16 +52,32 @@ if(isset($_POST['addNewShift']))
 
     $finalTime = $finalHoursTime . ":" . $finalMinutesTime . ":00"; 
     $colors = array("#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300", "#dc0ab4", "#b3d4ff", "#00bfa0");
-    $authorizedConnection = ConnectToDatabase::connAdminPass();
-    $depId = isset($_POST['departmentId_addShift']) ? $_POST['departmentId_addShift'] : $_SESSION['Current_User_Department_Id'];
-    $sqlCol = "SELECT COUNT(id) AS colorIndex FROM shifts WHERE dep_id = $depId;";
-    $result = $authorizedConnection->query($sqlCol);
-    $row = $result->fetch_assoc();
-    $colorIndex = intval($row['colorIndex']) - 1;
-    $color = $colors[$colorIndex];   
-    $sql = "INSERT INTO shifts(name, dep_id, hours_per_shift, startHour, endHour, color) VALUES('$name',$depId, '$finalTime', '$startTime', '$endTime','$color');";
-    $authorizedConnection->query($sql);
-    $_SESSION['Module'] = 4;
+    try
+    {
+        $authorizedConnection = ConnectToDatabase::connAdminPass();
+        $depId = isset($_POST['departmentId_addShift']) ? $_POST['departmentId_addShift'] : $_SESSION['Current_User_Department_Id'];
+        $sqlCol = "SELECT COUNT(id) AS colorIndex FROM shifts WHERE dep_id = $depId;";
+        $result = $authorizedConnection->query($sqlCol);
+        $row = $result->fetch_assoc();
+        $colorIndex = intval($row['colorIndex']) - 1;
+        $color = $colors[$colorIndex];
+   
+        $sql = "INSERT INTO shifts(name, dep_id, hours_per_shift, startHour, endHour, color) VALUES('$name',$depId, '$finalTime', '$startTime', '$endTime','$color');";
+        $authorizedConnection->query($sql);
+        $_SESSION['Module'] = 4;
+    }
+    catch (Ex $e)
+    {
+        $xmlFile = fopen("templatesNotification.xml", "r");
+        $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
+        echo "<script>";
+            echo 'window.history.pushState({}, document.title, "/" + "app/");';
+            echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Error,SubjectNotification.AddShiftFailed);";
+        echo "</script>";
+
+        $_SESSION['Module'] = 4;
+    }
+   
 }
 
 ?>

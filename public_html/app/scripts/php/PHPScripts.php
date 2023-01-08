@@ -33,6 +33,8 @@ class PHPScripts
 
     public static function ADD_NEW_SHIFT() { include('AddANewShift.php'); }
 
+    public static function ADD_NEW_DEPARTMENT() { include('AddANewDepartment.php'); }
+
 }
 
 
