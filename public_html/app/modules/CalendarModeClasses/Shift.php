@@ -80,7 +80,7 @@ class Shift
         //Przypisanie rezultatu wykonania zapytania do bazy danych
         $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
         //Generowanie formularza w HTMLu
-        echo '<form class="selectShift" method="post">';
+        echo '<form class="selectShift" name="changeCurrentShowingShift" method="post">';
         echo "<p style=\"font-size: 0.7vw;\">Select shift:</p>";
         echo '<select class="calendarFilterSelect" name="shiftID">';
         echo '<option onclick="this.form.submit();" selected="selected" value="all">All</option>';
