@@ -123,12 +123,15 @@ class Calendar
                     
                 }
                 echo "</div>Vacation:<div id=\"vacation\">";
-                foreach ($vacationPeople as $vacationingPerson)
-                {
-                    if ($roleId == $vacationingPerson->role_id) {
-                        echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
+              
+                    foreach ($vacationPeople as $vacationingPerson)
+                    {
+                        if ($roleId == $vacationingPerson->role_id) {
+                            echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
+                        }
                     }
-                }
+              
+                
     
                 echo "</div></div>
                                  
@@ -160,8 +163,7 @@ class Calendar
                     }
                 }
                 echo "</div>Vacation:<div id=\"vacation\">";
-                foreach( $_shifts as $_shift )
-                {
+                $_shift = $_shifts[0];
                     $vacationPeople = $_shift->EmployeesVacation;
                     foreach ($vacationPeople as $vacationingPerson)
                     {
@@ -170,7 +172,7 @@ class Calendar
                             echo "<div class=\"userV\" personID=\"$vacationingPerson->user_id\" >$vacationingPerson->name</div>";
                         }
                     }
-                }
+                
                 echo "</div></div>
                                      
                           </div>";
@@ -204,7 +206,11 @@ class Calendar
     }
     public function SignUserVacation($user, $dayId, $shiftId)
     {
-        array_push($this->Days[$dayId - 1]->Shifts[$shiftId - 1]->EmployeesVacation, $user);
+        foreach ($this->Days[$dayId - 1]->Shifts as $shift)
+        {
+            array_push($shift->EmployeesVacation, $user);
+        }
+        
     }
     public function UnsignWorkingUserFormDay($user, $dayId, $shiftId)
     {
@@ -230,18 +236,22 @@ class Calendar
 
         $indexUserToDel = 0;
 
-        foreach ($this->Days[$dayId - 1]->Shifts[$shiftId - 1]->EmployeesVacation as $employee)
+        foreach ($this->Days[$dayId - 1]->Shifts as $shift)
         {
-            $in = null;
-            if ($employee->user_id == $user->user_id)
+            foreach ($shift->EmployeesVacation as $employee)
             {
-                $in = $indexUserToDel;
-                break;
-            }
+                $in = null;
+                if ($employee->user_id == $user->user_id)
+                {
+                    $in = $indexUserToDel;
+                    break;
+                }
 
-            $indexUserToDel++;
+                $indexUserToDel++;
+            } 
+            array_splice($shift->EmployeesVacation, $in, 1);
         }
-        array_splice($this->Days[$dayId - 1]->Shifts[$shiftId - 1]->EmployeesVacation, $in, 1);
+        
     }
     //Dodawanie nowego kalendarza do bazy danych
     public function PushCalendarToDataBase($role_Id)

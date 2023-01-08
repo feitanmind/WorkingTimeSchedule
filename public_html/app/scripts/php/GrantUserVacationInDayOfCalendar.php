@@ -15,7 +15,7 @@ if(isset($_GET['usersToVacation']) && isset($_GET['dayId']))
         foreach($users as $user)
         {
             $user2 = new User($user);
-            $ifHoursOfWorkLeft = HoursOfWork::IfUserHaveHoursToSign($user2, $shiftId, $department_ID);
+            $ifHoursOfWorkLeft = HoursOfWork::IfUserHaveHoursToSign($user2, $department_ID);
             if(!$ifHoursOfWorkLeft)
             {
                 
@@ -38,7 +38,7 @@ if(isset($_GET['usersToVacation']) && isset($_GET['dayId']))
                             $how->ActualizeTimeAndHours($b->Hours);
                             if($user3->user_id == $user2->user_id)
                             {
-                                $how->SubstractTimeOfWork();
+                                $how->SubstractTimeOfWork($user3);
                             }
                         }
                         array_push($c, $how);

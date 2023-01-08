@@ -101,7 +101,7 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
                                 $how->ActualizeTimeAndHours($b->Hours);
                                 if($user3->user_id == $user2->user_id)
                                 {
-                                    $how->SubstractTimeOfWork();
+                                    $how->SubstractTimeOfWork($user3);
                                 }
                             }
                             array_push($c, $how);

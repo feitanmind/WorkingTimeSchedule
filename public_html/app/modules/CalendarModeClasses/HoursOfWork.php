@@ -39,14 +39,27 @@ class HoursOfWork
         $resTime = $diffHours . ":". $diffMinutes;
         return [$resTime, $offset];
     }
-    public function SubstractTimeOfWork()
+    public function SubstractTimeOfWork($user)
     {
-        $currentShift = $_SESSION['Shift_Id'];
         $accessConnection = ConnectToDatabase::connAdminPass();
-        $sql = "SELECT hours_per_shift FROM shifts WHERE id = $currentShift";
-        $result = $accessConnection->query($sql);
-        $row = $result->fetch_assoc();
-        $hoursPerShift = $row['hours_per_shift'];
+        if($_SESSION['Shift_Id'] != "all")
+        {
+            $currentShift = $_SESSION['Shift_Id'];
+            $sql = "SELECT hours_per_shift FROM shifts WHERE id = $currentShift";
+            $result = $accessConnection->query($sql);
+            $row = $result->fetch_assoc();
+            $hoursPerShift = $row['hours_per_shift'];
+        }
+        else
+        {
+            $sql = "SELECT hours_per_shift FROM user_data WHERE id = $user->user_id;";
+            $result = $accessConnection->query($sql);
+            $row = $result->fetch_assoc();
+            $hoursPerShift = $row['hours_per_shift'];
+        }
+        
+        
+       
         $hoursToSubstract = substr($hoursPerShift, 0, strpos($hoursPerShift, ":"));
         if (str_starts_with($hoursToSubstract, 0))
             $hoursToSubstract = substr($hoursToSubstract, 1);
@@ -299,12 +312,9 @@ class HoursOfWork
         return $secondsPerMonth / $secondsPerShift;
 
     }
-    public static function IfUserHaveHoursToSign($user,$shift_id,$depId)
+    public static function IfUserHaveHoursToSign($user,$depId)
     {
-        //trzeba później zmienić na zmienną sesyjną
-        $shift = new Shift($shift_id,$depId);
-        $shift->CompleteHours();
-       
+     
         $f = $_SESSION['arrayOfHoursOfWorkForCurrentMonth'];
         
         $decodedArrayOfHoursOfWork = HoursOfWork::decodeArrayOfHoursOfWork($f);
@@ -314,7 +324,7 @@ class HoursOfWork
             if($user->user_id == $how->User->user_id)
             {
                 $hoursLeft = $how->Hours;
-                $shiftHours = $shift->HoursPerShift;
+                $shiftHours = $user->hours_per_shift;
 
                 $hLeft = substr($hoursLeft, 0, strpos($hoursLeft, ":"));
                 if(str_starts_with($hLeft,'0') && strlen($hLeft) > 1)
