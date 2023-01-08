@@ -70,16 +70,17 @@ input{
     gap: 0.4vw;
 }
 
-.userLeftPanel .userData{
+.userData{
     width: auto;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 }
 .userLeftPanel .userData h2{
     margin-top: 5%;
     font-family: Roboto-Bold;
     font-size: 1.2vw;
+    text-align: center;
 }
 .userLeftPanel .userData p{
     text-transform: capitalize;

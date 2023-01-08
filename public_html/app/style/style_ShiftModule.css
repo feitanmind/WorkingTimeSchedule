@@ -1,4 +1,33 @@
-#AddShiftModule
+#tabsShift
+{
+    width: 100%;
+    display: flex;
+    height: 2vw;
+    position:absolute;
+    z-index: 2;
+    top: 18vh;
+    left: 27vw;
+    
+}
+.tabshifts
+{
+    box-sizing: border-box;
+    font-size: 1vw;
+    background-color: #cccccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3vw;
+    border: 0.1vw solid #cccccc;
+    border-bottom: none;
+    cursor: pointer;
+}
+
+#Shift_Add
+{
+    background-color: white;
+}
+.ShiftModule
 {
     background-color: white;
     width: 100%;
@@ -7,7 +36,7 @@
     justify-content: center;
     align-items: center;
 }
-.AddShiftForm
+.ShiftForm
 {
     width: 50vw;
     height: 70vh;
@@ -22,9 +51,10 @@
     box-sizing: border-box;
     padding: 4vw;
     padding-top: 10vh;
+    backdrop-filter: grayscale(80%);
 
 }
-.AddShiftForm form
+.ShiftForm form
 {
     display: flex;
     flex-direction: column;
@@ -55,8 +85,35 @@
     padding-left: 0.8vw;
     border-radius: 1vw;
 }
-.addShiftSubmit
+.ShiftSubmit
 {
     color: white;
     text-align: center;
+}
+
+#RemoveShiftModule 
+{
+    display: none;
+    
+}
+#RemoveShiftModule .ShiftForm
+{
+    background-image: url('img/imageRemoveShift.png');
+}
+#selectToRemoveShift
+{
+    margin-top: 2vh;
+    all: unset;
+    width: 16vw;
+    height: 30vh;
+    font-size: 1vw;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+#selectToRemoveShift option
+{
+    all: unset;
+    box-sizing: border-box;
+    padding: 0.2vw;
 }

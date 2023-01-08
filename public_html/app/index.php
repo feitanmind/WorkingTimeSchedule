@@ -33,7 +33,7 @@ require "modules/CalendarModeClasses/Statistics.php";
     <link rel="icon" type="image/x-icon" href="style/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_CalendarModule.css"/>
-    <link rel="stylesheet" type="text/css" href="style/style_AddShiftModule.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style_ShiftModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_AddDepartmentModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_Notifications.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_AddUserModule.css"/>
@@ -136,8 +136,8 @@ require "modules/CalendarModeClasses/Statistics.php";
         {
 
         
-        echo '<div class="addShiftModule" id="addShiftModule">';
-            include("modules/AddShiftModule.php");
+        echo '<div class="ShiftModule" id="ShiftModule">';
+            include("modules/ShiftModule.php");
         echo '</div>';
 
          // Moduł: Simple Calendar 
@@ -184,6 +184,7 @@ require "modules/CalendarModeClasses/Statistics.php";
         <script src="scripts/closeNewWindow.js"></script>
         <script src="scripts/Statistics.js"></script>
         <script src="scripts/Calendar.js"></script>
+        <script src="scripts/Shift.js"></script>
         <script src="scripts/showCalendarDayControls.js"></script>
         
         <?php PHPScripts::WHAT_MODULE_IS_SELECTED();?>

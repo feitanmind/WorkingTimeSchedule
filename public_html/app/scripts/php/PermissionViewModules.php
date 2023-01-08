@@ -6,7 +6,7 @@ namespace App;
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'flex\';
                      document.getElementById(\'addUser\').style.display = \'none\'
-                     document.getElementById(\'addShiftModule\').style.display = \'none\';
+                     document.getElementById(\'ShiftModule\').style.display = \'none\';
                      document.getElementById(\'simpleCalendar\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      ">
@@ -16,7 +16,7 @@ namespace App;
         <div class="button1"
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'addUser\').style.display = \'none\'
-                     document.getElementById(\'addShiftModule\').style.display = \'none\';
+                     document.getElementById(\'ShiftModule\').style.display = \'none\';
                      document.getElementById(\'simpleCalendar\').style.display = \'flex\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     ">
@@ -26,7 +26,7 @@ namespace App;
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'addUser\').style.display = \'block\'
-                     document.getElementById(\'addShiftModule\').style.display = \'none\';
+                     document.getElementById(\'ShiftModule\').style.display = \'none\';
                      document.getElementById(\'simpleCalendar\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      
@@ -37,19 +37,19 @@ namespace App;
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'addUser\').style.display = \'none\'
-                     document.getElementById(\'addShiftModule\').style.display = \'flex\';
+                     document.getElementById(\'ShiftModule\').style.display = \'flex\';
                      document.getElementById(\'simpleCalendar\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     
                     ">
             
-            Add shift
+            Shift
         </div>
 
         <div class="button1" 
         onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                  document.getElementById(\'addUser\').style.display = \'none\'
-                 document.getElementById(\'addShiftModule\').style.display = \'none\';
+                 document.getElementById(\'ShiftModule\').style.display = \'none\';
                  document.getElementById(\'simpleCalendar\').style.display = \'none\';
                  document.getElementById(\'addDepartmentModule\').style.display = \'flex\';
                 
@@ -65,7 +65,7 @@ namespace App;
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'flex\';
                      document.getElementById(\'addUser\').style.display = \'none\'
-                     document.getElementById(\'addShiftModule\').style.display = \'none\';
+                     document.getElementById(\'ShiftModule\').style.display = \'none\';
                      document.getElementById(\'simpleCalendar\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      ">
@@ -75,7 +75,7 @@ namespace App;
         <div class="button1"
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'addUser\').style.display = \'none\'
-                     document.getElementById(\'addShiftModule\').style.display = \'none\';
+                     document.getElementById(\'ShiftModule\').style.display = \'none\';
                      document.getElementById(\'simpleCalendar\').style.display = \'flex\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     ">
@@ -85,7 +85,7 @@ namespace App;
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'addUser\').style.display = \'block\'
-                     document.getElementById(\'addShiftModule\').style.display = \'none\';
+                     document.getElementById(\'ShiftModule\').style.display = \'none\';
                      document.getElementById(\'simpleCalendar\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      
@@ -96,13 +96,13 @@ namespace App;
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'addUser\').style.display = \'none\'
-                     document.getElementById(\'addShiftModule\').style.display = \'flex\';
+                     document.getElementById(\'ShiftModule\').style.display = \'flex\';
                      document.getElementById(\'simpleCalendar\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     
                     ">
             
-            Add shift
+            Shift
         </div>
 
         ';
@@ -113,7 +113,7 @@ namespace App;
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'flex\';
                      document.getElementById(\'addUser\').style.display = \'none\'
-                     document.getElementById(\'addShiftModule\').style.display = \'none\';
+                     document.getElementById(\'ShiftModule\').style.display = \'none\';
                      document.getElementById(\'simpleCalendar\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      ">
@@ -123,7 +123,7 @@ namespace App;
         <div class="button1"
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'addUser\').style.display = \'none\'
-                     document.getElementById(\'addShiftModule\').style.display = \'none\';
+                     document.getElementById(\'ShiftModule\').style.display = \'none\';
                      document.getElementById(\'simpleCalendar\').style.display = \'flex\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     ">
