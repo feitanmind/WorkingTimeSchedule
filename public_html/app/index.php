@@ -32,9 +32,11 @@ require "modules/CalendarModeClasses/Statistics.php";
     <meta http-equiv='pragma' content='no-cache'>
     <link rel="icon" type="image/x-icon" href="style/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="style/style.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style_CalendarModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_AddShiftModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_AddDepartmentModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_Notifications.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style_AddUserModule.css"/>
 
 
     <script src="scripts/jquery-3.6.0.min.js"></script>
@@ -45,7 +47,9 @@ require "modules/CalendarModeClasses/Statistics.php";
     //     return "Chcesz zamknąć stronę. Czy jesteś tego pewny? Wszystkie zmiany których nie zapisałeś zostaną utracone";
     // }
     // </script>
-    
+    <script>
+        var isCalendarSave = '<?php echo $_SESSION['IsCalendarSave'];?>';
+    </script>
     <title>Working time schedule</title>
 </head>
 <body>
@@ -126,22 +130,31 @@ require "modules/CalendarModeClasses/Statistics.php";
         <div class="calendarMode" id="calendarMode">
             <?php include("modules/CalendarModeModule.php");?>
         </div>
+        <?php 
+        // Moduł: Dodawanie zmiany
+        if($_SESSION['Current_User_Role_Id'] == 1 || $_SESSION['Current_User_Role_Id'] == 2) 
+        {
 
-        <!-- // Moduł: Dodawanie zmiany -->
-        <div class="addShiftModule" id="addShiftModule">
-            <?php include("modules/AddShiftModule.php");?>
-        </div>
+        
+        echo '<div class="addShiftModule" id="addShiftModule">';
+            include("modules/AddShiftModule.php");
+        echo '</div>';
 
-        <!-- // Moduł: Simple Calendar -->
-        <div class="simpleCalendar" id="simpleCalendar">
-            <?php include("modules/SimpleCalendarModule.php");?>
-        </div>
+         // Moduł: Simple Calendar 
+        echo '<div class="simpleCalendar" id="simpleCalendar">';
+             include("modules/SimpleCalendarModule.php");
+        echo '</div>';
 
-        <!-- // Moduł: Dodawanie działu -->
-        <div class="addDepartmentModule" id="addDepartmentModule">
-            <?php include("modules/AddDepartmentModule.php");?>
-        </div>
-       
+        if($_SESSION['Current_User_Role_Id'] == 1 )
+        {
+        // Moduł: Dodawanie działu 
+        echo '<div class="addDepartmentModule" id="addDepartmentModule">';
+            include("modules/AddDepartmentModule.php");
+        echo '</div>';
+        }
+        
+        }
+       ?>
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
     
@@ -171,8 +184,6 @@ require "modules/CalendarModeClasses/Statistics.php";
         <script src="scripts/closeNewWindow.js"></script>
         <script src="scripts/Statistics.js"></script>
         <script src="scripts/Calendar.js"></script>
-        <!-- Dodatkowe style zawierające wygląd formularzy i niektóre elementy CalendarMode -->
-        <link rel="stylesheet" type="text/css" href="style/calendarModeAdditionalStyles.css"/>
         <script src="scripts/showCalendarDayControls.js"></script>
         
         <?php PHPScripts::WHAT_MODULE_IS_SELECTED();?>

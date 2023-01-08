@@ -13,8 +13,19 @@
                             </select><br>
                             Role:
                             <select id="role" name="addu_role">
-                                <option value="2">Nurse</option>
-                                <option value="3">NotNurse</option>
+                                <?php
+                                use App\ConnectToDatabase;
+
+                                $accessConnection = ConnectToDatabase::connAdminPass();
+                                $sql = $_SESSION['Current_User_Role_Id'] == 1 ? 'SELECT id, name FROM roles;' : 'SELECT id, name FROM roles WHERE NOT id = 1;';
+                                $result = $accessConnection->query($sql);
+                                while($row = $result->fetch_assoc())
+                                {
+                                    echo "<option value=\"".$row['id']."\">".$row['name']."</option>";
+                                }
+                                $result->free();
+                                unset($accessConnection);
+                                ?>
                             </select>
                         <p>Avatar:</p>
                         <img id="userAvatarShow" src="style/img/user.png" alt="your image" />

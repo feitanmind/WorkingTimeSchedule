@@ -27,6 +27,7 @@ if(isset($_GET['usersToVacation']) && isset($_GET['dayId']))
                 if($calend2->canVacationBeGrantToUserOnDay($user2,$dayId))
             {
                 $calend2->SignUserVacation($user2, $dayId, $shiftId);
+                $_SESSION['IsCalendarSave'] = 'no';
                 $c = array();
                     $a = json_decode($_SESSION['arrayOfHoursOfWorkForCurrentMonth'],0);
                     foreach ($a as $b) {

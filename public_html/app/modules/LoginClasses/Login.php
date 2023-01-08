@@ -35,6 +35,7 @@ class Login
                     $_SESSION['log'] = true;
                     //$_SESSION['user_id'] = $row['id'];
                     $_SESSION['User_Id']= $row['id'];
+                    $_SESSION['IsCalendarSave'] = 'yes';
                     $id = $row['id'];
                     $_SESSION['username'] = $row['login'];
                     $_SESSION['password'] = $userPassword;

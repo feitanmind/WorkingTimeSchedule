@@ -87,6 +87,7 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
                         //czyszczenie Get
                         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
                         $_SESSION['Module'] = 1;
+                        $_SESSION['IsCalendarSave'] = 'no';
                         header("Location: $actual_link");
                     }
 

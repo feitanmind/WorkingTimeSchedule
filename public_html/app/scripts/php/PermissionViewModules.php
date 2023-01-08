@@ -59,7 +59,7 @@ namespace App;
         </div>
         ';
     }
-    else if($_SESSION['Role_Id'] == 2)
+    else if($_SESSION['Current_User_Role_Id'] == 2)
     {
         echo '
         <div class="button1" 

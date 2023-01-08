@@ -9,11 +9,14 @@ class Calendar
         inputForm.setAttribute("name","CALENDAR_SAVE");
         inputForm.setAttribute("value","YES");
         document.body.appendChild(form);
+        isCalendarSave = 'yes';
         form.submit();
     }
     static changeMonth($flag)
     {
-        const areYouSure = document.createElement("div");
+        if(isCalendarSave == 'no')
+        {
+            const areYouSure = document.createElement("div");
         areYouSure.setAttribute("id","areYouSure");
         // form.style.display = "none";
         
@@ -35,11 +38,18 @@ class Calendar
                                     <button class="button1" onclick="Calendar.changeMonthRefuse()">No</button>
                                 </div>
                             `;
+        }
+        else
+        {
+            Calendar.changeMonthAccept($flag);
+        }
+        
             
     
     }
     static changeMonthAccept($flag)
     {
+       
         const form = document.createElement("form");
         form.setAttribute("method","get");
         form.style.display = "none";
@@ -47,6 +57,7 @@ class Calendar
         inputForm.setAttribute("name","CHANGE_MONTH");
         inputForm.setAttribute("value",$flag);
         document.body.appendChild(form);
+        isCalendarSave = 'yes';
         form.submit();
     }
     static changeMonthRefuse()

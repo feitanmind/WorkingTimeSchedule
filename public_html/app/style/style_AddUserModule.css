@@ -1,0 +1,68 @@
+.addUser{
+    width: 34vw;
+    overflow: hidden;
+    margin-top: 15vh;
+    margin-left: 15vw;
+    font-size: 0.8vw;
+    border-radius: 1vw;
+    box-shadow: 0vw 0vw 2vw 0.1vw #cccccc;
+    display: none;
+}
+.addUser form{
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    gap: 1vh;
+    height: 60vh;
+    width: 36vw;
+    background-color: white;
+    
+    padding: 1.5vw;
+    border-radius: 1vw;
+}
+.addUser form p{
+    margin-top: 6vh;
+}
+.addUser input[type="text"]{
+    background-color: white;
+    width: 12vw;
+    height: 3vh;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    padding-left: 1vw;
+}
+.addUser input[type="submit"]{
+    color:white;
+    text-align: center;
+
+}
+.addUser input[type="password"]{
+    background-color: white;
+    width: 12vw;
+    height: 3vh;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    padding-left: 1vw;
+}
+.addUser select{
+    all: unset;
+}
+.addUser select{
+    width: 12vw;
+    height: 3vh;
+    background-color: white;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    font-size: 0.7vw;
+    padding-left: 1vw;
+}
+
+#userAvatarShow{
+    width: 7vw;
+    height: 7vw;
+    border-radius: 50%;
+}
+#tohide
+{
+    display: none;
+}

@@ -16,6 +16,7 @@ use \Exception as Ex;
                     $decodedCalendar->PushCalendarToDataBase($roleIdentifier);
                     HoursOfWork::PushHoursOfWorkArrayIntoDatabase();
                     $_SESSION['Module'] = 1;
+                    $_SESSION['IsCalendarSave'] = 'yes';
                     $_POST["CALENDAR_SAVE"] = "none";
                 }
                 catch(Ex $e)
