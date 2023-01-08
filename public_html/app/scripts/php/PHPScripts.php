@@ -1,10 +1,5 @@
 <?php
-
-use App\ConnectToDatabase;
-use App\Shift;
-use App\User;
-use App\Calendar;
-use App\HoursOfWork;
+namespace App;
 use Exception as Ex;
 use PHPUnit\TextUI\CliArguments\Exception;
 
