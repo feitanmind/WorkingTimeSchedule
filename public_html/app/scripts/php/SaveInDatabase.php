@@ -18,6 +18,15 @@ use \Exception as Ex;
                     $_SESSION['Module'] = 1;
                     $_SESSION['IsCalendarSave'] = 'yes';
                     $_POST["CALENDAR_SAVE"] = "none";
+
+                    $xmlFile = fopen("templatesNotification.xml", "r");
+                    $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
+                    echo "<script>";
+                        echo 'window.history.pushState({}, document.title, "/" + "app/");';
+                        echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Success,SubjectNotification.SaveCalendarCompleted);";
+                    echo "</script>";
+
+                   
                 }
                 catch(Ex $e)
                 {
@@ -27,6 +36,7 @@ use \Exception as Ex;
                         echo 'window.history.pushState({}, document.title, "/" + "app/");';
                         echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Error,SubjectNotification.CantSaveCalendar);";
                     echo "</script>";
+
                 }
 
             }

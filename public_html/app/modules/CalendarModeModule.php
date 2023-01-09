@@ -32,6 +32,6 @@ use PhpParser\JsonDecoder;
             
             <!-- Przycisk który generuje wydruk -->
             <div class="calendarButtons no-print">
-                <div class="button1 printCalendar">Print</div>
+                <div class="button1 printCalendar" onclick="window.print();">Print</div>
                 <div class="button1 saveCalendar" onclick="Calendar.saveCalendar()">Save</div>
             </div>

@@ -13,6 +13,9 @@ const SubjectNotification
     AddShiftFailed: "AddShiftFailed",
     CantSaveCalendar: "CantSaveCalendar",
     AddShiftFailed: "AddShiftFailed",
-    CantRemoveUserFromSystem: "CantRemoveUserFromSystem"
+    CantRemoveUserFromSystem: "CantRemoveUserFromSystem",
+    SaveCalendarCompleted: "SaveCalendarCompleted",
+    UserWasAdded: "UserWasAdded"
+    
 
 };

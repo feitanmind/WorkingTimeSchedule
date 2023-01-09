@@ -4,7 +4,7 @@
 </div>
 
 
-<form method="post" id="UserAdd_UserModule" class="formUserModule">
+<form method="post" id="UserAdd_UserModule" class="formUserModule" enctype="multipart/form-data">
                 <h2>Add new user</h2>
                 Name: <input type="text" name="addu_name"/>
                 Surname: <input type="text" name="addu_surname"/>
@@ -140,34 +140,18 @@
                     isset($_POST['addu_hps'])
                 )
                 {
-                    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/style/img/avatars/";
-                    $target_file = $target_dir . $_POST['addu_login'] . '-avatar';
-                    if(isset($_FILES['addu_userAvatar']['tmp_avatar']))
-                    {
-                        $check = getimagesize($_FILES['addu_userAvatar']['tmp_avatar']);
-                        $uploadOk = 1;
-                        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-                        if($check !== false) {
-    
-                        $uploadOk = 1;
-                        } else {
-                        $uploadOk = 0;
-                        }
-    
-                        if ($_FILES["fileToUpload"]["size"] > 500000) {
-                            $uploadOk = 0;
-                        }
-                    }
-                    else
-                    {
-                        $uploadOk = 0;
-                    }
                     
-                   
-                    if($uploadOk == 1)
+                    if(isset($_FILES['addu_userAvatar']))
                     {
-                        move_uploaded_file($_FILES["fileToUpload"]["addu_userAvatar"], $target_file);
-                        $avstr = $_POST['addu_login'] . '-avatar';
+                        $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/app/style/img/avatars/";
+                        $nameOfFile = $_POST['addu_login'] . '-avatar'. substr($_FILES['addu_userAvatar']['name'],strpos($_FILES['addu_userAvatar']['name'],"."));
+                        $target_file = $target_dir . $nameOfFile;
+                     
+                        if ($_FILES["addu_userAvatar"]["size"] < 5000000) {
+                            move_uploaded_file($_FILES["addu_userAvatar"]['tmp_name'], $target_file);
+                            $avstr = $nameOfFile;
+                        }
+                        
                     }
                     else
                     {
@@ -179,9 +163,8 @@
                         {
                         $avstr = "default2.png";
                         }
-                        
                     }
-
+                    
 
                     $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $avstr, $_POST['addu_custom_id'], $_POST['addu_fulltime'], $_POST['addu_hps']);
 

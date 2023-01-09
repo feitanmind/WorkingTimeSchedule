@@ -1,6 +1,6 @@
 <?php
 namespace App;
-use PHPUnit\Util\Exception;
+use \Exception as Ex;
 
     class User
     {
@@ -112,8 +112,9 @@ use PHPUnit\Util\Exception;
             $access_Connection = ConnectToDatabase::connAdminPass();
             
             $cipher = new Encrypt;
-
-            $encrypted_password = $cipher->encryptString($password);
+            try
+            {
+                $encrypted_password = $cipher->encryptString($password);
             $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$password'";
             $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
             $selectUserId = "SELECT id FROM users WHERE login = '$login'";
@@ -135,7 +136,17 @@ use PHPUnit\Util\Exception;
 
 
                 $access_Connection->query($sqlInsertIntoUserData);
-
+                $xmlFile = fopen("templatesNotification.xml", "r");
+                $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
+                echo "<script>";
+                    echo 'window.history.pushState({}, document.title, "/" + "app/");';
+                    echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Success,SubjectNotification.UserWasAdded);";
+                echo "</script>";
+            }
+            catch(Ex $e)
+            {
+                
+            }
              
                 
 

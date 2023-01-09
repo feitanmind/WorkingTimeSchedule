@@ -43,7 +43,7 @@ namespace App;
                     
                     ">
             
-            Shift
+            Shifts
         </div>
 
         <div class="button1" 
@@ -102,7 +102,7 @@ namespace App;
                     
                     ">
             
-            Shift
+            Shifts
         </div>
 
         ';
