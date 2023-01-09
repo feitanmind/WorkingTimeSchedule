@@ -1,0 +1,128 @@
+#tabsUsers
+{
+    width: 100%;
+    display: flex;
+    height: 2vw;
+    position:absolute;
+    z-index: 2;
+    top: 18vh;
+    left: 31.5vw;
+    
+}
+.tabusers
+{
+    box-sizing: border-box;
+    font-size: 1vw;
+    background-color: #cccccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3vw;
+    border: 0.1vw solid #cccccc;
+    border-bottom: none;
+    cursor: pointer;
+}
+
+#User_Add
+{
+    background-color: white;
+}
+#RemoveUser_UserModule
+{
+    display: none;
+}
+
+.UserModule{
+    width: 34vw;
+    overflow: hidden;
+    margin-top: 15vh;
+    margin-left: 15vw;
+    font-size: 0.8vw;
+    border-radius: 1vw;
+    box-shadow: 0vw 0vw 2vw 0.1vw #cccccc;
+    display: none;
+}
+.UserModule form{
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    gap: 1vh;
+    height: 60vh;
+    margin-top: 5vh;
+    width: 36vw;
+    background-color: white;
+    
+    padding: 1.5vw;
+    border-radius: 1vw;
+}
+.UserModule form p{
+    margin-top: 6vh;
+}
+.UserModule input[type="text"]{
+    background-color: white;
+    width: 12vw;
+    height: 3vh;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    padding-left: 1vw;
+}
+.UserModule input[type="submit"]{
+    color:white;
+    text-align: center;
+
+}
+.UserModule input[type="password"]{
+    background-color: white;
+    width: 12vw;
+    height: 3vh;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    padding-left: 1vw;
+}
+.UserModule select{
+    all: unset;
+}
+.UserModule select{
+    width: 12vw;
+    height: 3vh;
+    background-color: white;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    font-size: 0.7vw;
+    padding-left: 1vw;
+}
+
+#userAvatarShow{
+    width: 7vw;
+    height: 7vw;
+    border-radius: 50%;
+}
+#tohide
+{
+    display: none;
+}
+#RemoveUser_UserModule
+{
+    background-image: url("img/fired.png");
+    background-size: 75% 90%;
+    background-repeat: no-repeat;
+    background-position-x: 5vw;
+}
+#RemoveUser_UserModule h2
+{
+    margin-top: 6vh;
+}
+#RemoveUser_UserModule h3
+{
+    margin-top: 4vh;
+}
+
+#RemoveUser_UserModule #userToRemoveFromSystem
+{
+    width: 20vw;
+    border-color: red;
+}
+#submitRemoveUser
+{
+    background-color: #f84f4f;
+}

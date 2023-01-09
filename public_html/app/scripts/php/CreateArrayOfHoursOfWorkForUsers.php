@@ -1,5 +1,6 @@
 <?php
 namespace App;
+use \Exception as Ex;
         $monthNumber = $_SESSION['Month_Number'];
         $yearNumber = $_SESSION['Year_Number'];
         $dep_id = $_SESSION['Current_User_Department_Id'];
@@ -46,10 +47,16 @@ namespace App;
             $finalHoursOfWork = array();
             foreach($arrayOfHoursOfWorkForCurrentMonth as $currentHoursOfWorkAsStdClass)
             {
+                try {
                     $user = new User($currentHoursOfWorkAsStdClass->User->user_id);
                     $how = new HoursOfWork($user, $monthNumber, $yearNumber, $user->hours_per_shift);
                     $how->ActualizeTimeAndHours($currentHoursOfWorkAsStdClass->Hours);
                     array_push($finalHoursOfWork, $how);
+                }
+                catch(Ex $e)
+                {
+                    //skip
+                }
             }
             $_SESSION['arrayOfHoursOfWorkForCurrentMonth'] = json_encode($finalHoursOfWork,0);
         }

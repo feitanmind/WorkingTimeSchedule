@@ -1,4 +1,10 @@
-<form method="post" class="formAdduser">
+<div id="tabsUsers">
+        <div id="User_Add" class="tabusers" onclick="User.AddUserShow();">Add User</div>
+        <div id="User_Remove" class="tabusers" onclick="User.RemoveUserShow();">Remove User</div>
+</div>
+
+
+<form method="post" id="UserAdd_UserModule" class="formUserModule">
                 <h2>Add new user</h2>
                 Name: <input type="text" name="addu_name"/>
                 Surname: <input type="text" name="addu_surname"/>
@@ -72,6 +78,53 @@
                             <!-- Trzeba dodać skrypt js do weryfikacji danych -->
                             <input type="submit" value="Add user" class="button1"/>
             </form>
+
+
+            <form method="post" id="RemoveUser_UserModule" class="formUserModule">
+            <h2>Remove user</h2>
+            <h3>Select user to Remove</h3>
+            <?php
+            $currentUserRole = $_SESSION['Current_User_Role_Id'];
+            $currentUserDepartment = $_SESSION['Current_User_Department_Id'];
+            echo "<select id=\"userToRemoveFromSystem\" name=\"userToRemoveFromSystem\">";
+                $accessConnection = ConnectToDatabase::connAdminPass();
+           if($currentUserRole == 1)
+            {
+                $sql = 'SELECT user_data.name AS nameOfUser, users.login, user_data.surname, user_data.usr_id , department.name AS dep , roles.name AS role
+                        FROM (((user_data
+                        INNER JOIN department ON user_data.dep_id)
+                        INNER JOIN roles ON user_data.role_id = roles.id)
+                        INNER JOIN users ON user_data.usr_id = users.id);';
+                $result = $accessConnection->query($sql);
+                while($row = $result->fetch_assoc())
+                {
+                    echo '<option value="' . $row['usr_id'] .'!'.$row['login'].'">'.$row['usr_id'] . ' '.$row['nameOfUser']. ' '.$row['surname'].' | '.$row['dep'].' | '.$row['role'].'</option>';
+                }
+            }
+            else
+            {
+                $sql = 'SELECT user_data.name AS nameOfUser, user_data.surname, user_data.usr_id , roles.name AS role
+                FROM ((user_data
+                INNER JOIN roles ON user_data.role_id = roles.id)
+                INNER JOIN users ON user_data.usr_id = users.id) 
+                WHERE user_data.dep_id='.$currentUserDepartment.';';
+
+                $result = $accessConnection->query($sql);
+                while($row = $result->fetch_assoc())
+                {
+                    echo '<option value="' . $row['usr_id'] .'!'.$row['login'].'">'.$row['usr_id'] . ' '.$row['nameOfUser']. ' '.$row['surname'].' | '.$row['role'].'</option>';
+                }
+
+            }
+                echo "</select>";
+                
+
+            ?>
+            <input type="submit" value="Remove user" id="submitRemoveUser" class="button1"/>
+            </form>
+
+
+
             <?php
             
                 if
@@ -132,7 +185,7 @@
 
                     $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $avstr, $_POST['addu_custom_id'], $_POST['addu_fulltime'], $_POST['addu_hps']);
 
-
+                    
                     $_SESSION['Module'] = 3;
                 }
             ?>

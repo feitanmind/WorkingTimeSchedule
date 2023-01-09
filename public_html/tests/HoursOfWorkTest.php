@@ -16,7 +16,7 @@
             $hoursBefore = $hoursOfWorkForUserOnMay2022->Hours;
 
             //Spradzamy czy wyniki się róznią
-            $hoursOfWorkForUserOnMay2022->SubstractTimeOfWork();
+            $hoursOfWorkForUserOnMay2022->SubstractTimeOfWork($user);
             $hoursAfter = $hoursOfWorkForUserOnMay2022->Hours;
             $this->assertNotEquals($hoursBefore,$hoursAfter);
             //Sprawdzamy czy odjęto dokładną wartość

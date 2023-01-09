@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<notyfications>
+<notifications>
     <notification id="RefuseSignUser" notificationType="warning">
         <n_header><p>😢 <strong>Warning</strong></p></n_header>
         <n_body><p>You can\'t sign user to this day because user was signed on colliding shift</p><div id="progressBarToHideNotification"></div></n_body>
@@ -25,5 +25,13 @@
         <n_body>Can't Save Calendar. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
     </notification>
     
-</notyfications>
+    <notification id="CantRemoveShift" notificationType="error">
+        <n_header><p>😡 <strong>Error</strong></p></n_header>
+        <n_body>Can't Remove Shift!. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+    <notification id="CantRemoveUserFromSystem" notificationType="error">
+        <n_header><p>😡 <strong>Error</strong></p></n_header>
+        <n_body>Can't Remove User From System!. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+</notifications>
 

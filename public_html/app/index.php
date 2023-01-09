@@ -36,7 +36,7 @@ require "modules/CalendarModeClasses/Statistics.php";
     <link rel="stylesheet" type="text/css" href="style/style_ShiftModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_AddDepartmentModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_Notifications.css"/>
-    <link rel="stylesheet" type="text/css" href="style/style_AddUserModule.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style_UserModule.css"/>
 
 
     <script src="scripts/jquery-3.6.0.min.js"></script>
@@ -62,6 +62,8 @@ require "modules/CalendarModeClasses/Statistics.php";
     <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
     <?php PHPScripts::ADD_NEW_SHIFT();?>
     <?php PHPScripts::ADD_NEW_DEPARTMENT();?>
+    <?php PHPScripts::REMOVE_SHIFT();?>
+    <?php PHPScripts::REMOVE_USER_FROM_SYSTEM();?>
     
     
     <!-- SECTION __________________________LEFT USER PANEL -->
@@ -122,8 +124,8 @@ require "modules/CalendarModeClasses/Statistics.php";
     <!-- SECTION __________________________CENTER PANEL -->
     <div class="centerPanel landScape">
         <!-- // Moduł: Dodawanie użytkownika / pracownika -->
-        <div class="addUser" id="addUser">
-            <?php include("modules/AddUserModule.php");?>
+        <div class="UserModule" id="UserModule">
+            <?php include("modules/UserModule.php");?>
         </div>
 
         <!-- // Moduł: Obsługa grafiku w metodzie kalendarzowej -->
@@ -185,6 +187,7 @@ require "modules/CalendarModeClasses/Statistics.php";
         <script src="scripts/Statistics.js"></script>
         <script src="scripts/Calendar.js"></script>
         <script src="scripts/Shift.js"></script>
+        <script src="scripts/User.js"></script>
         <script src="scripts/showCalendarDayControls.js"></script>
         
         <?php PHPScripts::WHAT_MODULE_IS_SELECTED();?>

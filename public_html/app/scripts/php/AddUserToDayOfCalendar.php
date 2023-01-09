@@ -27,8 +27,8 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
         {
             $user2 = new User($user);
                 $canAdd = $calend2->CanUserBeSignOnDay($user2, $dayId, $shiftId);
-                $ifHoursOfWorkLeft = HoursOfWork::IfUserHaveHoursToSign($user2, $shiftId, $department_ID);
-            //throw new Exception("dfas");
+                $ifHoursOfWorkLeft = HoursOfWork::IfUserHaveHoursToSign($user2, $shiftId );
+            //throw new Exception("dfas");$department_ID
                 if(!$ifHoursOfWorkLeft)
                 {
                     

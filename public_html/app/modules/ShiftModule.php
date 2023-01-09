@@ -15,7 +15,7 @@
             <p>End hour of new Shift</p>
             <input type="text" class="inputAddShift" name="endHour_addShift" placeholder="Example: 15:00"/>
             <?php
-            if($_SESSION['Role_Id'] == 1)
+            if($_SESSION['Current_User_Role_Id'] == 1)
             {
                 $accessConnection = ConnectToDatabase::connAdminPass();
                 $sql = "SELECT id, name FROM department;";
@@ -24,16 +24,26 @@
                 {
                     echo "<p>Select Department</p>";
                     echo "<select name=\"departmentId_addShift\" id=\"selectDep\">";
+                    $id_first = true;
                     while($row = $result->fetch_assoc())
                     {
                         $id = $row['id'];
                         $name = $row['name'];
-                        echo "<option value=\"$id\">$id - $name</option>";
+                        if($id_first)
+                        {
+                            echo "<option value=\"$id\" selected>$id - $name</option>";
+                            $id_first = false;
+                        }
+                        else
+                        {
+                            echo "<option value=\"$id\">$id - $name</option>";
+                        }
+                        
                     }
                     echo "</select>";
                 }
             }
-            echo '<input type="submit" name="addNewShift" class="button1 addShiftSubmit" value="Add shift"/>'
+            echo '<input type="submit" name="addNewShift" class="button1 ShiftSubmit" value="Add shift"/>'
             ?>
         </form>
     </div>
@@ -56,15 +66,23 @@
                 $result = $accessConnection->query($sql);
                 if($result->num_rows > 0)
                 {
-                    
-                    echo "<select name=\"departmentId_removeShift\" id=\"selectToRemoveShift\" multiple>";
+                    $id_first = true;
+                    echo "<select name=\"Id_removeShift\" id=\"selectToRemoveShift\" multiple>";
                     while($row = $result->fetch_assoc())
                     {
                         $id = $row['id'];
                         $name = $row['name'];
                         $starHour = $row['startHour'];
                         $endHour = $row['EndHour'];
-                        echo "<option value=\"$id\">$id - $name - Starts: $startHour, Ends: $endHour</option>";
+                        if($id_first)
+                        {
+                            echo "<option value=\"$id\" selected=\"selected\">$id - $name - Starts: $startHour, Ends: $endHour</option>";
+                            $id_first = false;
+                        }
+                        else
+                        {
+                            echo "<option value=\"$id\">$id - $name - Starts: $startHour, Ends: $endHour</option>";
+                        }
                     }
                     echo "</select>";
                 }

@@ -35,6 +35,10 @@ class PHPScripts
 
     public static function ADD_NEW_DEPARTMENT() { include('AddANewDepartment.php'); }
 
+    public static function REMOVE_SHIFT() { include('RemoveShift.php'); }
+
+    public static function REMOVE_USER_FROM_SYSTEM(){ include('RemoveUserFromSystem.php'); } 
+
 }
 
 

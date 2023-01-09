@@ -11,6 +11,8 @@ const SubjectNotification
     NoHoursLeft: "NoHoursLeft",
     AddDepartmentFailed: "AddDepFailed",
     AddShiftFailed: "AddShiftFailed",
-    CantSaveCalendar: "CantSaveCalendar"
+    CantSaveCalendar: "CantSaveCalendar",
+    AddShiftFailed: "AddShiftFailed",
+    CantRemoveUserFromSystem: "CantRemoveUserFromSystem"
 
 };
