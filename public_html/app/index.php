@@ -37,6 +37,7 @@ require "modules/CalendarModeClasses/Statistics.php";
     <link rel="stylesheet" type="text/css" href="style/style_AddDepartmentModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_Notifications.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_UserModule.css"/>
+    <link rel="stylesheet" type="text/css" href="style/style_userSettings.css"/>
 
 
     <script src="scripts/jquery-3.6.0.min.js"></script>
@@ -53,7 +54,17 @@ require "modules/CalendarModeClasses/Statistics.php";
     <title>Working time schedule</title>
 </head>
 <body>
-
+<script>
+        function show()
+        {
+            //create form post module = 0;
+            document.getElementById('CurrentUserSettingsWindow').style.display = 'flex';
+        }
+        function closeUserSettings()
+        {
+            document.getElementById('CurrentUserSettingsWindow').style.display = 'none'
+        }
+    </script>
     <script src="scripts/Notification.js"></script>
     
     <?php PHPScripts::CHANGE_MONTH();?>
@@ -157,6 +168,8 @@ require "modules/CalendarModeClasses/Statistics.php";
         
         }
        ?>
+       <a id="licences" class="no-print" href="licences.txt">Licences</a>
+       <a id="licenceImages" class="no-print" href="http://www.freepik.com">Background Images <br>designed by pch.vector / Freepik</a>
     </div>
     <!-- SECTION __________________________RIGHT STATS PANEL -->
     

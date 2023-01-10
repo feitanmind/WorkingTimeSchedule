@@ -128,6 +128,20 @@ select{
 {
     display: none;
 }
-
-
+#licenceImages
+{
+    color: #ffffff;
+    font-size: 0.8vw;
+    position:absolute;
+    top: 95vh;
+    left: 1vw;
+}
+#licences
+{
+    color: #ffffff;
+    font-size: 0.8vw;
+    position:absolute;
+    top: 92vh;
+    left: 1vw;
+}
 

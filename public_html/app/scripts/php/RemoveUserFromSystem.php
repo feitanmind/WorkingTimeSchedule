@@ -12,11 +12,23 @@ if(isset($_POST['userToRemoveFromSystem']))
         $accessConnection = ConnectToDatabase::connAdminPass();
         $sql_DelFromUsers = "DELETE FROM users WHERE id=$idToDel;";
         $sql_DelFromUserData = "DELETE FROM user_data WHERE id=$idToDel;";
-        $sql_LockUser = "ALTER USER '$loginToLock'@'localhost' ACCOUNT LOCK;";
+        $sql_LockUser = "DROP USER '$loginToLock'@'localhost';";
         $accessConnection->query($sql_DelFromUsers);
         $accessConnection->query($sql_DelFromUserData);
         $accessConnection->query($sql_LockUser);
-        $_SESSION['Module'] = 3;
+        $depId = $_SESSION['Current_User_Department_Id'];
+        $_SESSION['Module'] = 1;
+        unset($_SESSION['arrayOfHoursOfWorkForCurrentMonth']);
+        $result_newStatisticUser = $accessConnection->query("SELECT usr_id FROM user_data WHERE dep_id=$depId;");
+        $row_newStatisticUser = $result_newStatisticUser->fetch_assoc();
+        if($result_newStatisticUser->num_rows > 0)
+        {
+            $_SESSION['id_stat'] = $row_newStatisticUser['usr_id'];
+        }
+        else
+        {
+            $_SESSION['id_stat'] = 1;
+        }
     }
     catch(Ex $e)
     {
@@ -26,7 +38,7 @@ if(isset($_POST['userToRemoveFromSystem']))
             echo 'window.history.pushState({}, document.title, "/" + "app/");';
             echo "Notification.displayNotification(`$tempateNotification`,TypeOfNotification.Error,SubjectNotification.CantRemoveUserFromSystem);";
         echo "</script>";
-        
+        echo $e;
         $_SESSION['Module'] = 3;
     }
 }

@@ -374,7 +374,14 @@ class Calendar
                 {
                     for ($k = 0;$k <= sizeof($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesWorking) - 1;$k++)
                     {
-                        array_push($eWorking, new User($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesWorking[$k]->user_id));
+                        try
+                        {
+                            array_push($eWorking, new User($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesWorking[$k]->user_id));
+                        }
+                        catch(\Exception $e)
+                        {
+                            //skip
+                        }
                     }
                     $calenadarObjectAsCalendar->Days[$i]->Shifts[$j]->EmployeesWorking = $eWorking;
                 }
@@ -382,7 +389,14 @@ class Calendar
                 {
                     for ($k = 0;$k <= sizeof($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesVacation) - 1;$k++)
                     {
-                        array_push($eVacation, new User($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesVacation[$k]->user_id));
+                        try
+                        {
+                            array_push($eVacation, new User($calendarAsObjectAStdClass->Days[$i]->Shifts[$j]->EmployeesVacation[$k]->user_id));
+                        }
+                        catch(\Exception $e)
+                        {
+                            //skip
+                        }
                     }
 
                     $calenadarObjectAsCalendar->Days[$i]->Shifts[$j]->EmployeesVacation = $eVacation;

@@ -77,14 +77,50 @@ use \Exception as Ex;
         // Zwraca dane użytkownika 
         public function getUserData()
         {
-            //data:image/png;base64,'.base64_encode($this->avatar).'
+            // //data:image/png;base64,'.base64_encode($this->avatar).'
             $userAvatar = $this->avatar;
-            $userCredentials = '<img src="/app/style/img/avatars/'.$userAvatar.'"/>'
-            .'<h2>'.$this->name. ' '. $this->surname. '</h2>'
+            // $userCredentials = '<img src="/app/style/img/avatars/'.$userAvatar.'"/>'
+            // .'<h2>'.$this->name. ' '. $this->surname. '</h2>'
+            // .'<p>UserID: '.$this->user_id.'</p>'
+            // .'<p>Department: '.$this->department.'</p>'
+            // .'<p>Role: '.$this->role.'</p>'
+            // ;
+
+
+            $userCredentials = 
+            '   <div id="avatarCurrentUser" style="background-image: url(\'style/img/avatars/'.$userAvatar.'\');"></div>
+                <div onclick="show();" id="settingsCurrentUser">
+                    <p>Settings ⛭</p>     
+                </div>
+
+                <div id="CurrentUserSettingsWindow">
+                    <div id="CurrentUserSettingsForms">
+                        <div id="HeaderCurrentUserSettings">
+                            <div id="headerUserSettings"><h2>User settings</h2></div>
+                            <div id="closeUserSettings" onclick="closeUserSettings();">❌</div>
+                        </div>
+                        <div id="avatarSettingsForms" style="background-image: url(\'style/img/avatars/'.$userAvatar.'\');"></div>
+                        <h3>'.$this->name. ' '. $this->surname. '</h3>
+                        <p>User Id: '.$this->user_id.', Custom Id: '.$this->custom_id.'</p>
+
+                        <form id="settingUserForm_form" method="post" enctype="multipart/form-data">
+                            <div>
+                                <p><strong>Change Password</strong></p>
+                                New password: <input type="password" name="newPassword_CUS" id="newPassword_CUS"/>
+                            </div>
+                            <div>
+                                <p><strong>Change Avatar</strong></p>
+                                New avatar: <input type="file" name="newAvatar_CUS" id="newAvatar_CUS"/>
+                            </div>
+                            <p></p>
+                            <input id="save_CUS" type="submit" value="Save"/>
+                        </form>
+                    </div>
+                </div>
+            '.'<h2>'.$this->name. ' '. $this->surname. '</h2>'
             .'<p>UserID: '.$this->user_id.'</p>'
             .'<p>Department: '.$this->department.'</p>'
-            .'<p>Role: '.$this->role.'</p>'
-            ;
+            .'<p>Role: '.$this->role.'</p>';
 
 
             return $userCredentials;
@@ -114,10 +150,19 @@ use \Exception as Ex;
             $cipher = new Encrypt;
             try
             {
-                $encrypted_password = $cipher->encryptString($password);
-            $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$password'";
-            $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
-            $selectUserId = "SELECT id FROM users WHERE login = '$login'";
+                echo "Avatar: $avatar";
+                $sqlGood = "SELECT login FROM users WHERE login='$login';";
+                
+                    $resGood = $access_Connection->query($sqlGood);
+                
+                if($resGood->num_rows != 0)
+                {
+                    throw new Ex("Użytkownik już jest w bazie danych");
+                }
+                    $encrypted_password = $cipher->encryptString($password);
+                    $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$password'";
+                    $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
+                    $selectUserId = "SELECT id FROM users WHERE login = '$login'";
 
 
 
@@ -128,13 +173,11 @@ use \Exception as Ex;
                 $row = $resultIdOfUser->fetch_assoc();
                 $idOfUser = $row['id'];
                 //$sqlInsertIntoUserData = "INSERT INTO user_data(name,surname,dep_id,role_id,avatar,usr_id,custom_id, full_time, hours_of_work, days_of_holiday) VALUES('$name','$surname',$dep_id,$role_id,'$avatar',$idOfUser,$custom_id,$full_time,'[]','[]');";
-
-                $sqlInsertIntoUserData = "INSERT INTO app_commercial.user_data".
+                try{
+                    $sqlInsertIntoUserData = "INSERT INTO app_commercial.user_data".
                 "(name, surname, dep_id, role_id, avatar, usr_id, custom_id, full_time, hours_of_work, days_of_vacation, hours_per_shift)".
                 "VALUES('$name', '$surname', $dep_id, $role_id, '$avatar', $idOfUser, $custom_id, $full_time, '[]', '[]', '$hoursPerShift');";
    
-
-
                 $access_Connection->query($sqlInsertIntoUserData);
                 $xmlFile = fopen("templatesNotification.xml", "r");
                 $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
@@ -142,10 +185,32 @@ use \Exception as Ex;
                     echo 'window.history.pushState({}, document.title, "/" + "app/");';
                     echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Success,SubjectNotification.UserWasAdded);";
                 echo "</script>";
+                PHPScripts::REFRESH_CAL_AND_HOURS();
+                }
+                catch(Ex $e)
+                {
+                    $sqlRevert1 = "DELETE FROM users WHERE login='$login';";
+                    $sqlRevert2 = "DROP USER '$login'@'localhost';";
+                    $access_Connection->query($sqlRevert1);
+                    $access_Connection->query($sqlRevert2);
+                    $xmlFile = fopen("templatesNotification.xml", "r");
+                $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
+                echo "<script>";
+                    echo 'window.history.pushState({}, document.title, "/" + "app/");';
+                    echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Error,SubjectNotification.CantAddUser);";
+                echo "</script>";
+                }
+
+                
             }
             catch(Ex $e)
             {
-                
+                $xmlFile = fopen("templatesNotification.xml", "r");
+                $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
+                echo "<script>";
+                    echo 'window.history.pushState({}, document.title, "/" + "app/");';
+                    echo "Notification.displayNotification(`$tempateNotyfication`,TypeOfNotification.Error,SubjectNotification.CantAddUser);";
+                echo "</script>";
             }
              
                 

@@ -24,23 +24,25 @@
         <n_header><p>😡 <strong>Error</strong></p></n_header>
         <n_body>Can't Save Calendar. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
     </notification>
-    
     <notification id="CantRemoveShift" notificationType="error">
         <n_header><p>😡 <strong>Error</strong></p></n_header>
-        <n_body>Can't Remove Shift!. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
+        <n_body>Can\'t Remove Shift!. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
     </notification>
     <notification id="CantRemoveUserFromSystem" notificationType="error">
         <n_header><p>😡 <strong>Error</strong></p></n_header>
-        <n_body>Can't Remove User From System!. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
+        <n_body>Can\'t Remove User From System!. Contact with support!<div id="progressBarToHideNotification"></div></n_body>
     </notification>
     <notification id="SaveCalendarCompleted" notificationType="success">
         <n_header><p>😃 <strong>Success</strong></p></n_header>
         <n_body>Calendar was Saved in Database! Yeah<div id="progressBarToHideNotification"></div></n_body>
     </notification>
-        <notification id="SaveCalendarCompleted" notificationType="success">
+    <notification id="UserWasAdded" notificationType="success">
         <n_header><p>😊 <strong>Success</strong></p></n_header>
         <n_body>User was Added to Department! Yeah<div id="progressBarToHideNotification"></div></n_body>
     </notification>
-    
+    <notification id="CantAddUser" notificationType="error">
+        <n_header><p>😡 <strong>Error</strong></p></n_header>
+        <n_body>Can\'t add user to system<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
 </notifications>
 

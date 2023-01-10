@@ -39,6 +39,7 @@ class PHPScripts
 
     public static function REMOVE_USER_FROM_SYSTEM(){ include('RemoveUserFromSystem.php'); } 
 
+    public static function REFRESH_CAL_AND_HOURS(){ include('RefreshCalendarAndHoursOfWork.php'); }
 }
 
 

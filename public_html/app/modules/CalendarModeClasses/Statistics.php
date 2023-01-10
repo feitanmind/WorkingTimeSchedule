@@ -1,6 +1,6 @@
 <?php
 namespace App;
-
+use \Exception as Ex;
 use LDAP\Connection;
 
 class Statistics
@@ -52,18 +52,14 @@ class Statistics
 
     public static function DrawStatisticsChartForUser()
     {
-        // <div class="StatisticGraph">
-        //     <div class="StatisticGraph_mask">
-        //     <p class="StatisticLeftHours_name">Left:</p>
-        //     <p class="StatisticLeftHours">123:05</p>
-        //     </div>
-        // </div>
 
+        
         $user_id = $_SESSION['id_stat'];
-
+        
 
         $accessConnection = ConnectToDatabase::connAdminPass();
-        $user = new User($user_id);
+
+            $user = new User($user_id);
 
         echo '<div class="StatisticForUser">';
             echo '<div class="StatisticAvatar"style="background-image: url(\'style/img/avatars/'.$user->avatar.'\');"></div>';

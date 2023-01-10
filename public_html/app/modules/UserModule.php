@@ -21,6 +21,8 @@
                             <select id="role" name="addu_role">
                                 <?php
                                 use App\ConnectToDatabase;
+                                use \Exception as Ex;
+use function PHPUnit\Framework\throwException;
 
                                 $accessConnection = ConnectToDatabase::connAdminPass();
                                 $sql = $_SESSION['Current_User_Role_Id'] == 1 ? 'SELECT id, name FROM roles;' : 'SELECT id, name FROM roles WHERE NOT id = 1;';
@@ -59,8 +61,6 @@
                                 <option value="08:00:00">8</option>
                                 <option value="07:35:00">7:35</option>
                             </select>
-                                <input type="file" style="display:none;" name="maleDefault" value="default.png"/>
-                                <input type="file" style="display:none;" name="femaleDefault" value="default2.png"/>
                             <script>
                                  $('#gender').change(function() {
                                     if($(this).val() === 'female' && changedAv == 0){
@@ -143,26 +143,28 @@
                     
                     if(isset($_FILES['addu_userAvatar']))
                     {
-                        $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/app/style/img/avatars/";
-                        $nameOfFile = $_POST['addu_login'] . '-avatar'. substr($_FILES['addu_userAvatar']['name'],strpos($_FILES['addu_userAvatar']['name'],"."));
-                        $target_file = $target_dir . $nameOfFile;
+                        if($_FILES['addu_userAvatar']['size'] != 0)
+                        {
+                            $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/app/style/img/avatars/";
+                            $nameOfFile = $_POST['addu_login'] . '-avatar'. substr($_FILES['addu_userAvatar']['name'],strpos($_FILES['addu_userAvatar']['name'],"."));
+                            $target_file = $target_dir . $nameOfFile;
                      
-                        if ($_FILES["addu_userAvatar"]["size"] < 5000000) {
-                            move_uploaded_file($_FILES["addu_userAvatar"]['tmp_name'], $target_file);
-                            $avstr = $nameOfFile;
+                            if ($_FILES["addu_userAvatar"]["size"] < 5000000) {
+                                move_uploaded_file($_FILES["addu_userAvatar"]['tmp_name'], $target_file);
+                                $avstr = $nameOfFile;
+                            }
                         }
+                        else
+                        {
+                            $avstr = $_POST['gender'] == "male" ? "default1.png" : "default2.png";
+                        }
+                        
                         
                     }
                     else
                     {
-                        if($_POST['gender'] == "male")
-                        {
-                            $avstr = "default1.png";
-                        }
-                        else
-                        {
-                        $avstr = "default2.png";
-                        }
+                        $avstr = $_POST['gender'] == "male" ? "default1.png" : "default2.png";
+         
                     }
                     
 
