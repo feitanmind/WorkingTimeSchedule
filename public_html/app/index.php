@@ -75,6 +75,7 @@ require "modules/CalendarModeClasses/Statistics.php";
     <?php PHPScripts::ADD_NEW_DEPARTMENT();?>
     <?php PHPScripts::REMOVE_SHIFT();?>
     <?php PHPScripts::REMOVE_USER_FROM_SYSTEM();?>
+    <?php PHPScripts::CHANGE_SETTINGS_CURRENT_USER();?>
     
     
     <!-- SECTION __________________________LEFT USER PANEL -->

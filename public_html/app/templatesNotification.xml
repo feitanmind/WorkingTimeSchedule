@@ -44,5 +44,14 @@
         <n_header><p>😡 <strong>Error</strong></p></n_header>
         <n_body>Can\'t add user to system<div id="progressBarToHideNotification"></div></n_body>
     </notification>
+    <notification id="CantChangePassword" notificationType="error">
+        <n_header><p>😡 <strong>Error</strong></p></n_header>
+        <n_body>You can'\t change your password! Try again<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
+    <notification id="PasswordWasChanged" notificationType="error">
+        <n_header><p>😊 <strong>Success</strong></p></n_header>
+        <n_body>Your password was changed<div id="progressBarToHideNotification"></div></n_body>
+    </notification>
 </notifications>
 
+    

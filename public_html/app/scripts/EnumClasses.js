@@ -16,7 +16,7 @@ const SubjectNotification
     CantRemoveUserFromSystem: "CantRemoveUserFromSystem",
     SaveCalendarCompleted: "SaveCalendarCompleted",
     UserWasAdded: "UserWasAdded",
-    CantAddUser: "CantAddUser"
-    
-
+    CantAddUser: "CantAddUser",
+    PasswordWasChanged: "PasswordWasChanged",
+    CantChangePassword: "CantChangePassword"
 };
