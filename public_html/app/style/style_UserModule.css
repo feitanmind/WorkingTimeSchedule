@@ -93,8 +93,8 @@
 }
 
 #userAvatarShow{
-    width: 7vw;
-    height: 7vw;
+    width: 5.5vw;
+    height: 5.5vw;
     border-radius: 50%;
 }
 #tohide
@@ -125,4 +125,8 @@
 #submitRemoveUser
 {
     background-color: #f84f4f;
+}
+#addnewUser_adduInput
+{
+    margin-top: 0;
 }

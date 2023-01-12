@@ -1,3 +1,7 @@
+<?php
+use App\ConnectToDatabase;
+use \Exception as Ex;
+?>
 <div id="tabsUsers">
         <div id="User_Add" class="tabusers" onclick="User.AddUserShow();">Add User</div>
         <div id="User_Remove" class="tabusers" onclick="User.RemoveUserShow();">Remove User</div>
@@ -20,10 +24,7 @@
                             Role:
                             <select id="role" name="addu_role">
                                 <?php
-                                use App\ConnectToDatabase;
-                                use \Exception as Ex;
-use function PHPUnit\Framework\throwException;
-
+                                
                                 $accessConnection = ConnectToDatabase::connAdminPass();
                                 $sql = $_SESSION['Current_User_Role_Id'] == 1 ? 'SELECT id, name FROM roles;' : 'SELECT id, name FROM roles WHERE NOT id = 1;';
                                 $result = $accessConnection->query($sql);
@@ -32,9 +33,24 @@ use function PHPUnit\Framework\throwException;
                                     echo "<option value=\"".$row['id']."\">".$row['name']."</option>";
                                 }
                                 $result->free();
-                                unset($accessConnection);
+                                
                                 ?>
                             </select>
+                            <?php
+                                if($_SESSION['Current_User_Role_Id'] == 1)
+                                {
+                                    $resultDepartment = $accessConnection->query("SELECT id,name FROM department;");
+                                    echo '<p>Department</p>';
+                                    echo '<select name="newUserDepId" style="margin-bottom: -5vh;">';
+                                            while($rowDep = $resultDepartment->fetch_assoc())
+                                            {
+                                                echo '<option value="'.$rowDep['id'].'">'.$rowDep['name'].'</option>';
+                                            }
+                                    echo '</select>';
+                                    
+                                }
+
+                            ?>
                         <p>Avatar:</p>
                         <img id="userAvatarShow" src="style/img/user.png" alt="your image" />
                             <input accept="image/*" name="addu_userAvatar" type='file' id="addu_userAvatar" />
@@ -76,7 +92,7 @@ use function PHPUnit\Framework\throwException;
                             <input type="password" name="addu_password"/>
                             <input type="text" name="changeModule" value="3" style="display: none;"/>
                             <!-- Trzeba dodać skrypt js do weryfikacji danych -->
-                            <input type="submit" value="Add user" class="button1"/>
+                            <input type="submit" value="Add user" id="addnewUser_adduInput" class="button1"/>
             </form>
 
 
@@ -154,20 +170,14 @@ use function PHPUnit\Framework\throwException;
                                 $avstr = $nameOfFile;
                             }
                         }
-                        else
-                        {
-                            $avstr = $_POST['gender'] == "male" ? "default1.png" : "default2.png";
-                        }
-                        
-                        
+                        else $avstr = $_POST['gender'] == "male" ? "default1.png" : "default2.png";
+                           
                     }
-                    else
-                    {
-                        $avstr = $_POST['gender'] == "male" ? "default1.png" : "default2.png";
-         
-                    }
-                    
-
+                    else $avstr = $_POST['gender'] == "male" ? "default1.png" : "default2.png";
+    
+                    $departmentId = $user->dep_id;
+                    if(isset($_POST['newUserDepId'])) if($_POST['newUserDepId'] != "") $departmentId = $_POST['newUserDepId'];
+                  
                     $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $avstr, $_POST['addu_custom_id'], $_POST['addu_fulltime'], $_POST['addu_hps']);
 
                     

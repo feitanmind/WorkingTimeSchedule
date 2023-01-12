@@ -175,17 +175,11 @@ use \Exception as Ex;
                     $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
                     $selectUserId = "SELECT id FROM users WHERE login = '$login'";
                     $sqlGrant = "GRANT '$roleDB' TO '$login'@'localhost';";
-                    
 
-
-                
                     $access_Connection->query($sqlCreateUserInDataBase);
                     $access_Connection->query($sqlInsertIntoUsers);
                     $access_Connection->query($sqlGrant);
                
-                
-                
-
                 $resultIdOfUser = $access_Connection ->query($selectUserId);
                 $row = $resultIdOfUser->fetch_assoc();
                 $idOfUser = $row['id'];
