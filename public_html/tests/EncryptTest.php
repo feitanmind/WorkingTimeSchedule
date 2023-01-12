@@ -15,6 +15,7 @@
         public function testDecriptionWorksProprely()
         {
             $ci = new App\Encrypt();
+            print_r($ci->decryptString("xaDKyOPiQ9lA2p5qQg3OAQU003DU003D"));
             $this-> assertEquals("secret",$ci->decryptString("Nv51daHO4hxgW6n0xS0pmAU003DU003D"));
         }
 

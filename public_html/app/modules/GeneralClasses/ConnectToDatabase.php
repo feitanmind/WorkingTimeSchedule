@@ -39,7 +39,7 @@ class ConnectToDatabase
     {
         $en = new Encrypt();
         $decryptPass = $en->decryptString('xaDKyOPiQ9lA2p5qQg3OAQU003DU003D');
-        $mysqli = new \MySQLi('localhost', 'root','niemahasla','app_commercial');
+        $mysqli = new \MySQLi('localhost', 'technican',$decryptPass,'app_commercial');
         if($mysqli->connect_errno)
         {
             echo("Failed to connect. Error: ".$mysqli->connect_error);
