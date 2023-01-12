@@ -17,10 +17,29 @@ class ConnectToDatabase
         }
     }
 
+    public static function connUserPass()
+    {
+        $en = new Encrypt();
+        $username = $_SESSION['username'];
+        $encryptedPass = $_SESSION['password'];
+        $decryptPass = $en->decryptString();
+        $mysqli = new \MySQLi('localhost', $username,$decryptPass,'app_commercial');
+        if($mysqli->connect_errno)
+        {
+            echo("Failed to connect. Error: ".$mysqli->connect_error);
+            return false;
+        }
+        else
+        {
+            return $mysqli;
+        }
+    }
 
     public static function connAdminPass()
     {
-        $mysqli = new \MySQLi('localhost', 'testowy1','niemahasla','app_commercial');
+        $en = new Encrypt();
+        $decryptPass = $en->decryptString('xaDKyOPiQ9lA2p5qQg3OAQU003DU003D');
+        $mysqli = new \MySQLi('localhost', 'root','niemahasla','app_commercial');
         if($mysqli->connect_errno)
         {
             echo("Failed to connect. Error: ".$mysqli->connect_error);

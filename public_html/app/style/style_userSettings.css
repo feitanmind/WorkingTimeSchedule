@@ -29,6 +29,7 @@
         #settingsCurrentUser
         {
             position: absolute;
+            z-index: 2;
             top: 17vh;
             left: 6vw;
             opacity: 1.3;

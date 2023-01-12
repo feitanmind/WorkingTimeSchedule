@@ -12,10 +12,10 @@ if(isset($_POST['userToRemoveFromSystem']))
         $accessConnection = ConnectToDatabase::connAdminPass();
         $sql_DelFromUsers = "DELETE FROM users WHERE id=$idToDel;";
         $sql_DelFromUserData = "DELETE FROM user_data WHERE id=$idToDel;";
-        $sql_LockUser = "DROP USER '$loginToLock'@'localhost';";
+        $sql_DelUser = "DROP USER '$loginToLock'@'localhost';";
         $accessConnection->query($sql_DelFromUsers);
         $accessConnection->query($sql_DelFromUserData);
-        $accessConnection->query($sql_LockUser);
+        $accessConnection->query($sql_DelUser);
         $depId = $_SESSION['Current_User_Department_Id'];
         $_SESSION['Module'] = 1;
         unset($_SESSION['arrayOfHoursOfWorkForCurrentMonth']);

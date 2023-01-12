@@ -160,14 +160,31 @@ use \Exception as Ex;
                     throw new Ex("Użytkownik już jest w bazie danych");
                 }
                     $encrypted_password = $cipher->encryptString($password);
-                    $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$password'";
+                    if($role_id == 1){
+                        $roleDB = 'admin';
+                    }
+                    else if($role_id == 2)
+                    { 
+                        $roleDB  = 'manager';
+                    
+                        }    else 
+                        {$roleDB  = 'worker';
+                        }
+                    
+                    $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$encrypted_password';";
                     $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
                     $selectUserId = "SELECT id FROM users WHERE login = '$login'";
+                    $sqlGrant = "GRANT '$roleDB' TO '$login'@'localhost';";
+                    
 
 
-
-                $access_Connection->query($sqlCreateUserInDataBase);
-                $access_Connection->query($sqlInsertIntoUsers);
+                
+                    $access_Connection->query($sqlCreateUserInDataBase);
+                    $access_Connection->query($sqlInsertIntoUsers);
+                    $access_Connection->query($sqlGrant);
+               
+                
+                
 
                 $resultIdOfUser = $access_Connection ->query($selectUserId);
                 $row = $resultIdOfUser->fetch_assoc();
@@ -189,8 +206,8 @@ use \Exception as Ex;
                 }
                 catch(Ex $e)
                 {
+                    
                     $sqlRevert1 = "DELETE FROM users WHERE login='$login';";
-                    $sqlRevert2 = "DROP USER '$login'@'localhost';";
                     $access_Connection->query($sqlRevert1);
                     $access_Connection->query($sqlRevert2);
                     $xmlFile = fopen("templatesNotification.xml", "r");
@@ -203,8 +220,13 @@ use \Exception as Ex;
 
                 
             }
+            catch(mysqli_sql_exception $e)
+                {
+                    echo($e);
+                }
             catch(Ex $e)
             {
+                echo $e;
                 $xmlFile = fopen("templatesNotification.xml", "r");
                 $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
                 echo "<script>";

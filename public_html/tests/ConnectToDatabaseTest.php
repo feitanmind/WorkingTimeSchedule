@@ -28,6 +28,7 @@ class ConnectToDatabaseTest extends \PHPUnit\Framework\TestCase
         $this -> assertStringContainsString("Uptime", $status);
         unset($conn); 
     }
+
 }
 
 
