@@ -17,6 +17,10 @@ class ComposerStaticInitceab3b4ba106c32c79d1eadf40fa6139
             'PhpParser\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'L' => 
+        array (
+            'Linq\\' => 5,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -36,6 +40,10 @@ class ComposerStaticInitceab3b4ba106c32c79d1eadf40fa6139
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Linq\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/linq/php-linq/linq',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

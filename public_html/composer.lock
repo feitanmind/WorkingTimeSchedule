@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "863782f8c6d0b5bf6e0a6dfe55b9e5e3",
+    "content-hash": "b92f77e3b41fca633e8132e4cc157303",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -75,6 +75,43 @@
                 }
             ],
             "time": "2022-12-30T00:15:36+00:00"
+        },
+        {
+            "name": "linq/php-linq",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gallas12/php-linq.git",
+                "reference": "ac3c0e246e408de9006b33a1c710d0d80558e2ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gallas12/php-linq/zipball/ac3c0e246e408de9006b33a1c710d0d80558e2ed",
+                "reference": "ac3c0e246e408de9006b33a1c710d0d80558e2ed",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Linq\\": "linq"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Gallas",
+                    "email": "gallas@gmail.com"
+                }
+            ],
+            "description": "the fast and modern library for easy data manipulation",
+            "support": {
+                "issues": "https://github.com/gallas12/php-linq/issues",
+                "source": "https://github.com/gallas12/php-linq/tree/0.1.2"
+            },
+            "time": "2016-10-23T13:32:37+00:00"
         },
         {
             "name": "myclabs/deep-copy",

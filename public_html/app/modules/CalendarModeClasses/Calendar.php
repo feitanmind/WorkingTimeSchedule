@@ -6,7 +6,7 @@ use PHPUnit\Util\Exception;
 
 use function PHPUnit\Framework\returnSelf;
 use function PHPUnit\Framework\throwException;
-
+require '/var/www/WorkingTimeSchedule/public_html/vendor/autoload.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -56,7 +56,8 @@ class Calendar
     {
             if($_SESSION["Shift_Id"] != "all")
             {
-            $shiftId = $_SESSION["Shift_Id"] - 1;
+            $shiftId = $_SESSION["Shift_Id"];
+            echo $shiftId;
             }
             $roleId = $_SESSION["Role_Id"];
             //Sprawdzamy ile dni jest w miesiącu
@@ -104,8 +105,12 @@ class Calendar
             {
                 if($_SESSION["Shift_Id"] != "all")
                 {
-                $workingPeople = $this->Days[$j - 1]->Shifts[$shiftId]->EmployeesWorking;
-                $vacationPeople = $this->Days[$j - 1]->Shifts[$shiftId]->EmployeesVacation;
+                    
+                $linq = \Linq\LinqFactory::createLinq();
+                var_dump($linq ->from($this->Days[$j - 1]->Shifts) ->where(function($e) use ($shiftId){if($e->Id == $shiftId) return $e;})-> select('EmployeesWorking'));
+                $workingPeople = $linq ->from($this->Days[$j - 1]->Shifts) ->where(function($e) use ($shiftId){if($e->Id == $shiftId) return $e;})->EmployeesWorking;
+                //print_r($workingPeople);
+                $vacationPeople = $linq ->from($this->Days[$j - 1]->Shifts) ->first(function($e){if($e->Id == $shiftId) return $e;})->EmployeesVacation;
     
                 echo '<div class="dayOfTheWeek"  id="day' . $j . '" onmouseover="showAddAndRemoveControls(' . $j . ')" onmouseout="hideAddAndRemoveControls(' . $j . ')">' . '<div class="numberOfDay"><p><b>' . $j . '</b></p>
                             <div id="addP" class="windowButton" onclick="createFormToAddPersonToDay(this);">+</div>
@@ -118,7 +123,11 @@ class Calendar
                 {
                     if($roleId == $workingPerson->role_id)
                     {
-                        echo "<div class=\"userW\" style=\"background-color: ". $this->Days[$j - 1]->Shifts[$shiftId]->Color."80; border-color: ".$this->Days[$j - 1]->Shifts[$shiftId]->Color.";\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
+                        echo "<div class=\"userW\" style=\"background-color: ". 
+                        $linq ->from($this->Days[$j - 1]->Shifts) ->first(function($e){if($e->Id == $shiftId) return $e;})->Color
+                        ."80; border-color: ".
+                        $linq ->from($this->Days[$j - 1]->Shifts) ->first(function($e){if($e->Id == $shiftId) return $e;})->Color
+                        .";\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
                     }
                     
                 }
