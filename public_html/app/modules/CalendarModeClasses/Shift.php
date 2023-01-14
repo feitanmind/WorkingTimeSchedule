@@ -4,6 +4,7 @@ namespace App;
 class Shift
 {
     public int $Id;
+    public int $IdInDepartment;
     public string $Name;
     public string $Department;
     public string $HoursPerShift;
@@ -13,16 +14,10 @@ class Shift
     public $EmployeesWorking = array();
     public $EmployeesVacation = array();
 
-    //Shift($row['name'],$row['dep_id'],$row['hours_per_shift'],$row['startHour'],$row['endHour']))
     public function __construct($id, $depId)
     {
         $this->Id = $id;
-        // $this->Name = $name;
-        //echo "DEPS".$depId;
         $this->Department = $depId;
-        // $this->HoursPerShift = $hoursPerShift;
-        // $this->StartHour = $startHour;
-        // $this->EndHour = $endHour;
         $this->CompleteHours();
     }
     public function CompleteHours()
@@ -34,7 +29,7 @@ class Shift
         $sql_Query_Selection = "SELECT * FROM shifts WHERE dep_id = $department_ID AND id = $shiftId;";
         //Przypisanie rezultatu wykonania zapytania do bazy danych
         $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
-        
+        $idInDepartment = 0;
         while($row = $result_Of_Selection->fetch_assoc())
         {
             $this->StartHour = $row['startHour'];

@@ -4,6 +4,7 @@ namespace App;
 use PhpParser\Node\Stmt\Foreach_;
 use PHPUnit\Util\Exception;
 
+
 use function PHPUnit\Framework\returnSelf;
 use function PHPUnit\Framework\throwException;
 require '/var/www/WorkingTimeSchedule/public_html/vendor/autoload.php';
@@ -57,7 +58,7 @@ class Calendar
             if($_SESSION["Shift_Id"] != "all")
             {
             $shiftId = $_SESSION["Shift_Id"];
-            echo $shiftId;
+            //echo $shiftId;
             }
             $roleId = $_SESSION["Role_Id"];
             //Sprawdzamy ile dni jest w miesiącu
@@ -105,12 +106,10 @@ class Calendar
             {
                 if($_SESSION["Shift_Id"] != "all")
                 {
-                    
                 $linq = \Linq\LinqFactory::createLinq();
-                var_dump($linq ->from($this->Days[$j - 1]->Shifts) ->where(function($e) use ($shiftId){if($e->Id == $shiftId) return $e;})-> select('EmployeesWorking'));
-                $workingPeople = $linq ->from($this->Days[$j - 1]->Shifts) ->where(function($e) use ($shiftId){if($e->Id == $shiftId) return $e;})->EmployeesWorking;
-                //print_r($workingPeople);
-                $vacationPeople = $linq ->from($this->Days[$j - 1]->Shifts) ->first(function($e){if($e->Id == $shiftId) return $e;})->EmployeesVacation;
+                
+                $workingPeople = current(array_filter($linq->from($this->Days[$j - 1]->Shifts)->takeWhile(function($x) use ($shiftId) { if($x->Id == $shiftId) return $x;})))->EmployeesWorking;
+                $vacationPeople = current(array_filter($linq->from($this->Days[$j - 1]->Shifts)->takeWhile(function($x) use ($shiftId) { if($x->Id == $shiftId) return $x;})))->EmployeesVacation;
     
                 echo '<div class="dayOfTheWeek"  id="day' . $j . '" onmouseover="showAddAndRemoveControls(' . $j . ')" onmouseout="hideAddAndRemoveControls(' . $j . ')">' . '<div class="numberOfDay"><p><b>' . $j . '</b></p>
                             <div id="addP" class="windowButton" onclick="createFormToAddPersonToDay(this);">+</div>
@@ -124,9 +123,9 @@ class Calendar
                     if($roleId == $workingPerson->role_id)
                     {
                         echo "<div class=\"userW\" style=\"background-color: ". 
-                        $linq ->from($this->Days[$j - 1]->Shifts) ->first(function($e){if($e->Id == $shiftId) return $e;})->Color
+                        current(array_filter($linq->from($this->Days[$j - 1]->Shifts)->takeWhile(function($x) use ($shiftId) { if($x->Id == $shiftId) return $x;})))->Color
                         ."80; border-color: ".
-                        $linq ->from($this->Days[$j - 1]->Shifts) ->first(function($e){if($e->Id == $shiftId) return $e;})->Color
+                        current(array_filter($linq->from($this->Days[$j - 1]->Shifts)->takeWhile(function($x) use ($shiftId) { if($x->Id == $shiftId) return $x;})))->Color
                         .";\" personID=\"$workingPerson->user_id\">$workingPerson->name</div>";
                     }
                     
@@ -204,11 +203,14 @@ class Calendar
     {
         if($this->CanUserBeSignOnDay($user,$dayId,$shiftId))
         {
-            array_push($this->Days[$dayId - 1]->Shifts[$shiftId - 1]->EmployeesWorking, $user);
+             $linq = \Linq\LinqFactory::createLinq(); 
+             //print_r($this->Days[$dayId - 1]->Shifts[0]->EmployeesWorking);
+             $arrOfU = $linq->from($this->Days[$dayId - 1]->Shifts)->takeWhile(function($x) use ($shiftId) { if($x->Id == $shiftId) return $x;});
+             foreach($arrOfU as $a) if($a != null) $index = key($arrOfU);
+            array_push($this->Days[$dayId - 1]->Shifts[$index]->EmployeesWorking, $user);          
         }
         else
         {
-            //throw new \Exception("You can't sign user. User wassigned on colliding shift");
             return false;
         }
         
@@ -225,19 +227,18 @@ class Calendar
     {
 
         $indexUserToDel = 0;
-
-        foreach ($this->Days[$dayId - 1]->Shifts[$shiftId - 1]->EmployeesWorking as $employee)
+        $linq = \Linq\LinqFactory::createLinq();
+        $arrOfU = $linq->from($this->Days[$dayId - 1]->Shifts)->takeWhile(function($x) use ($shiftId) { if($x->Id == $shiftId) return $x;});
+       
+        foreach($arrOfU as $a) if($a != null) $index = key($arrOfU);
+        foreach($this->Days[$dayId - 1]->Shifts[$index]->EmployeesWorking as $u)
         {
-            $in = null;
-            if ($employee->user_id == $user->user_id)
+            if($u->user_id == $user->user_id)
             {
-                $in = $indexUserToDel;
-                break;
+                $in=  key($this->Days[$dayId - 1]->Shifts[$index]->EmployeesWorking);
             }
-
-            $indexUserToDel++;
         }
-        array_splice($this->Days[$dayId - 1]->Shifts[$shiftId - 1]->EmployeesWorking, $in, 1);
+        array_splice($this->Days[$dayId - 1]->Shifts[$index]->EmployeesWorking, $in, 1);
 
     }
     public function UnsignVacationUserFormDay($user, $dayId, $shiftId)
@@ -413,6 +414,7 @@ class Calendar
 
             }
         }
+        
         return $calenadarObjectAsCalendar;
     }
 
@@ -431,7 +433,9 @@ class Calendar
     {
         $dateString = $this->Year . '-' . $this->MonthNumber . '-1';
         $dateOfMonth = date("Y-m", strtotime($dateString));
-        $enrolledShift = $this->Days[$day_id - 1]->Shifts[$shift_id - 1];
+        $linq = \Linq\LinqFactory::createLinq();
+      
+        $enrolledShift = current(array_filter($linq->from($this->Days[$day_id]->Shifts)->takeWhile(function($x) use ($shift_id) { if($x->Id == $shift_id) return $x;})));
         $enroledHours = $enrolledShift->GetIntArray_HoursOfShift();
 
         $currentShifts = $this->Days[$day_id - 1]->Shifts;
