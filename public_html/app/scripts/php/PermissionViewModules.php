@@ -7,7 +7,7 @@ namespace App;
             onclick="document.getElementById(\'calendarMode\').style.display = \'flex\';
                      document.getElementById(\'UserModule\').style.display = \'none\'
                      document.getElementById(\'ShiftModule\').style.display = \'none\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'none\';
+                     document.getElementById(\'rolesModule\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      ">
             Calendar Mode
@@ -17,17 +17,17 @@ namespace App;
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'UserModule\').style.display = \'none\'
                      document.getElementById(\'ShiftModule\').style.display = \'none\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'flex\';
+                     document.getElementById(\'rolesModule\').style.display = \'flex\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     ">
-            Simple Mode
+            Roles
         </div>
 
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'UserModule\').style.display = \'block\'
                      document.getElementById(\'ShiftModule\').style.display = \'none\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'none\';
+                     document.getElementById(\'rolesModule\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      
                      ">
@@ -38,7 +38,7 @@ namespace App;
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'UserModule\').style.display = \'none\'
                      document.getElementById(\'ShiftModule\').style.display = \'flex\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'none\';
+                     document.getElementById(\'rolesModule\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     
                     ">
@@ -50,7 +50,7 @@ namespace App;
         onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                  document.getElementById(\'UserModule\').style.display = \'none\'
                  document.getElementById(\'ShiftModule\').style.display = \'none\';
-                 document.getElementById(\'simpleCalendar\').style.display = \'none\';
+                 document.getElementById(\'rolesModule\').style.display = \'none\';
                  document.getElementById(\'addDepartmentModule\').style.display = \'flex\';
                 
                 ">
@@ -66,7 +66,7 @@ namespace App;
             onclick="document.getElementById(\'calendarMode\').style.display = \'flex\';
                      document.getElementById(\'UserModule\').style.display = \'none\'
                      document.getElementById(\'ShiftModule\').style.display = \'none\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'none\';
+                     document.getElementById(\'rolesModule\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      ">
             Calendar Mode
@@ -76,17 +76,17 @@ namespace App;
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'UserModule\').style.display = \'none\'
                      document.getElementById(\'ShiftModule\').style.display = \'none\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'flex\';
+                     document.getElementById(\'rolesModule\').style.display = \'flex\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     ">
-            Simple Mode
+            Roles
         </div>
 
         <div class="button1" 
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'UserModule\').style.display = \'block\'
                      document.getElementById(\'ShiftModule\').style.display = \'none\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'none\';
+                     document.getElementById(\'rolesModule\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      
                      ">
@@ -97,7 +97,7 @@ namespace App;
             onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
                      document.getElementById(\'UserModule\').style.display = \'none\'
                      document.getElementById(\'ShiftModule\').style.display = \'flex\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'none\';
+                     document.getElementById(\'rolesModule\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                     
                     ">
@@ -114,21 +114,12 @@ namespace App;
             onclick="document.getElementById(\'calendarMode\').style.display = \'flex\';
                      document.getElementById(\'UserModule\').style.display = \'none\'
                      document.getElementById(\'ShiftModule\').style.display = \'none\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'none\';
+                     document.getElementById(\'rolesModule\').style.display = \'none\';
                      document.getElementById(\'addDepartmentModule\').style.display = \'none\';
                      ">
             Calendar Mode
         </div>
-
-        <div class="button1"
-            onclick="document.getElementById(\'calendarMode\').style.display = \'none\';
-                     document.getElementById(\'UserModule\').style.display = \'none\'
-                     document.getElementById(\'ShiftModule\').style.display = \'none\';
-                     document.getElementById(\'simpleCalendar\').style.display = \'flex\';
-                     document.getElementById(\'addDepartmentModule\').style.display = \'none\';
-                    ">
-            Simple Mode
-        </div>';
+        ';
     }
 
 

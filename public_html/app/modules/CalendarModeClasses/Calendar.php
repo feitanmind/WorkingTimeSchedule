@@ -28,13 +28,9 @@ class Calendar
     }
     public static function Get_Name_Of_Month($monthNumber, $year)
     {
-        // $fmt = new \IntlDateFormatter('pl_PL',\IntlDateFormatter::FULL,\IntlDateFormatter::FULL,'Europe/Warsaw',\IntlDateFormatter::GREGORIAN);
-        // $fmt->setPattern("MMMM");
-        // return $fmt->format(mktime(0, 0, 0, $monthNumber, 1, $year));
-        return date('F', mktime(0, 0, 0, $monthNumber, 1, $year));
-        //return strftime('%B', mktime(0, 0, 0, $monthNumber, 1, $year));
-        
+        return date('F', mktime(0, 0, 0, $monthNumber, 1, $year));    
     }
+    
     private function CreateDaysInMonth($monthNumber, $year, $department)
     {
         $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $monthNumber, $year);
@@ -43,16 +39,7 @@ class Calendar
             array_push($this->Days, new Day($i, $department));
         }
     }
-    // public function ActualizeDays($_day)
-    // {
-    //     foreach ($this->Days as $day)
-    //     {
-    //         if($day->NumberOfDay == $_day->NumberOfDay)
-    //         {
-    //             $day->Shifts = $_day->Shifts;
-    //         }
-    //     }
-    // }
+
     public function DrawCalendar()
     {
             if($_SESSION["Shift_Id"] != "all")

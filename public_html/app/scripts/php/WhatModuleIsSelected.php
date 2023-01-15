@@ -9,7 +9,7 @@ namespace App;
                         document.getElementById('calendarMode').style.display = 'flex';
                         document.getElementById('ShiftModule').style.display = 'none'
                         document.getElementById('addDepartmentModule').style.display = 'none';
-                        document.getElementById('simpleCalendarModule').style.display = 'none';
+                        document.getElementById('rolesModule').style.display = 'none';
                     </script>";
                 break;
             case 2:
@@ -18,7 +18,7 @@ namespace App;
                         document.getElementById('calendarMode').style.display = 'none';
                         document.getElementById('ShiftModule').style.display = 'none';
                         document.getElementById('addDepartmentModule').style.display = 'none';
-                        document.getElementById('simpleCalendarModule').style.display = 'none';
+                        document.getElementById('rolesModule').style.display = 'none';
                     </script>";
                 break;
             case 3:
@@ -27,7 +27,7 @@ namespace App;
                         document.getElementById('calendarMode').style.display = 'none';
                         document.getElementById('ShiftModule').style.display = 'none';
                         document.getElementById('addDepartmentModule').style.display = 'none';
-                        document.getElementById('simpleCalendarModule').style.display = 'none';
+                        document.getElementById('rolesModule').style.display = 'none';
                     </script>";
                 break;
             case 4:
@@ -36,7 +36,7 @@ namespace App;
                         document.getElementById('calendarMode').style.display = 'none';
                         document.getElementById('ShiftModule').style.display = 'flex';
                         document.getElementById('addDepartmentModule').style.display = 'none';
-                        document.getElementById('simpleCalendarModule').style.display = 'none';
+                        document.getElementById('rolesModule').style.display = 'none';
                     </script>";
                 break;
             case 5:
@@ -45,7 +45,7 @@ namespace App;
                         document.getElementById('calendarMode').style.display = 'none';
                          document.getElementById('ShiftModule').style.display = 'none';
                         document.getElementById('addDepartmentModule').style.display = 'flex';
-                        document.getElementById('simpleCalendarModule').style.display = 'none';
+                        document.getElementById('rolesModule').style.display = 'none';
                      </script>";
                 break;
             default:
@@ -54,7 +54,7 @@ namespace App;
                         document.getElementById('calendarMode').style.display = 'flex';
                         document.getElementById('ShiftModule').style.display = 'none';
                         document.getElementById('DepartmentModule').style.display = 'none';
-                        document.getElementById('simpleCalendarModule').style.display = 'none';
+                        document.getElementById('rolesModule').style.display = 'none';
                 </script>";
                 
         }

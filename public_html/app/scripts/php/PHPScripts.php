@@ -42,6 +42,10 @@ class PHPScripts
     public static function REFRESH_CAL_AND_HOURS(){ include('RefreshCalendarAndHoursOfWork.php'); }
 
     public static function CHANGE_SETTINGS_CURRENT_USER(){ include('ChangeSettingsCurrentUser.php');}
+
+    public static function ADD_NEW_ROLE(){ include('AddANewRole.php');}
+
+    public static function REMOVE_ROLE(){ include('RemoveARole.php');}
 }
 
 

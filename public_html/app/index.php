@@ -38,8 +38,8 @@ require "modules/CalendarModeClasses/Statistics.php";
     <link rel="stylesheet" type="text/css" href="style/style_Notifications.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_UserModule.css"/>
     <link rel="stylesheet" type="text/css" href="style/style_userSettings.css"/>
-
-
+    <link rel="stylesheet" type="text/css" href="style/style_RolesModule.css"/>
+    
     <script src="scripts/jquery-3.6.0.min.js"></script>
     <script src="scripts/EnumClasses.js"></script>
     <script language="JavaScript">
@@ -73,6 +73,8 @@ require "modules/CalendarModeClasses/Statistics.php";
     <?php PHPScripts::ADD_USER_TO_Day_of_Calendar();?>
     <?php PHPScripts::ADD_NEW_SHIFT();?>
     <?php PHPScripts::ADD_NEW_DEPARTMENT();?>
+    <?php PHPScripts::ADD_NEW_ROLE();?>
+    <?php PHPScripts::REMOVE_ROLE();?>
     <?php PHPScripts::REMOVE_SHIFT();?>
     <?php PHPScripts::REMOVE_USER_FROM_SYSTEM();?>
     <?php PHPScripts::CHANGE_SETTINGS_CURRENT_USER();?>
@@ -112,9 +114,7 @@ require "modules/CalendarModeClasses/Statistics.php";
                 </select>
             </div>
 <!-- TOAST -->
-            <div id="toast" style="display: none;">
-
-            </div>
+            
             <!-- //Sprawdzenie czy formularz z dodaniem użytkownika został wysłany i dodanie użytkownika do obiektu calendar -->
 
            
@@ -154,9 +154,9 @@ require "modules/CalendarModeClasses/Statistics.php";
             include("modules/ShiftModule.php");
         echo '</div>';
 
-         // Moduł: Simple Calendar 
-        echo '<div class="simpleCalendar" id="simpleCalendar">';
-             include("modules/SimpleCalendarModule.php");
+         // Moduł: Ról 
+        echo '<div class="rolesModule" id="rolesModule">';
+             include("modules/RolesModule.php");
         echo '</div>';
 
         if($_SESSION['Current_User_Role_Id'] == 1 )
@@ -201,6 +201,7 @@ require "modules/CalendarModeClasses/Statistics.php";
         <script src="scripts/Statistics.js"></script>
         <script src="scripts/Calendar.js"></script>
         <script src="scripts/Shift.js"></script>
+        <script src="scripts/Roles.js"></script>
         <script src="scripts/User.js"></script>
         <script src="scripts/showCalendarDayControls.js"></script>
         

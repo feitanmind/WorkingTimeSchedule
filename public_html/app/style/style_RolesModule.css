@@ -1,0 +1,101 @@
+
+#tabsRoles
+{
+    width: 100%;
+    display: flex;
+    height: 2vw;
+    position:absolute;
+    z-index: 2;
+    top: 22vh;
+    left: 34.5vw;
+    
+}
+.tabroles
+{
+    box-sizing: border-box;
+    font-size: 1vw;
+    background-color: #cccccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3vw;
+    border: 0.1vw solid #cccccc;
+    border-bottom: none;
+    cursor: pointer;
+}
+
+#Role_Add
+{
+    background-color: white;
+}
+
+#rolesModule
+{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1vw;
+}
+
+#rolesModule select
+{
+    font-size: 1vw;
+}
+
+.boardRolesModule
+{
+    width: 30vw;
+    height: 60vh;
+    box-shadow: 0vw 0vw 2vw 0.1vw #cccccc;
+    box-sizing: border-box;
+    padding: 1vw;
+    padding-top: 7vh;
+    border-radius: 1vw;
+}
+.AddNewRole
+{
+    background-image: url("img/imageNewRole.jpg");
+    background-size: 100% 30vh;
+    background-repeat: no-repeat;
+    background-position-y: 40vh;
+}
+#listOfRolesRoleModule
+{
+    height: 10vh;
+    overflow-y: auto;
+    margin-bottom: 2vh;
+
+}
+.boardRolesModule h3
+{
+    margin-bottom: 0.2vh;
+}
+.boardRolesModule #nameOfNewRole
+{
+    width: 10vw;
+    border: 0.1vw solid black;
+    border-radius: 1vw;
+    box-sizing: border-box;
+    padding-left: 1vw;
+}
+#newRoleAsRoleDb
+{
+    width: 8vw;
+}
+#newRoleDepId_header
+{
+    margin-top: 1vh;
+}
+#rolesModule input[type="submit"]
+{
+    display: flex;
+    color: white;
+    box-sizing: border-box;
+    text-align: center;
+}
+#roleRemoveSubmit
+{
+    background-color: #f84f4f;
+}

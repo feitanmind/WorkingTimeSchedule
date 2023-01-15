@@ -8,15 +8,10 @@ class ComposerStaticInitceab3b4ba106c32c79d1eadf40fa6139
 {
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        'f9e61f18f0291090ecf3f67a829046de' => __DIR__ . '/..' . '/athari/yalinqo/YaLinqo/Linq.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'Y' => 
-        array (
-            'YaLinqo\\' => 8,
-        ),
         'P' => 
         array (
             'PhpParser\\' => 10,
@@ -38,10 +33,6 @@ class ComposerStaticInitceab3b4ba106c32c79d1eadf40fa6139
     );
 
     public static $prefixDirsPsr4 = array (
-        'YaLinqo\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/athari/yalinqo/YaLinqo',
-        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',

@@ -77,15 +77,7 @@ use \Exception as Ex;
         // Zwraca dane użytkownika 
         public function getUserData()
         {
-            // //data:image/png;base64,'.base64_encode($this->avatar).'
             $userAvatar = $this->avatar;
-            // $userCredentials = '<img src="/app/style/img/avatars/'.$userAvatar.'"/>'
-            // .'<h2>'.$this->name. ' '. $this->surname. '</h2>'
-            // .'<p>UserID: '.$this->user_id.'</p>'
-            // .'<p>Department: '.$this->department.'</p>'
-            // .'<p>Role: '.$this->role.'</p>'
-            // ;
-
 
             $userCredentials = 
             '   <div id="avatarCurrentUser" style="background-image: url(\'style/img/avatars/'.$userAvatar.'\');"></div>
@@ -159,17 +151,24 @@ use \Exception as Ex;
                 {
                     throw new Ex("Użytkownik już jest w bazie danych");
                 }
+
+                $sqlRole = "SELECT role_db FROM roles WHERE id = $role_id;";
+                $resRole = $access_Connection->query($sqlRole);
+                $rowRole = $resRole->fetch_assoc();
+
                     $encrypted_password = $cipher->encryptString($password);
-                    if($role_id == 1){
+                    if($rowRole['id'] == 1)
+                    {
                         $roleDB = 'admin';
                     }
-                    else if($role_id == 2)
+                    else if($rowRole['id'] == 2)
                     { 
                         $roleDB  = 'manager';
-                    
-                        }    else 
-                        {$roleDB  = 'worker';
-                        }
+                    }
+                    else 
+                    {
+                        $roleDB  = 'worker';
+                    }
                     
                     $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$encrypted_password';";
                     $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
