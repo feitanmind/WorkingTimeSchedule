@@ -1,7 +1,7 @@
 <?php
     namespace App;
-    require "app/modules/GeneralClasses/Encrypt.php";
-    require "app/modules/GeneralClasses/ConnectToDatabase.php";
+    require "modules/GeneralClasses/Encrypt.php";
+    require "modules/GeneralClasses/ConnectToDatabase.php";
 ?>
 <html>
 <head>
@@ -22,9 +22,10 @@
         if($cipher->decryptString($cryptedEvaluationDate) >= strtotime("now")){
             
             $user_id = $cipher->decryptString($cryptedUserIdentifier);
+            
             echo '
             
-            <script src="/../scripts/showpass.js"></script>
+            <script src="/app/scripts/showpass.js"></script>
             <form class="ChangePasswordPosition" id="form1" method="post" action="ChangePasswordForm.php">
                 <h2>Change your password</h2>
                 <input type="password" name="newpass" id="newpass" onfocusout="checkPasswordsAreSameFieldOne()" placeholder="insert new password" /><br>
@@ -34,7 +35,7 @@
                 <input type="submit" id="changePassSend" disabled="true" value="Change password"/>
                 
             </form>
-            <script src="/../scripts/checkPasswordChange.js"></script>
+            <script src="/app/scripts/checkPasswordChange.js"></script>
             ';
         }
         else
@@ -45,7 +46,7 @@
             </form>
             <h2 style="margin-top: 5vh;">Redirecting to login site...</h2>
             <h2 style="font-size: 10vw;">9</h2>
-            <script src="/scripts/countDownAndLog.js"></script>
+            <script src="/app/scripts/countDownAndLog.js"></script>
             ';
         }            
     }
@@ -69,16 +70,16 @@
                     $findUsernameInDatabase = "SELECT login FROM users WHERE id = $uid";
                     $resultSelectLogin = $access_Connection->query($findUsernameInDatabase);
                     $rowSelectLogin = $resultSelectLogin->fetch_assoc();
-
+                    
                     $changePasswordForDatabaseSQL = "SET PASSWORD FOR '".$rowSelectLogin['login']."'@'localhost' = PASSWORD('".$newPasswordDecrypted."');";
-                    $resultSelectLogin = $connAuth->query($changePasswordForDatabaseSQL);
+                    $resultSelectLogin = $access_Connection->query($changePasswordForDatabaseSQL);
                     echo '
                     <form class="ChangePasswordPosition" style="height: 8vh; background-color: rgba(82, 218, 54, 0.212);" id="form1">
                         <h2>Password changed</h2>
                     </form>
                     <h2 style="margin-top: 5vh;">Redirecting to login site...</h2>
                     <h2 style="font-size: 10vw;">9</h2>
-                    <script src="/scripts/countDownAndLog.js"></script>
+                    <script src="/app/scripts/countDownAndLog.js"></script>
                     ';
                 }
                 else

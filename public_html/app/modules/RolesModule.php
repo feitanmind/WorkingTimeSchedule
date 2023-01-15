@@ -1,7 +1,7 @@
 <?php namespace App; ?>
 <div id="tabsRoles">
-    <div id="Role_Add" class="tabroles" onclick="Role.AddRoleShow();">Add Shift</div>
-    <div id="Role_Remove" class="tabroles" onclick="Role.RemoveRoleShow();">Remove Shift</div>
+    <div id="Role_Add" class="tabroles" onclick="Role.AddRoleShow();">Add Role</div>
+    <div id="Role_Remove" class="tabroles" onclick="Role.RemoveRoleShow();">Remove Role</div>
 </div>
 
 <form class="AddNewRole boardRolesModule" id="AddRoleModule" method="post">

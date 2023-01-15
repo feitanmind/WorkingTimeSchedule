@@ -6,13 +6,13 @@
 </form>
 
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-$xmlFile = fopen("templatesNotification.xml", "r");
-        $tempateNotification = fread($xmlFile,filesize("templatesNotification.xml"));
-        print_r($tempateNotification);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+// $xmlFile = fopen("templatesNotification.xml", "r");
+//         $tempateNotification = fread($xmlFile,filesize("templatesNotification.xml"));
+//         print_r($tempateNotification);
 
 
-
+echo $_SERVER['SERVER_ADDR'];
 ?>

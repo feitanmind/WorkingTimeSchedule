@@ -152,7 +152,7 @@ use \Exception as Ex;
                     throw new Ex("Użytkownik już jest w bazie danych");
                 }
 
-                $sqlRole = "SELECT role_db FROM roles WHERE id = $role_id;";
+                $sqlRole = "SELECT id, role_db FROM roles WHERE id = $role_id;";
                 $resRole = $access_Connection->query($sqlRole);
                 $rowRole = $resRole->fetch_assoc();
 

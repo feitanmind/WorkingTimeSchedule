@@ -37,9 +37,9 @@ public function recoverPass(string $userMail)
             $mailer = new Mailer;
             $mailSubject = "WorkingTimeSchedule - Recover Your Password";
             // Będzie trzeba zmienić localhost an ip
-            $data1= 'http://localhost/app/ChangePasswordForm.php?uid='.$en_data.'&d='.$en_date;
+            $data1= 'http://'.$_SERVER['SERVER_ADDR'].'/app/ChangePasswordForm.php?uid='.$en_data.'&d='.$en_date;
             $mailBody = "
-            Hello Adam<br>
+            Hello User<br>
             We have received a request to <b>reset your account password</b>.<br>
             Keep a link that will help you with this.<br>
             ".$data1."<br>
