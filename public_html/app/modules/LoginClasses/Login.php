@@ -43,8 +43,7 @@ class Login
                     $_SESSION['header'] = "Location: ../../app/";
                     //$_SESSION['workers_role'] = 1;
                     $_SESSION['Role_Of_Employees'] = 1;
-                    //$_SESSION['shift_id'] = 1;
-                    $_SESSION['Shift_Id'] = 1;
+                    //$_SESSION['shift_id'] = 1;                   
                     
                     $_SESSION['id_stat'] = 1;
                     $searchAdditionalInformation = "SELECT avatar, dep_id, role_id FROM user_data WHERE usr_id = $id;";
@@ -55,9 +54,22 @@ class Login
                         $_SESSION['Current_User_Department_Id'] = $row['dep_id'];
                         $_SESSION['User_Avatar'] = $row['avatar'];
                         $_SESSION['Role_Id'] = $row['role_id'];
-                        $_SESSION['Current_User_Role_Id'] = $row['role_id'];
+                        $sqlRoleDb = "SELECT role_db FROM roles WHERE id=".$row['role_id'].";";
+                        $resRole = $access_Connection->query($sqlRoleDb);
+                        $rowRole = $resRole->fetch_assoc();
+                        $_SESSION['Current_User_Role_Id'] = $rowRole['role_db'];
                     }
-                    
+                    $searchShift = "SELECT id FROM shifts WHERE dep_id =".$row['dep_id'] .";";
+                    $resShi = $access_Connection->query($searchShift);
+                    if($res->num_rows > 0)
+                    {
+                        $rowShi = $resShi->fetch_assoc();
+                        $_SESSION['Shift_Id'] = $rowShi['id'];
+                    }
+                    else
+                    {
+                        $_SESSION['Shift_Id'] = 0;
+                    }
 
                     // $_SESSION['Month_Number'] = date('m');
                     // $_SESSION['Year_Number'] = date('Y');

@@ -145,3 +145,11 @@ select{
     left: 1vw;
 }
 
+#rolesModule
+{
+    display:none;
+}
+#ShiftModule
+{
+    display: none;
+}

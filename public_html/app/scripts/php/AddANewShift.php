@@ -59,12 +59,16 @@ if(isset($_POST['addNewShift']))
         $sqlCol = "SELECT COUNT(id) AS colorIndex FROM shifts WHERE dep_id = $depId;";
         $result = $authorizedConnection->query($sqlCol);
         $row = $result->fetch_assoc();
-        $colorIndex = intval($row['colorIndex']) - 1;
+        $colorIndex = $row['colorIndex'];
         $color = $colors[$colorIndex];
    
         $sql = "INSERT INTO shifts(name, dep_id, hours_per_shift, startHour, endHour, color) VALUES('$name',$depId, '$finalTime', '$startTime', '$endTime','$color');";
         $authorizedConnection->query($sql);
-        $_SESSION['Module'] = 4;
+        $selectShift = "SELECT id FROM shifts WHERE dep_id = $depId;";
+        $resShifts = $authorizedConnection->query($selectShift);
+        $rowShifts = $resShifts->fetch_assoc();
+        $_SESSION['Shift_Id'] = $rowShifts['id'];
+        $_SESSION['Module'] = 1;
     }
     catch (Ex $e)
     {

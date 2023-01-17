@@ -56,8 +56,9 @@ class Statistics
         
         $user_id = $_SESSION['id_stat'];
         
-
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        if($_SESSION['Shift_Id'] != 0)
+        {
+            $accessConnection = ConnectToDatabase::connAdminPass();
 
             $user = new User($user_id);
 
@@ -172,11 +173,14 @@ class Statistics
         echo '   </div>';
         echo '</div>';
         echo '</div>';
+        }
 
       
     }
     public static function DrawMiniCalendarForUserStatistics()
     {
+        if($_SESSION['Shift_Id'] != 0)
+        {
         $user_id = $_SESSION['id_stat'];
         $user = new User($user_id);
         $month_Number = $_SESSION['Month_Number'];
@@ -222,6 +226,7 @@ class Statistics
         }
         echo "</tr>";
         echo "</table>";
+    }
 
     }
 

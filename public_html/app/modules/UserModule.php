@@ -178,7 +178,7 @@ use \Exception as Ex;
                     $departmentId = $user->dep_id;
                     if(isset($_POST['newUserDepId'])) if($_POST['newUserDepId'] != "") $departmentId = $_POST['newUserDepId'];
                   
-                    $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $user->dep_id, $_POST['addu_role'], $avstr, $_POST['addu_custom_id'], $_POST['addu_fulltime'], $_POST['addu_hps']);
+                    $user->addUser($_POST['addu_login'], $_POST['addu_password'], $_POST['addu_email'], $_POST['addu_name'], $_POST['addu_surname'], $departmentId, $_POST['addu_role'], $avstr, $_POST['addu_custom_id'], $_POST['addu_fulltime'], $_POST['addu_hps']);
 
                     
                     $_SESSION['Module'] = 3;

@@ -189,7 +189,7 @@ require "modules/CalendarModeClasses/Statistics.php";
             <?php Statistics::DrawListOfUsersForStatistic() ?>
        
         </div>
-
+            
                 <?php Statistics::DrawStatisticsChartForUser(); ?>
             <div class="StatisticCalendar">
                 <?php Statistics::DrawMiniCalendarForUserStatistics();?>
