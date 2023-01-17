@@ -10,11 +10,11 @@ use \Exception as Ex;
 
 <form method="post" id="UserAdd_UserModule" class="formUserModule" enctype="multipart/form-data">
                 <h2>Add new user</h2>
-                Name: <input type="text" name="addu_name"/>
-                Surname: <input type="text" name="addu_surname"/>
-                Login: <input type="text" name="addu_login"/>
-                Email: <input type="text" name="addu_email"/>
-                CustomID: <input type="text" name="addu_custom_id"/>
+                Name: <input type="text" name="addu_name" id="addu_name" onclick="this.style.backgroundColor='white';"/>
+                Surname: <input type="text" name="addu_surname" id="addu_surname" onclick="this.style.backgroundColor='white';"/>
+                Login: <input type="text" name="addu_login" id="addu_login" onclick="this.style.backgroundColor='white';"/>
+                Email: <input type="text" name="addu_email" id="addu_email" onclick="this.style.backgroundColor='white';"/>
+                CustomID: <input type="number" name="addu_custom_id" id="addu_custom_id" onclick="this.style.backgroundColor='white';"/>
                 FullTime:   <select name="addu_fulltime">
                                 <option value="1">Full Time (1)</option>
                                 <option value="0.5">Half (1/2)</option>
@@ -89,10 +89,10 @@ use \Exception as Ex;
 
                             </script>
                             Temporary password:
-                            <input type="password" name="addu_password"/>
+                            <input type="password" name="addu_password" id="addu_password" onclick="this.style.backgroundColor='white';"/>
                             <input type="text" name="changeModule" value="3" style="display: none;"/>
-                            <!-- Trzeba dodać skrypt js do weryfikacji danych -->
-                            <input type="submit" value="Add user" id="addnewUser_adduInput" class="button1"/>
+                            <div id="addnewUser_adduInput" class="button1" onclick="User.VerificationAddForm();">Add user</div>
+                            <!-- <input type="submit" value="Add user" id="addnewUser_adduInput" class="button1"/> -->
             </form>
 
 

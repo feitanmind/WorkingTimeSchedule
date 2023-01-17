@@ -55,7 +55,7 @@
         }
         $res->free();
     ?>
-    <input type="submit" class="button1" value="Add" />
+     <div class="button1" id="roleAddSubmit" onclick="Role.AddRoleFormVerify();" >Add</div>
 
 </form>
 <form class="RemoveRole boardRolesModule" method="post" id="RemoveRoleModule"style="display: none;">

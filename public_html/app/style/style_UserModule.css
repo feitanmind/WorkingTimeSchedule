@@ -66,6 +66,14 @@
     border-radius: 1vw;
     padding-left: 1vw;
 }
+.UserModule input[type="number"]{
+    background-color: white;
+    width: 12vw;
+    height: 3vh;
+    border:0.1vw solid #0A85ED;
+    border-radius: 1vw;
+    padding-left: 1vw;
+}
 .UserModule input[type="submit"]{
     color:white;
     text-align: center;

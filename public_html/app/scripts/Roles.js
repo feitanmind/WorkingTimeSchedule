@@ -16,4 +16,17 @@ class Role
         document.getElementById("Role_Add").style.backgroundColor = '#cccccc';
         document.getElementById("Role_Remove").style.backgroundColor = 'white';
     }
+    static AddRoleFormVerify()
+    {
+        let nameOfNewRole = document.getElementById("nameOfNewRole");
+        if(nameOfNewRole.value == "")
+        {
+            nameOfNewRole.style.backgroundColor = "#e48080";
+        }
+        else
+        {
+            let formAddRole = document.getElementById("AddRoleModule");
+            formAddRole.submit();
+        }
+    }
 }

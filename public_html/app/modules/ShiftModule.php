@@ -7,13 +7,13 @@
     
     <div class="ShiftForm">
         <h2>Add new Shift!</h2>
-        <form method="post">
+        <form method="post" id="addShiftFormPost">
             <p>Name of new Shift</p>
-            <input type="text" class="inputAddShift" name="nameOfShift_addShift"/>
+            <input type="text" class="inputAddShift" name="nameOfShift_addShift" id="nameOfShift_addShift"/>
             <p>Start hour of new Shift</p>
-            <input type="text" class="inputAddShift" name="startHour_addShift" placeholder="Example: 07:00"/>
+            <input type="text" class="inputAddShift" name="startHour_addShift" id="startHour_addShift" placeholder="Example: 07:00"/>
             <p>End hour of new Shift</p>
-            <input type="text" class="inputAddShift" name="endHour_addShift" placeholder="Example: 15:00"/>
+            <input type="text" class="inputAddShift" name="endHour_addShift" id="endHour_addShift" placeholder="Example: 15:00"/>
             <?php
             if($_SESSION['Current_User_Role_Id'] == 1)
             {
@@ -43,7 +43,7 @@
                     echo "</select>";
                 }
             }
-            echo '<input type="submit" name="addNewShift" class="button1 ShiftSubmit" value="Add shift"/>'
+            echo '<div name="addNewShift" class="button1 ShiftSubmit" onclick="Shift.AddShiftVerify();">Add shift</div>';
             ?>
         </form>
     </div>

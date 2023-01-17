@@ -66,6 +66,9 @@ require "modules/CalendarModeClasses/Statistics.php";
         }
     </script>
     <script src="scripts/Notification.js"></script>
+    <script src="scripts/User.js"></script>
+    <script src="scripts/Shift.js"></script>
+    <script src="scripts/Roles.js"></script>
     
     <?php PHPScripts::CHANGE_MONTH();?>
     <?php PHPScripts::CHECK_User_Is_Logged()?>
@@ -200,9 +203,8 @@ require "modules/CalendarModeClasses/Statistics.php";
         <script src="scripts/closeNewWindow.js"></script>
         <script src="scripts/Statistics.js"></script>
         <script src="scripts/Calendar.js"></script>
-        <script src="scripts/Shift.js"></script>
-        <script src="scripts/Roles.js"></script>
-        <script src="scripts/User.js"></script>
+
+        
         <script src="scripts/showCalendarDayControls.js"></script>
         
         <?php PHPScripts::WHAT_MODULE_IS_SELECTED();?>
