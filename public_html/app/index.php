@@ -8,6 +8,7 @@ date_default_timezone_set('America/Los_Angeles');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 //Załączanie innych plików
 require "scripts/php/PHPScripts.php";
 require "modules/GeneralClasses/Encrypt.php";
@@ -54,17 +55,8 @@ require "modules/CalendarModeClasses/Statistics.php";
     <title>Working time schedule</title>
 </head>
 <body>
-<script>
-        function show()
-        {
-            //create form post module = 0;
-            document.getElementById('CurrentUserSettingsWindow').style.display = 'flex';
-        }
-        function closeUserSettings()
-        {
-            document.getElementById('CurrentUserSettingsWindow').style.display = 'none'
-        }
-    </script>
+    <script>var roleOfUser = <?php echo $_SESSION['Current_User_Role_Id'];?>;</script>
+    <script src="scripts/showCurrentUserSettings.js"></script>
     <script src="scripts/Notification.js"></script>
     <script src="scripts/User.js"></script>
     <script src="scripts/Shift.js"></script>
