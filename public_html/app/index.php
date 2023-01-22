@@ -47,11 +47,11 @@ require "modules/CalendarModeClasses/Statistics.php";
     <script src="scripts/jquery-3.6.0.min.js"></script>
     <script src="scripts/EnumClasses.js"></script>
     <script language="JavaScript">
-    // window.onbeforeunload = confirmExit;
-    // function confirmExit() {
-    //     return "Chcesz zamknąć stronę. Czy jesteś tego pewny? Wszystkie zmiany których nie zapisałeś zostaną utracone";
-    // }
-    // </script>
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+        return "Chcesz zamknąć stronę. Czy jesteś tego pewny? Wszystkie zmiany których nie zapisałeś zostaną utracone";
+    }
+    </script>
     <script>
         var isCalendarSave = '<?php echo $_SESSION['IsCalendarSave'];?>';
     </script>
@@ -85,8 +85,8 @@ require "modules/CalendarModeClasses/Statistics.php";
         <img src="style/img/logo.png"/>
             <a href="modules/LoginClasses/Logout.php">Logout</a><br>
             <!-- <div id="includedConstent" style="width: 20vw; height: 10vh; background-color: green;"></div> -->
-            <div class="timeToLogout"><p>Time to logout:</p><p>20min</p></div>
-            
+            <div class="timeToLogout"><p>Time to logout:</p><p id="timeToLogout">20min</p></div>
+            <script src="scripts/timeToLogout.js"></script>
         </div>
         
         <div class="userData">           
