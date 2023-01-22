@@ -26,6 +26,10 @@ class User
         let au_email = document.getElementById("addu_email")
         let au_custom_id = document.getElementById("addu_custom_id");
         let au_pass = document.getElementById("addu_password");
+        let au_role = document.getElementById("role");
+        
+        let roleDep = au_role.options[au_role.options.selectedIndex].getAttribute("dep");
+        
         let isGood = true;
 
         if(au_name.value == "") {isGood = false; au_name.style.backgroundColor = "#e48080";}
@@ -35,6 +39,14 @@ class User
         if(au_custom_id.value == "") {isGood = false;au_custom_id.style.backgroundColor = "#e48080";}
         if(au_custom_id.value != "" && parseInt(au_custom_id.value) <= 0) {isGood = false; au_custom_id.style.backgroundColor = "#e48080";}
         if(au_pass.value == "") {isGood = false; au_pass.style.backgroundColor = "#e48080";}
+
+        if(document.getElementById("newUserDepId")!= null)
+        {
+            let dep1 = document.getElementById("newUserDepId");
+            let dep1id = dep1.options[dep1.options.selectedIndex].text;
+            console.log(dep1id)
+            if(roleDep != dep1id) {isGood = false; document.getElementById("newUserDepId").style.backgroundColor = "#e48080";}
+        }
 
         if(isGood == true)
         {

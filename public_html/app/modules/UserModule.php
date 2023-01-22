@@ -26,13 +26,24 @@ use \Exception as Ex;
                                 <?php
                                 
                                 $accessConnection = ConnectToDatabase::connUserPass();
-                                $sql = $_SESSION['Current_User_Role_Id'] == 1 ? 'SELECT id, name FROM roles;' : 'SELECT id, name FROM roles WHERE NOT id = 1;';
-                                $result = $accessConnection->query($sql);
+                                if($_SESSION['Current_User_Role_Id'] == 1) {
+                                    $sql = 'SELECT roles.id, roles.name, department.name AS department FROM roles INNER JOIN department ON roles.dep_id = department.id;';
+                                    $result = $accessConnection->query($sql);
+                                while($row = $result->fetch_assoc())
+                                {
+                                    echo "<option dep=\"".$row['department']."\"value=\"".$row['id']."\">".$row['name']." -> Only for dep: ".$row['department']."</option>";
+                                }
+                                $result->free();
+                                 } else {
+                                    $sql = 'SELECT id, name FROM roles WHERE NOT id = 1;';
+                                    $result = $accessConnection->query($sql);
                                 while($row = $result->fetch_assoc())
                                 {
                                     echo "<option value=\"".$row['id']."\">".$row['name']."</option>";
                                 }
                                 $result->free();
+                                }
+                                
                                 
                                 ?>
                             </select>
@@ -41,7 +52,7 @@ use \Exception as Ex;
                                 {
                                     $resultDepartment = $accessConnection->query("SELECT id,name FROM department;");
                                     echo '<p>Department</p>';
-                                    echo '<select name="newUserDepId" style="margin-bottom: -5vh;">';
+                                    echo '<select name="newUserDepId" id="newUserDepId" onclick="this.style.backgroundColor=\'white\';" style="margin-bottom: -5vh;">';
                                             while($rowDep = $resultDepartment->fetch_assoc())
                                             {
                                                 echo '<option value="'.$rowDep['id'].'">'.$rowDep['name'].'</option>';
