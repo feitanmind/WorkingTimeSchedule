@@ -64,9 +64,13 @@ class Shift
     }
 
 
-    public static function getColorOfShift()
+    public static function getColorOfShift($shiftId)
     {
-
+        $accessConnection = ConnectToDatabase::connAdminPass();
+        $sql = "SELECT color FROM shifts WHERE id=$shiftId;";
+        $result = $accessConnection->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['color'];
     }
 
     //Funcja Generuje formularz dzięki któremu będzie można wybrać konkretną zmianę dla której ustalamy grafik

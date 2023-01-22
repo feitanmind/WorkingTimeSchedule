@@ -217,7 +217,7 @@ class Statistics
             $isWorking = $day->IfUserWorkingOnThisDay($user->user_id);
             if($isWorking != false)
             {
-                $color = $colorsChart[$isWorking[1]-1];
+                $color = Shift::getColorOfShift($isWorking[1]);
                 echo "<td style=\"background-color: $color\">$numberDay</td>";
             }
             else
