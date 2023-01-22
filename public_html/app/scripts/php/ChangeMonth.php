@@ -95,7 +95,7 @@ namespace App;
                                     {
                                         $sethow = false;
                                         $user = new User($row['usr_id']);
-                        $f = $row['usr_id'];
+                                        
 
                                         if(!empty($row['hours_of_work']))
                                         {
@@ -112,8 +112,8 @@ namespace App;
                                                     break;
                                                 }
 
+                                                $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
                                             }
-                                            $how = new HoursOfWork($user, $uh->month, $uh->year, $user->hours_per_shift);
 
                                         } else {
                                             $how = new HoursOfWork($user, $previousMonthNumber, $previousYearNumber, $user->hours_per_shift);
