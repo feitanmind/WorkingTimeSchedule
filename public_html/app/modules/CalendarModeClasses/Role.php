@@ -9,15 +9,9 @@ class Role
         $access_Connection = ConnectToDatabase::connAdminPass();
         $currentLogedUserRole = $_SESSION['Current_User_Role_Id'];
         //Zapytanie SQL wybierające wszystkie dostępne role
-        if($currentLogedUserRole == 1)
-        {
-            $sql_Query_Selection = "SELECT * FROM roles;";
-        }
-        else
-        {
-            $sql_Query_Selection = "SELECT * FROM roles WHERE NOT id=1;";
-        }
-        
+
+            $sql_Query_Selection = "SELECT * FROM roles WHERE dep_id =".$_SESSION['Current_User_Department_Id'].";";
+
         //Przypisanie reszultatu wykoannia zapytania
         $result_Of_Selection = $access_Connection->query($sql_Query_Selection);
         //Stworzenie formularza w HTMLu 
