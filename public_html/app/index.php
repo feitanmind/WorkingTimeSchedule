@@ -182,11 +182,10 @@ require "modules/CalendarModeClasses/Statistics.php";
             Shift::GenerateFormSelectForShifts($_SESSION['dep_id']);
             ?>
         </div>
-        <div class="SelectUserForStatistics">
-            <div class="UserToSelect_Header header-cal-right">Show statistics</div>
+        
             <?php Statistics::DrawListOfUsersForStatistic() ?>
        
-        </div>
+       
             
                 <?php Statistics::DrawStatisticsChartForUser(); ?>
             <div class="StatisticCalendar">

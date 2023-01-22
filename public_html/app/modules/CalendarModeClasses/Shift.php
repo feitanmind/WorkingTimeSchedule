@@ -64,7 +64,10 @@ class Shift
     }
 
 
+    public static function getColorOfShift()
+    {
 
+    }
 
     //Funcja Generuje formularz dzięki któremu będzie można wybrać konkretną zmianę dla której ustalamy grafik
     public static function GenerateFormSelectForShifts(string $department_ID)

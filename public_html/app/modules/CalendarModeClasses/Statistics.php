@@ -32,19 +32,23 @@ class Statistics
 
     public static function DrawListOfUsersForStatistic()
     {
-        $depId = $_SESSION['Current_User_Department_Id'];
-        $accessConnection = ConnectToDatabase::connAdminPass();
-        $sql = "SELECT name, surname, usr_id, custom_id, avatar FROM user_data WHERE dep_id = $depId AND role_id =".$_SESSION["Role_Id"].";";
-        $result = $accessConnection->query($sql);
-        while($row = $result->fetch_assoc())
-        {
-            echo '<div class="UserToSelect" id="statisticUser'.$row['usr_id'].'" >';
-                echo '<div class="UserToSelectAvatar" style="background-image: url(\'style/img/avatars/'.$row['avatar'].'\');"></div>'; 
+        if ($_SESSION['Current_User_Role_Id'] != 3) {
+            echo '<div class="SelectUserForStatistics">
+            <div class="UserToSelect_Header header-cal-right">Show statistics</div>';
+            $depId = $_SESSION['Current_User_Department_Id'];
+            $accessConnection = ConnectToDatabase::connAdminPass();
+            $sql = "SELECT name, surname, usr_id, custom_id, avatar FROM user_data WHERE dep_id = $depId AND role_id =" . $_SESSION["Role_Id"] . ";";
+            $result = $accessConnection->query($sql);
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="UserToSelect" id="statisticUser' . $row['usr_id'] . '" >';
+                echo '<div class="UserToSelectAvatar" style="background-image: url(\'style/img/avatars/' . $row['avatar'] . '\');"></div>';
                 echo '<div class="UserToSelect_Description">';
-                    echo '<div class="UserToSelect_SurnameAndName">'.$row['surname'] . ' '.$row['name'].'</div>';
-                    echo '<div class="UserToSelect_OtherInfo">User_id: '.$row['usr_id'].', Custom_id:'.$row['custom_id'].'</div>';
+                echo '<div class="UserToSelect_SurnameAndName">' . $row['surname'] . ' ' . $row['name'] . '</div>';
+                echo '<div class="UserToSelect_OtherInfo">User_id: ' . $row['usr_id'] . ', Custom_id:' . $row['custom_id'] . '</div>';
                 echo '</div>';
-                echo '<div class="UserToSelect_button" onclick="Statistics.displayUserStats('.$row['usr_id'].');">Show</div>';
+                echo '<div class="UserToSelect_button" onclick="Statistics.displayUserStats(' . $row['usr_id'] . ');">Show</div>';
+                echo '</div>';
+            }
             echo '</div>';
         }
        
