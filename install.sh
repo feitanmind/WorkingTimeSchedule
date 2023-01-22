@@ -13,6 +13,7 @@ sudo echo 'password="niemahasla"' | sudo tee -a /etc/mysql/mysqlpassword.cnf
 sudo apt-get install apt-transport-https  ca-certificates lsb-release software-properties-common gnupg2 -y
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
 curl -fsSL  https://packages.sury.org/php/apt.gpg| sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/sury-keyring.gpg
+sudo chmod -R 777 /var/www/WorkingTimeSchedule/public_html/app/style/img/avatars
 sudo apt-get update
 sudo apt-get install php8.1 -y
 sudo apt-get install php8.1-{bcmath,fpm,xml,mysql,zip,intl,ldap,gd,cli,bz2,curl,mbstring,pgsql,opcache,soap,cgi} -y
