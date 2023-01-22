@@ -48,7 +48,7 @@
                     </div>
                     <div class="lpl-ctas-btns">
                         <div class="btn-mail btn-1"><a href="mailto:burskiadamwork@gmail.com">MAIL</a></div>
-                        <div class="btn-form btn-1"><a href="#form">FORM</a></div>
+                        <div class="btn-form btn-1"><a href="contactForm.php">FORM</a></div>
                     </div>
                 </div>
                 <div class="tutorial box1">
