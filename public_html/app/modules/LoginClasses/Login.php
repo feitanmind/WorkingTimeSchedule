@@ -33,19 +33,15 @@ class Login
                 if($row['password'] == $userPassword)
                 {
                     $_SESSION['log'] = true;
-                    //$_SESSION['user_id'] = $row['id'];
                     $_SESSION['User_Id']= $row['id'];
                     $_SESSION['IsCalendarSave'] = 'yes';
                     $id = $row['id'];
                     $_SESSION['username'] = $row['login'];
                     $_SESSION['password'] = $userPassword;
                     unset($_SESSION['warning1']);
-                    $_SESSION['header'] = "Location: ../../app/";
-                    //$_SESSION['workers_role'] = 1;
-                    $_SESSION['Role_Of_Employees'] = 1;
-                    //$_SESSION['shift_id'] = 1;                   
+                    $_SESSION['header'] = "Location: ../../app/";         
                     
-                    $_SESSION['id_stat'] = 1;
+                    $_SESSION['id_stat'] = $_SESSION['User_Id'];
                     $searchAdditionalInformation = "SELECT avatar, dep_id, role_id FROM user_data WHERE usr_id = $id;";
                     $res = $access_Connection->query($searchAdditionalInformation);
                     if($res->num_rows > 0)
