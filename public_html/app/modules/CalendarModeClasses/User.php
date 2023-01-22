@@ -202,7 +202,7 @@ use \Exception as Ex;
                     
                     $sqlRevert1 = "DELETE FROM users WHERE login='$login';";
                     $access_Connection->query($sqlRevert1);
-                    $access_Connection->query($sqlRevert2);
+                    // $access_Connection->query($sqlRevert2);
                     $xmlFile = fopen("templatesNotification.xml", "r");
                 $tempateNotyfication = fread($xmlFile,filesize("templatesNotification.xml"));
                 echo "<script>";
