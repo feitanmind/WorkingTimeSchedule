@@ -7,7 +7,7 @@ namespace App;
             $shiftId = $_SESSION['Shift_Id'];
             $month_Number = $_SESSION['Month_Number'];
             $year = $_SESSION['Year_Number'];
-            $department_ID = 1;
+            $department_ID = $_SESSION['Current_User_Department_Id'];
             $calend = json_decode($_SESSION['calendar']);
             $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
             foreach($users as $user)
