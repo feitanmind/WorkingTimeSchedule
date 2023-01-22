@@ -213,7 +213,7 @@ use \Exception as Ex;
 
                 
             }
-            catch(mysqli_sql_exception $e)
+            catch(Ex $e)
                 {
                     echo($e);
                 }
