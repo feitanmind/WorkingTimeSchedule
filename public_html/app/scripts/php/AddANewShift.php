@@ -1,7 +1,7 @@
 <?php
 namespace App;
 use \Exception as Ex;
-if(isset($_POST['addNewShift']))
+if(isset($_POST['nameOfShift_addShift']))
 {
     
     $name = $_POST['nameOfShift_addShift'];

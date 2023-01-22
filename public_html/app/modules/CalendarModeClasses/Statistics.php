@@ -207,6 +207,9 @@ class Statistics
         }
         foreach($calendar->Days as $day)
         {
+
+            
+
             $isWorking = $day->IfUserWorkingOnThisDay($user->user_id);
             if($isWorking != false)
             {
