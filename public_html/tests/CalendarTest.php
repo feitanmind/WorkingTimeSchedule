@@ -39,7 +39,7 @@ final class CalendarTest extends TestCase
     {
         $calendar = new App\Calendar(self::$NumberOfMonth, self::$NumberOfYear, self::$DepartmentId);
         $calendar->SignUserToWorkInDay(self::$TestUser, self::$DayIdInCalendar, self::$ShiftId);
-        $this->assertEquals($calendar->Days[1]->Shifts[0]->EmployeesWorking[0]->name, 'Adam');
+        $this->assertEquals($calendar->Days[1]->Shifts[0]->EmployeesWorking[0]->name, 'Admin');
     }
     public function test_ShuldReturnEmptyArrayWhenDeleteLastUserFromShift()
     {
