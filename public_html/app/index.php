@@ -8,7 +8,10 @@ date_default_timezone_set('America/Los_Angeles');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', FALSE);
+header('Pragma: no-cache');
 //Załączanie innych plików
 require "scripts/php/PHPScripts.php";
 require "modules/GeneralClasses/Encrypt.php";
