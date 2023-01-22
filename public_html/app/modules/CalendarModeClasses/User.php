@@ -231,16 +231,5 @@ use \Exception as Ex;
                 
 
         }
-
-
-        public function createListOfUsersToCheckStatistics()
-        {
-            $accessConnection = ConnectToDatabase::connAdminPass();
-            $sql = "SELECT name, surname, usr_id, ";
-            
-        }
-
-
-
     }
 ?>
