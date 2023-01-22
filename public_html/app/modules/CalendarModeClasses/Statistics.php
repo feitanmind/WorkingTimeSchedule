@@ -34,7 +34,7 @@ class Statistics
     {
         $depId = $_SESSION['Current_User_Department_Id'];
         $accessConnection = ConnectToDatabase::connAdminPass();
-        $sql = "SELECT name, surname, usr_id, custom_id, avatar FROM user_data WHERE dep_id = $depId;";
+        $sql = "SELECT name, surname, usr_id, custom_id, avatar FROM user_data WHERE dep_id = $depId AND role_id =".$_SESSION["Role_Id"].";";
         $result = $accessConnection->query($sql);
         while($row = $result->fetch_assoc())
         {
