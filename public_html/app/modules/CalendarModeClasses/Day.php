@@ -53,6 +53,9 @@ class Day
             }
         return false;
     }
+
+
+
     public function ActualizeShifts($sh)
     {
         foreach ($this->Shifts as $shift)

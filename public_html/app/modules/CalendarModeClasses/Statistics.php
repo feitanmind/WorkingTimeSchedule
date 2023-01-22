@@ -211,10 +211,9 @@ class Statistics
         }
         foreach($calendar->Days as $day)
         {
-
-            
-
             $isWorking = $day->IfUserWorkingOnThisDay($user->user_id);
+
+
             if($isWorking != false)
             {
                 $color = Shift::getColorOfShift($isWorking[1]);
@@ -222,7 +221,9 @@ class Statistics
             }
             else
             {
+            
                 echo "<td>$numberDay</td>";
+            
             }
             if($i % 7 == 0)
             {
