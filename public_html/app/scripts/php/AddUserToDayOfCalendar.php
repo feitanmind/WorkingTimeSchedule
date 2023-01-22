@@ -7,7 +7,7 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
     $users = $_GET['usersToAdd'];
     $month_Number = $_SESSION['Month_Number'];
     $year = $_SESSION['Year_Number'];
-    $department_ID = 1;
+    $department_ID = $_SESSION['Current_User_Department_Id'];
     $shiftId = $_SESSION['Shift_Id'];
         if ($shiftId == 'all'){
             $_SESSION['shiftIsAll'] = true;
@@ -21,8 +21,9 @@ if(isset($_GET['usersToAdd']) && isset($_GET['dayId']))
     {
         
         $calend = json_decode($_SESSION['calendar']);
-
         $calend2 = Calendar::DecodeJsonCalendar($month_Number, $year, $department_ID, $calend);
+
+        
         foreach($users as $user)
         {
             $user2 = new User($user);
