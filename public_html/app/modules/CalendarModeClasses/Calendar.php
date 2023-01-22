@@ -255,7 +255,7 @@ class Calendar
     {
         $roleId = $_SESSION['Role_Id'];
         $calendarIsInDatabase = Calendar::ChceckCalendarInDb($this->Department,$roleId,$this->MonthNumber,$this->Year);                    
-        $access_Connection = ConnectToDatabase::connAdminPass();
+        $access_Connection = ConnectToDatabase::connUserPass();
         $encoded_Calendar = json_encode($this);
         $monthDateInDatabase = date("Y-m-d", mktime(0, 0, 0, $this->MonthNumber, 1, $this->Year));
 
@@ -290,7 +290,7 @@ class Calendar
         //Data miesiąca
         $month_Date = date("Y-m-d", mktime(0, 0, 0, $month_Number, 1, $year));
         //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
-        $access_Connection = ConnectToDatabase::connAdminPass();
+        $access_Connection = ConnectToDatabase::connUserPass();
         //Znalezienie zserialiowanego kalendarza
         $sql = "SELECT days FROM calendar WHERE monthDate = '$month_Date' AND roleId = $role_ID AND depId = $department_ID";
         //Przypisanie wyniku zapytania do zmiennej
@@ -317,7 +317,7 @@ class Calendar
         //Data miesiąca
         $month_Date = date("Y-m-d", mktime(0, 0, 0, $month_Number, 1, $year));
         //Połączenie za pomocą poświadczeń Administracyjnych - Do zmiany na użytkownika
-        $access_Connection = ConnectToDatabase::connAdminPass();
+        $access_Connection = ConnectToDatabase::connUserPass();
         $sql_SelectHours = "SELECT usr_id, hours_of_work FROM user_data";
         // $result_SelectHours = $access_Connection->query($sql_SelectHours);
         // if($result_SelectHours->num_rows > 0)

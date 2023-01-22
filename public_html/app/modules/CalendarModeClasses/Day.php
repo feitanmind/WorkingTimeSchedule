@@ -18,7 +18,7 @@ class Day
     private function InitializeShifts($depID)
     {
         //Połączenie z bazą danych
-        $access_Connection = ConnectToDatabase::connAdminPass();
+        $access_Connection = ConnectToDatabase::connUserPass();
         //Polecenie SQL - pobranie z tabeli shifts wszystkich zmian dla danego działu / oddziału
         $sql_Query_Selection = "SELECT * FROM shifts WHERE dep_id = $depID;";
         //Przypisanie rezultatu z egzekucji zapytania do bazy danych

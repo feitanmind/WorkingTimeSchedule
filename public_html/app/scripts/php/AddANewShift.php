@@ -54,7 +54,7 @@ if(isset($_POST['nameOfShift_addShift']))
     $colors = array("#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300", "#dc0ab4", "#b3d4ff", "#00bfa0");
     try
     {
-        $authorizedConnection = ConnectToDatabase::connAdminPass();
+        $authorizedConnection = ConnectToDatabase::connUserPass();
         $depId = isset($_POST['departmentId_addShift']) ? $_POST['departmentId_addShift'] : $_SESSION['Current_User_Department_Id'];
         $sqlCol = "SELECT COUNT(id) AS colorIndex FROM shifts WHERE dep_id = $depId;";
         $result = $authorizedConnection->query($sqlCol);

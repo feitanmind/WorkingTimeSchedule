@@ -36,7 +36,7 @@ class Statistics
             echo '<div class="SelectUserForStatistics">
             <div class="UserToSelect_Header header-cal-right">Show statistics</div>';
             $depId = $_SESSION['Current_User_Department_Id'];
-            $accessConnection = ConnectToDatabase::connAdminPass();
+            $accessConnection = ConnectToDatabase::connUserPass();
             $sql = "SELECT name, surname, usr_id, custom_id, avatar FROM user_data WHERE dep_id = $depId AND role_id =" . $_SESSION["Role_Id"] . ";";
             $result = $accessConnection->query($sql);
             while ($row = $result->fetch_assoc()) {
@@ -62,7 +62,7 @@ class Statistics
         
         if($_SESSION['Shift_Id'] != 0)
         {
-            $accessConnection = ConnectToDatabase::connAdminPass();
+            $accessConnection = ConnectToDatabase::connUserPass();
 
             $user = new User($user_id);
 

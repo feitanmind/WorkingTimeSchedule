@@ -7,7 +7,7 @@ if(isset($_POST['Id_removeShift']))
     try
     {
         $idToDel = $_POST['Id_removeShift'];
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
         $sql = "DELETE FROM shifts WHERE id=$idToDel;";
         $accessConnection->query($sql);
         $_SESSION['Module'] = 4;

@@ -41,7 +41,7 @@ class HoursOfWork
     }
     public function SubstractTimeOfWork($user)
     {
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
         if($_SESSION['Shift_Id'] != "all")
         {
             $currentShift = $_SESSION['Shift_Id'];
@@ -78,7 +78,7 @@ class HoursOfWork
     public function AddTimeOfWork()
     {
         $currentShift = $_SESSION['Shift_Id'];
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
         $sql = "SELECT hours_per_shift FROM shifts WHERE id = $currentShift";
         $result = $accessConnection->query($sql);
         $row = $result->fetch_assoc();
@@ -144,7 +144,7 @@ class HoursOfWork
         $monthNumber = $_SESSION['Month_Number'];
         $yearNumber = $_SESSION['Year_Number'];
         $depId = $_SESSION['Current_User_Department_Id'];
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
          //deckodowanie zmiennej sesyjnej 
          $encodedArrayOfHoursOfWork = $_SESSION['arrayOfHoursOfWorkForCurrentMonth'];
          $decodedSessionArrayOfHoursOfWork = HoursOfWork::decodeArrayOfHoursOfWork($encodedArrayOfHoursOfWork);

@@ -7,7 +7,7 @@
                 <h3>List of current Departments</h3>
                 <div class="listOfCurrentDepartment">
                     <?php
-                    $accessConnection = ConnectToDatabase::connAdminPass();
+                    $accessConnection = ConnectToDatabase::connUserPass();
                     $sql = "SELECT name FROM department";
                     $result = $accessConnection->query($sql);
                     echo "<ul>";

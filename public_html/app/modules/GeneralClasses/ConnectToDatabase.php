@@ -23,6 +23,7 @@ class ConnectToDatabase
         $username = $_SESSION['username'];
         $encryptedPass = $_SESSION['password'];
         $decryptPass = $en->decryptString($encryptedPass);
+        
         $mysqli = new \MySQLi('localhost', $username,$decryptPass,'app_commercial');
         if($mysqli->connect_errno)
         {

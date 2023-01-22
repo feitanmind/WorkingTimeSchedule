@@ -15,7 +15,7 @@ if(isset($_POST['newRoleAsRoleDb']))
         {
             $newRoledepId = $_SESSION['Current_User_Department_Id'];
         }
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
         $sqlAddNewRole = "INSERT INTO roles(name,dep_id,role_db) VALUES('$nameOfNewRole',$newRoledepId,$roleInDb);";
         $accessConnection->query($sqlAddNewRole);
     }

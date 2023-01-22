@@ -95,6 +95,7 @@ require "modules/CalendarModeClasses/Statistics.php";
 
             <?php
             $user_id = $_SESSION['User_Id'];
+
             $user = new User($user_id);
             //echo $user->dep_id;
             $_SESSION['dep_id'] = $user->dep_id;
@@ -122,7 +123,7 @@ require "modules/CalendarModeClasses/Statistics.php";
             <?php PHPScripts::SAVE_IN_DATABASE();?>
             <?php PHPScripts::CreateArrayOfHoursOfWorkForUsers();?>
             <?php PHPScripts::CHANGE_USER_STATS(); ?>
-           
+
             <script>
                 var listOfUsersToAdd = document.getElementById("usersToAdd").outerHTML;
                 var listOfUsersToGrantVacation = document.getElementById("usersToVacation").outerHTML;

@@ -7,7 +7,7 @@ use \Exception as Ex;
 
         if(!isset($_SESSION['arrayOfHoursOfWorkForCurrentMonth']))
         {
-            $accessConnection = ConnectToDatabase::connAdminPass();
+            $accessConnection = ConnectToDatabase::connUserPass();
             $sql = "SELECT usr_id, hours_of_work, hours_per_shift FROM user_data WHERE dep_id = $dep_id;";
             $result = $accessConnection->query($sql);
             $finalHoursOfWork = array();

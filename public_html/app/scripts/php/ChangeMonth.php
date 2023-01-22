@@ -18,7 +18,7 @@ namespace App;
 
                 $dep_id = $_SESSION['Current_User_Department_Id'];
                 $role_id = $_SESSION['Role_Id'];
-                $accessConnection = ConnectToDatabase::connAdminPass();
+                $accessConnection = ConnectToDatabase::connUserPass();
                 $sql = "SELECT usr_id, hours_of_work FROM user_data WHERE dep_id = $dep_id";
                 $result = $accessConnection->query($sql);
                 if($result->num_rows > 0)
@@ -86,7 +86,7 @@ namespace App;
                                 $arrOfHours = array();
                                 $dep_id = $_SESSION['Current_User_Department_Id'];
                                 $role_id = $_SESSION['Role_Id'];
-                                $accessConnection = ConnectToDatabase::connAdminPass();
+                                $accessConnection = ConnectToDatabase::connUserPass();
                                 $sql = "SELECT usr_id, hours_of_work FROM user_data WHERE dep_id = $dep_id";
                                 $result = $accessConnection->query($sql);
                                 if($result->num_rows > 0)

@@ -23,7 +23,7 @@ use \Exception as Ex;
         static private function selectName($id, $tableName)
         {
             //Połączenie z bazą danych
-            $access_Connection = ConnectToDatabase::connAdminPass();
+            $access_Connection = ConnectToDatabase::connUserPass();
             //Zapytanie SQL do bazy 
             $sql = "SELECT name FROM $tableName WHERE id=$id";
             $res = $access_Connection -> query($sql);
@@ -39,7 +39,7 @@ use \Exception as Ex;
         public function __construct($user_id)
         {
             //Połączenie z bazą danych
-            $access_Connection = ConnectToDatabase::connAdminPass();
+            $access_Connection = ConnectToDatabase::connUserPass();
 
             //Zapytanie do bazy danych w języku SQL 
             $sql_Query_Selection= "SELECT * FROM users INNER JOIN user_data ON users.id = user_data.usr_id WHERE users.id = $user_id";
@@ -121,7 +121,7 @@ use \Exception as Ex;
         public function createOptionsListOfAllUsers()
         {
             // Tworzymy nowe połączenie do bazy danych 
-            $access_Connection = ConnectToDatabase::connAdminPass();
+            $access_Connection = ConnectToDatabase::connUserPass();
             $role_id = $_SESSION['Role_Id'];
             $selectListOfUserSQL = "SELECT name, surname, usr_id FROM user_data WHERE dep_id = $this->dep_id AND role_id = $role_id";
             $resultWorkersData = $access_Connection -> query($selectListOfUserSQL);
@@ -170,15 +170,26 @@ use \Exception as Ex;
                         $roleDB  = 'worker';
                     }
                     
-                    $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$encrypted_password';";
+                    $sqlCreateUserInDataBase = "CREATE USER '$login'@'localhost' IDENTIFIED BY '$password';";
+                    
                     $sqlInsertIntoUsers = "INSERT INTO users(login,email,password) VALUES('$login','$email','$encrypted_password');";
                     $selectUserId = "SELECT id FROM users WHERE login = '$login'";
                     $sqlGrant = "GRANT '$roleDB' TO '$login'@'localhost';";
+                    $sqlGrant2 = "GRANT SELECT, UPDATE, INSERT, DELETE ON app_commercial.* TO '$login'@'localhost'";
 
                     $access_Connection->query($sqlCreateUserInDataBase);
                     $access_Connection->query($sqlInsertIntoUsers);
                     $access_Connection->query($sqlGrant);
-               
+                    try
+                    {
+                        $access_Connection->query($sqlGrant2);
+                    }
+                    catch(\Exception $e)
+                    {
+                        print_r($e);
+                    }
+                    
+
                 $resultIdOfUser = $access_Connection ->query($selectUserId);
                 $row = $resultIdOfUser->fetch_assoc();
                 $idOfUser = $row['id'];

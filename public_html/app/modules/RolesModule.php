@@ -9,7 +9,7 @@
     <?php
         $roleCurrentUser = $_SESSION['Current_User_Role_Id'];
         $department = $_SESSION['Current_User_Department_Id'];
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
         if($roleCurrentUser == 1)
         {
             $sql = "SELECT id, name FROM roles;";

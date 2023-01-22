@@ -24,7 +24,7 @@ class Shift
     {
         $department_ID = $_SESSION['Current_User_Department_Id'];
         $shiftId = $this->Id;
-        $access_Connection = ConnectToDatabase::connAdminPass();
+        $access_Connection = ConnectToDatabase::connUserPass();
         //Polecenie SQL do wybrania wszytskich zmian z tabeli shifts dla konkretnego działu
         $sql_Query_Selection = "SELECT * FROM shifts WHERE dep_id = $department_ID AND id = $shiftId;";
         //Przypisanie rezultatu wykonania zapytania do bazy danych
@@ -66,7 +66,7 @@ class Shift
 
     public static function getColorOfShift($shiftId)
     {
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
         $sql = "SELECT color FROM shifts WHERE id=$shiftId;";
         $result = $accessConnection->query($sql);
         $row = $result->fetch_assoc();
@@ -77,7 +77,7 @@ class Shift
     public static function GenerateFormSelectForShifts(string $department_ID)
     {
         //Połączenie z bazą danych
-        $access_Connection = ConnectToDatabase::connAdminPass();
+        $access_Connection = ConnectToDatabase::connUserPass();
         //Polecenie SQL do wybrania wszytskich zmian z tabeli shifts dla konkretnego działu
         $sql_Query_Selection = "SELECT * FROM shifts WHERE dep_id = $department_ID;";
         //Przypisanie rezultatu wykonania zapytania do bazy danych

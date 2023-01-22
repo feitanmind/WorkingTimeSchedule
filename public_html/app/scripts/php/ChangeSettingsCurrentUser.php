@@ -8,7 +8,7 @@ if(isset($_POST['newPassword_CUS']))
         $decPass = $_POST['newPassword_CUS'];
         $idCurrentUser = $_SESSION['User_Id'];
         $username = $_SESSION['username'];
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
         $encrypt = new Encrypt();
         $newPassword = $encrypt->encryptString($_POST['newPassword_CUS']);
         $updatePasswordQuery = "UPDATE users SET password='$newPassword' WHERE id=$idCurrentUser;";
@@ -51,7 +51,7 @@ if(isset($_FILES['newAvatar_CUS']))
                      
         if ($_FILES["newAvatar_CUS"]["size"] < 5000000) {
             move_uploaded_file($_FILES["newAvatar_CUS"]['tmp_name'], $target_file);
-            $accessConnection = ConnectToDatabase::connAdminPass();
+            $accessConnection = ConnectToDatabase::connUserPass();
             $accessConnection->query("UPDATE user_data SET avatar='$nameOfFile' WHERE id = $idUsr;");
         }
     }

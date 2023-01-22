@@ -3,7 +3,7 @@ namespace App;
 if(isset($_POST['roleToRemove']))
 {
     $roleToRemove = $_POST['roleToRemove'];
-    $accessConnection = ConnectToDatabase::connAdminPass();
+    $accessConnection = ConnectToDatabase::connUserPass();
     $sqlAddNewRole = "DELETE FROM roles WHERE id = $roleToRemove;";
     try
     {

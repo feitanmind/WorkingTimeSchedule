@@ -25,7 +25,7 @@ use \Exception as Ex;
                             <select id="role" name="addu_role">
                                 <?php
                                 
-                                $accessConnection = ConnectToDatabase::connAdminPass();
+                                $accessConnection = ConnectToDatabase::connUserPass();
                                 $sql = $_SESSION['Current_User_Role_Id'] == 1 ? 'SELECT id, name FROM roles;' : 'SELECT id, name FROM roles WHERE NOT id = 1;';
                                 $result = $accessConnection->query($sql);
                                 while($row = $result->fetch_assoc())
@@ -103,15 +103,16 @@ use \Exception as Ex;
             $currentUserRole = $_SESSION['Current_User_Role_Id'];
             $currentUserDepartment = $_SESSION['Current_User_Department_Id'];
             echo "<select id=\"userToRemoveFromSystem\" name=\"userToRemoveFromSystem\">";
-                $accessConnection = ConnectToDatabase::connAdminPass();
+                $accessConnection = ConnectToDatabase::connUserPass();
            if($currentUserRole == 1)
             {
+                $accessConnectionAdm = ConnectToDatabase::connAdminPass();
                 $sql = 'SELECT user_data.name AS nameOfUser, users.login, user_data.surname, user_data.usr_id , department.name AS dep , roles.name AS role
                         FROM (((user_data
                         INNER JOIN department ON user_data.dep_id)
                         INNER JOIN roles ON user_data.role_id = roles.id)
                         INNER JOIN users ON user_data.usr_id = users.id);';
-                $result = $accessConnection->query($sql);
+                $result = $accessConnectionAdm->query($sql);
                 while($row = $result->fetch_assoc())
                 {
                     echo '<option value="' . $row['usr_id'] .'!'.$row['login'].'">'.$row['usr_id'] . ' '.$row['nameOfUser']. ' '.$row['surname'].' | '.$row['dep'].' | '.$row['role'].'</option>';

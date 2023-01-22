@@ -9,7 +9,7 @@ if(isset($_POST['userToRemoveFromSystem']))
         $userToRemove = $_POST['userToRemoveFromSystem'];
         $idToDel = substr($userToRemove,0,strpos($userToRemove,'!'));
         $loginToLock = substr($userToRemove, strpos($userToRemove, '!') + 1);
-        $accessConnection = ConnectToDatabase::connAdminPass();
+        $accessConnection = ConnectToDatabase::connUserPass();
         $sql_DelFromUsers = "DELETE FROM users WHERE id=$idToDel;";
         $sql_DelFromUserData = "DELETE FROM user_data WHERE id=$idToDel;";
         $sql_DelUser = "DROP USER '$loginToLock'@'localhost';";

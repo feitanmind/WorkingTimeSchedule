@@ -6,7 +6,7 @@ class Role
     public static function displaySelectRolesForUser()
     {
         //Połączenie z bazą danych
-        $access_Connection = ConnectToDatabase::connAdminPass();
+        $access_Connection = ConnectToDatabase::connUserPass();
         $currentLogedUserRole = $_SESSION['Current_User_Role_Id'];
         //Zapytanie SQL wybierające wszystkie dostępne role
 

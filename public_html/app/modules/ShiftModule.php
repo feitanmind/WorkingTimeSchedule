@@ -17,7 +17,7 @@
             <?php
             if($_SESSION['Current_User_Role_Id'] == 1)
             {
-                $accessConnection = ConnectToDatabase::connAdminPass();
+                $accessConnection = ConnectToDatabase::connUserPass();
                 $sql = "SELECT id, name FROM department;";
                 $result = $accessConnection->query($sql);
                 if($result->num_rows > 0)

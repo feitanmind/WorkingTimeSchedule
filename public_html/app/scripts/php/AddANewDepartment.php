@@ -6,7 +6,7 @@ use \Exception as Ex;
 if(isset($_POST['nameOfAddingDepartment']))
 {
     $name = $_POST['nameOfAddingDepartment'];
-    $accessConnection = ConnectToDatabase::connAdminPass();
+    $accessConnection = ConnectToDatabase::connUserPass();
     $sql = "INSERT INTO department(name) VALUES('$name');";
     try
     {
