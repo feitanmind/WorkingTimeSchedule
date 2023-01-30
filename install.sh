@@ -22,4 +22,4 @@ sudo cp /var/www/WorkingTimeSchedule/conf/WorkingTimeSchedule.conf /etc/apache2/
 sudo a2dissite 000-default.conf
 sudo a2ensite WorkingTimeSchedule.conf
 sudo systemctl restart apache2
-sudo mysql --defaults-file=/path-to-file/.my.cnf –u root app_commercial < newInstallWTS.sql
+sudo mysql --defaults-file=/path-to-file/.my.cnf –u root app_commercial < new_database_for_wts.sql
